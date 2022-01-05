@@ -1,0 +1,59 @@
+<div class="card-body">
+    <form novalidate
+          #courseForm="ngForm">
+      <fieldset>
+        <legend>课程信息</legend>
+  
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="courseNameId">课程名</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="courseNameId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       minlength="2"
+                       [(ngModel)]=course.courseName
+                       name="CourseName"
+                       #courseNameVar="ngModel"
+                       [ngClass]="{'is-invalid': (courseNameVar.touched || 
+                                                    courseNameVar.dirty ||
+                                                      course.id !== 0) && 
+                                                      !courseNameVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="courseNameVar.errors?.required">
+                        课程名不能为空.
+                    </span>
+                    <span *ngIf="courseNameVar.errors?.minlength">
+                        课程名至少2个字符.
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="textbookId">教材</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="textbookId"
+                       type="text"
+                       placeholder=""
+                       [(ngModel)]=course.textbook
+                       name="Textbook"
+                       #textbookVar="ngModel"
+                       [ngClass]="{'is-invalid': (textbookVar.touched || 
+                                                    textbookVar.dirty ||
+                                                      course.id !== 0) &&
+                                                      !textbookVar.valid }" />                
+            </div>
+        </div>
+        
+      </fieldset>
+    </form>
+  </div>
+  
+  <div class='alert alert-danger'
+       *ngIf='errorMessage'>{{errorMessage}}
+  </div>

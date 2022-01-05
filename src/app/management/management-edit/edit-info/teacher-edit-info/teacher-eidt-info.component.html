@@ -1,0 +1,133 @@
+<div class="card-body">
+    <form novalidate
+          #teacherForm="ngForm">
+      <fieldset>
+        <legend>教师信息</legend>
+  
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="nameId">姓名</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="nameId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       minlength="2"
+                       [(ngModel)]=teacher.name
+                       name="Name"
+                       #nameVar="ngModel"
+                       [ngClass]="{'is-invalid': (nameVar.touched || 
+                                                    nameVar.dirty ||
+                                                      teacher.id !== 0) && 
+                                                      !nameVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="nameVar.errors?.required">
+                        姓名不能为空.
+                    </span>
+                    <span *ngIf="nameVar.errors?.minlength">
+                        姓名至少2个字符.
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="teacherNumberId">教师编号</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="teacherNumberId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=teacher.teacherNumber
+                       name="TeacherNumber"
+                       #teacherNumberVar="ngModel"
+                       [ngClass]="{'is-invalid': (teacherNumberVar.touched || 
+                                                    teacherNumberVar.dirty ||
+                                                      teacher.id !== 0) && 
+                                                      !teacherNumberVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="nameVar.errors?.required">
+                        编号不能为空.
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="statusId">教师状态</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="statusId"
+                       type="text"
+                       [(ngModel)]=teacher.teacherStatus
+                       name="TeacherStatus"
+                       #teacherStatusVar="ngModel"
+                       [ngClass]="{'is-invalid': (teacherStatusVar.touched || 
+                                                    teacherStatusVar.dirty ||
+                                                      teacher.id !== 0) &&
+                                                      !teacherStatusVar.valid }" />                
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="phoneId">联系电话</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="phoneId"
+                       type="text"
+                       [(ngModel)]=teacher.phoneNumber
+                       name="Phone"
+                       #phoneVar="ngModel"
+                       [ngClass]="{'is-invalid': (phoneVar.touched || 
+                                                    phoneVar.dirty ||
+                                                      teacher.id !== 0) &&
+                                                      !phoneVar.valid }" />                
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="commentId">简介</label>
+            <div class="col-md-8">
+              <textarea class="form-control"
+                        id="commentId"
+                        placeholder="描述"
+                        rows=3
+                        [(ngModel)]=teacher.teacherComment
+                        name="comment"
+                        #commentVar="ngModel"
+                        [ngClass]="{'is-invalid': (commentVar.touched || 
+                                             commentVar.dirty ||
+                                               teacher.id !== 0) &&
+                                               !commentVar.valid }"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2"
+                   for="isMentorId">是否是导员</label>
+            <div class="col-md-8">
+                <input class=""
+                id="isMentorId"
+                type="checkbox"
+                [(ngModel)]=teacher.isMentor
+                name="mentor"
+                #mentorVar="ngModel"
+                [ngClass]="{'is-invalid': (mentorVar.touched || 
+                                             mentorVar.dirty ||
+                                               teacher.id !== 0) &&
+                                               !mentorVar.valid }" />
+            </div>
+          </div>
+      </fieldset>
+    </form>
+  </div>
+  
+  <div class='alert alert-danger'
+       *ngIf='errorMessage'>{{errorMessage}}
+  </div>

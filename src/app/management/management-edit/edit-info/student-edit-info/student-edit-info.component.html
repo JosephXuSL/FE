@@ -1,0 +1,236 @@
+<div class="card-body">
+    <form novalidate
+          #studentForm="ngForm">
+      <fieldset>
+        <legend>学生信息</legend>
+  
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="nameId">姓名</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="nameId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       minlength="2"
+                       [(ngModel)]=student.name
+                       name="Name"
+                       #nameVar="ngModel"
+                       [ngClass]="{'is-invalid': (nameVar.touched || 
+                                                    nameVar.dirty ||
+                                                      student.id !== 0) && 
+                                                      !nameVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="nameVar.errors?.required">
+                        姓名不能为空.
+                    </span>
+                    <span *ngIf="nameVar.errors?.minlength">
+                        姓名至少2个字符.
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="sexId">性别</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="sexId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=student.sex
+                       name="sex"
+                       #sexVar="ngModel"
+                       [ngClass]="{'is-invalid': (sexVar.touched || 
+                                                    sexVar.dirty ||
+                                                      student.id !== 0) && 
+                                                      !sexVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="sexVar.errors?.required">
+                        性别不能为空.
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="IDNumberId">身份证号</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="IDNumberId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=student.identityCardNumber
+                       name="identityCardNumber"
+                       #idNumberVar="ngModel"
+                       [ngClass]="{'is-invalid': (idNumberVar.touched || 
+                                                    idNumberVar.dirty ||
+                                                      student.id !== 0) && 
+                                                      !idNumberVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="idNumberVar.errors?.required">
+                        身份证号不能为空.
+                    </span>
+                    <span *ngIf="idNumberVar.errors?.length">
+                        身份证号18位.
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="studentNumberId">学号</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="studentNumberId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=student.studentNumber
+                       name="studentNumber"
+                       #studentNumberVar="ngModel"
+                       [ngClass]="{'is-invalid': (studentNumberVar.touched || 
+                                                    studentNumberVar.dirty ||
+                                                      student.id !== 0) && 
+                                                      !studentNumberVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="studentNumberVar.errors?.required">
+                        学号不能为空.
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="statusId">学生状态</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="statusId"
+                       type="text"
+                       [(ngModel)]=student.studentStatus
+                       name="studentStatus"/>                
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="homeAddressId">家庭住址</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="homeAddressId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=student.homeAddress
+                       name="homeAddress"
+                       #homeAddressVar="ngModel"
+                       [ngClass]="{'is-invalid': (homeAddressVar.touched || 
+                                                    homeAddressVar.dirty ||
+                                                      student.id !== 0) &&
+                                                      !homeAddressVar.valid }" />                
+            </div>
+            <span class="invalid-feedback">
+                <span *ngIf="homeAddressVar.errors?.required">
+                    家庭住址不能为空.
+                </span>
+            </span>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="phoneId">联系电话</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="phoneId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=student.phoneNumber
+                       name="Phone"
+                       #phoneVar="ngModel"
+                       [ngClass]="{'is-invalid': (phoneVar.touched || 
+                                                    phoneVar.dirty ||
+                                                    student.id !== 0) &&
+                                                      !phoneVar.valid }" />                
+            </div>
+            <span class="invalid-feedback">
+                <span *ngIf="phoneVar.errors?.required">
+                    联系电话不能为空.
+                </span>
+            </span>
+        </div>       
+       
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="apartmentId">寝室楼号</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="apartmentId"
+                       type="text"                       
+                       [(ngModel)]=student.apartment
+                       name="apartment"/>                
+            </div>            
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="chamberId">寝室号</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="chamberId"
+                       type="text"                       
+                       [(ngModel)]=student.chamber
+                       name="chamber"/>                
+            </div>            
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="bedId">床位号</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="bedId"
+                       type="text"                       
+                       [(ngModel)]=student.bed
+                       name="bed"/>                
+            </div>            
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="classId">班级</label>
+            <div class="col-md-8" (click)= "selectClass()">
+                <input class="form-control"
+                       disabled
+                       id="classId"
+                       type="text"
+                       placeholder="（前往选择）"
+                       required
+                       [(ngModel)]=student.class.classNumber
+                       name="class"
+                       #classVar="ngModel"
+                       [ngClass]="{'is-invalid': (classVar.touched || 
+                                                    classVar.dirty ||
+                                                    student.id !== 0) &&
+                                                    !classVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="classVar.errors?.required">
+                        请选择班级.
+                    </span>
+                </span>
+            </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  
+  <div class='alert alert-danger'
+       *ngIf='errorMessage'>{{errorMessage}}
+  </div>

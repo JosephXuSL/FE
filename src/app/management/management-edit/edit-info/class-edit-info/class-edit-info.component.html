@@ -1,0 +1,90 @@
+<div class="card-body">
+    <form novalidate
+          #classForm="ngForm">
+      <fieldset>
+        <legend>班级信息</legend>
+  
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="classNumberId">班级</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="classNumberId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       minlength="2"
+                       [(ngModel)]=class.classNumber
+                       name="classNumber"
+                       #classNumberVar="ngModel"
+                       [ngClass]="{'is-invalid': (classNumberVar.touched || 
+                                                    classNumberVar.dirty ||
+                                                      class.id !== 0) && 
+                                                      !classNumberVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="classNumberVar.errors?.required">
+                        班级不能为空.
+                    </span>
+                    <span *ngIf="classNumberVar.errors?.minlength">
+                        班级至少2个字符.
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="majorId">专业</label>
+            <div class="col-md-8" (click)= "selectMajor()">
+                <input class="form-control"
+                       disabled
+                       id="majorId"
+                       type="text"
+                       placeholder="（前往选择）"
+                       required
+                       [(ngModel)]=class.major.majorName
+                       name="major"
+                       #majorVar="ngModel"
+                       [ngClass]="{'is-invalid': (majorVar.touched || 
+                                                    majorVar.dirty ||
+                                                    class.id !== 0) &&
+                                                    !majorVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="majorVar.errors?.required">
+                        请选择专业.
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="mentorId">导员</label>
+            <div class="col-md-8" (click)= "selectTeacher()">
+                <input class="form-control"
+                       disabled
+                       id="mentorId"
+                       type="text"
+                       placeholder="（前往选择）"
+                       required
+                       [(ngModel)]=class.mentor.name
+                       name="mentor"
+                       #mentorVar="ngModel"
+                       [ngClass]="{'is-invalid': (mentorVar.touched || 
+                                                    mentorVar.dirty ||
+                                                    class.id !== 0) &&
+                                                    !mentorVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="mentorVar.errors?.required">
+                        请选择导员.
+                    </span>
+                </span>
+            </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  
+  <div class='alert alert-danger'
+       *ngIf='errorMessage'>{{errorMessage}}
+  </div>

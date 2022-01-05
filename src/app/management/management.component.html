@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}管理
+            <div class="ml-auto">
+                <button class="btn btn-outline-primary btn-sm"
+                        [routerLink]="['/management',business.name,'edit',0,this.business.subTab]">
+                    添加{{business.nameForShow}}
+                </button>
+            </div>
+        </div>    
+    </div>
+
+    <div class="card-body">
+      <ag-grid-angular style="width: 500px; height: 500px;"
+                       class="ag-theme-alpine"
+                       [rowData]="rowData"
+                       [columnDefs]="columnDefs"
+                       (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+      
+    </div>
+</div>
+
+<!-- <div *ngIf="errorMessage"
+       class="alert alert-danger">
+    Error: {{ errorMessage }}
+  </div> -->
