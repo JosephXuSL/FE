@@ -143,51 +143,51 @@ export const businessList: Business[] = [
             },
             {
                 headerName: '身份证号',
-                field: 'classNumber'
+                field: 'identityCardNumber'
             },
             {
                 headerName: '学号',
-                field: 'major.majorName'
+                field: 'studentNumber'
             },
             {
                 headerName: '状态',
-                field: 'mentor.name'
+                field: 'studentStatus'
             },
             {
                 headerName: '家庭住址',
-                field: 'mentor.name'
+                field: 'homeAddress'
             },
             {
                 headerName: '联系电话',
-                field: 'major.department'
+                field: 'phoneNumber'
             },
             {
                 headerName: '宿舍楼号',
-                field: 'classNumber'
+                field: 'apartment'
             },
             {
                 headerName: '宿舍房间号',
-                field: 'major.majorName'
+                field: 'chamber'
             },
             {
                 headerName: '床位号',
-                field: 'mentor.name'
-            },
-            {
-                headerName: '级',
-                field: 'mentor.name'
-            },
-            {
-                headerName: '院系',
-                field: 'major.majorName'
-            },
-            {
-                headerName: '班级',
-                field: 'mentor.name'
+                field: 'bed'
             },
             {
                 headerName: '专业',
-                field: 'mentor.name'
+                field: 'major.majorName'
+            },
+            {
+                headerName: '级',
+                field: 'major.grade'
+            },
+            {
+                headerName: '院系',
+                field: 'major.department'
+            },
+            {
+                headerName: '班级',
+                field: 'class.classNumber'
             }
 
         ]

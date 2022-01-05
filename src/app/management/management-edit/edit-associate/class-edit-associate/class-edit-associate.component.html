@@ -1,0 +1,98 @@
+<div class="card-body">
+    
+    <fieldset>
+      <div class="row">
+          <legend>查找班级</legend>
+      </div>
+      
+
+      <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="gradeId">级</label>
+          <div class="col-md-8">
+              <input class="form-control"
+                     id="gradeId"
+                     type="text"                       
+                     [(ngModel)]= searchGrade
+                     name="Grade"/>                
+          </div>
+      </div>
+      
+      <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="departmentId">院系</label>
+          <div class="col-md-8">
+              <input class="form-control"
+                     id="departmentId"
+                     type="text"                      
+                     [(ngModel)]=searchDepartment
+                     name="department"/>                
+          </div>
+      </div>
+      
+      <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="majorNameId">专业</label>
+          <div class="col-md-8">
+              <input class="form-control"
+                     id="majorNameId"
+                     type="text"
+                     [(ngModel)]=searchMajorName
+                     name="majorName"/>                
+          </div>          
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label"
+               for="classNumberId">班级</label>
+        <div class="col-md-8">
+            <input class="form-control"
+                   id="classNumberId"
+                   type="text"
+                   [(ngModel)]=searchClassNumber
+                   name="classNumber"/>                
+        </div>
+        <button class="btn btn-primary mr-3"
+              style="width:80px"
+              type="button"
+              title="查询专业"
+              (click)="searchInfo()">
+        查找
+    </button>
+    </div>
+      
+    </fieldset>
+
+    <div class="table-responsive">
+      <table class="table mb-0"
+             *ngIf="searchClasses && searchClasses.length">
+        <thead>
+          <tr>             
+            <th>级</th>
+            <th>院系</th>
+            <th>专业</th>
+            <th>班级</th>              
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of searchClasses">
+            
+            <td>{{ data.major.grade }}</td>
+            <td>{{ data.major.department }}</td>
+            <td>{{ data.major.majorName}}</td>  
+            <td>{{ data.classNumber}}</td>            
+            <td>
+              <button class="btn btn-outline-primary btn-sm"
+                      (click)= "choseClass(data)">
+                选择
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  
+</div>
+

@@ -117,6 +117,18 @@ export class ManagementEditComponent implements OnInit {
           this.validateAssociateTab(a.name);
         });
         return;
+      case 'student':
+        if (this.info.name && this.info.sex && this.info.identityCardNumber &&
+          this.info.studentNumber && this.info.homeAddress && this.info.phoneNumber &&
+          this.info.major.id > 0 && this.info.class.id > 0) {
+          this.dataIsValid[this.business.subTab] = true;
+        } else {
+          this.dataIsValid[this.business.subTab] = false;
+        }
+        this.business.subAssociateTab.forEach(a => {
+          this.validateAssociateTab(a.name);
+        });
+        return;
     }
   }
 
@@ -136,6 +148,13 @@ export class ManagementEditComponent implements OnInit {
           this.dataIsValid[tab] = false;
         }
         return;
+        case 'classAssociate':
+          if (this.info.class.id > 0) {
+            this.dataIsValid[tab] = true;
+          } else {
+            this.dataIsValid[tab] = false;
+          }
+          return;
     }
   }
 

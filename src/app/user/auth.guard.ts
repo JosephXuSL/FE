@@ -22,7 +22,8 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   checkLoggedIn(url: string): boolean {
-    if (this.authService.isLoggedIn) {
+    const token = sessionStorage.getItem('user');
+    if (token.length > 0 || this.authService.isLoggedIn) {
       return true;
     }
     this.authService.redirectUrl = url;

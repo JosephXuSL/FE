@@ -6,7 +6,7 @@ import { Class } from 'src/app/models/class';
 import { Course } from 'src/app/models/course';
 import { Student } from 'src/app/models/student';
 import { Teacher } from 'src/app/models/teacher';
-import { ApiClient, GetMajorRequestBody} from '../../api-client';
+import { ApiClient, ClassInfoRequestBody, GetMajorRequestBody} from '../../api-client';
 import { Major } from '../../models/major';
 import { ManagementServiceMapper } from './management.service.mapper';
 
@@ -230,7 +230,18 @@ export class ManagementService {
     }));
   }
 
-
+  searchClasses(grade: string, department: string, majorName: string, classNumber: string): Observable<Class[]> {
+    const data = new ClassInfoRequestBody();
+    data.grade = grade;
+    data.department = department;
+    data.majorName = majorName;
+    data.classNumber = classNumber;
+    return this.apiClient.getClassesByClassInfo(data).pipe(map(majors => {
+      return majors.map(m => {
+        return ManagementServiceMapper.mapClassInput(m);
+      });
+    }));
+  }
 
   private handleError(err) {
     // in a real world app, we may send the server to some remote logging infrastructure

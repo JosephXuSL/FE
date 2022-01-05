@@ -24,22 +24,22 @@ export class ClassEditAssociateComponent implements OnInit {
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
       console.log(this.currentData);
-      this.searchGrade = this.currentData.major.grade;
-      this.searchDepartment = this.currentData.major.department;
-      this.searchMajorName = this.currentData.major.majorName;
+      this.searchGrade = this.currentData.class.major.grade;
+      this.searchDepartment = this.currentData.class.major.department;
+      this.searchMajorName = this.currentData.class.major.majorName;
+      this.searchClassNumber = this.currentData.class.classNumber;
     });
   }
 
-  // searchInfo() {
-  //   this.managementService.searchMajors(this.searchGrade,
-  //     this.searchDepartment, this.searchMajorName).subscribe(data => {
-  //       this.searchMajors = data;
-  //     });
-  // }
-
-  // choseMajor(major: Major) {
-  //   this.currentData.major = major;
-  //   this.router.navigate(['/management/class/edit/0/classInfo']);
-  // }
-
+  searchInfo() {
+    this.managementService.searchClasses(this.searchGrade,
+      this.searchDepartment, this.searchMajorName, this.searchClassNumber).subscribe(data => {
+        this.searchClasses = data;
+      });
+  }
+  choseClass(data: Class) {
+    this.currentData.class = data;
+    this.currentData.major = data.major;
+    this.router.navigate(['/management/student/edit/0/studentInfo']);
+  }
 }

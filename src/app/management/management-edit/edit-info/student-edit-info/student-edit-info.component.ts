@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from 'src/app/api-client';
 
 @Component({
@@ -14,7 +14,7 @@ export class StudentEditInfoComponent implements OnInit {
   errorMessage: string;
   student: Student;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.parent.data.subscribe(data => {
@@ -27,6 +27,6 @@ export class StudentEditInfoComponent implements OnInit {
   }
 
   selectClass() {
-
+    this.router.navigate(['/management/student/edit/0/classAssociate']);
   }
 }

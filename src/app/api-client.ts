@@ -12,8 +12,8 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
-export const API_BASE_URL = new InjectionToken<string>('https://localhost:5001');
-//'https://localhost:5001/'
+export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
+
 @Injectable({
     providedIn: 'root'
 })
@@ -513,10 +513,10 @@ export class ApiClient {
      * @return Success
      */
     findTeachersByName(name: string | null): Observable<Teacher[]> {
-        let url_ = this.baseUrl + "/FindTeachersByName/{Name}";
+        let url_ = this.baseUrl + "/FindTeachersByName/{name}";
         if (name === undefined || name === null)
             throw new Error("The parameter 'name' must be defined.");
-        url_ = url_.replace("{Name}", encodeURIComponent("" + name));
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2004,6 +2004,66 @@ export class ApiClient {
      * @param body (optional) 
      * @return Success
      */
+    getClassesByClassInfo(body: ClassInfoRequestBody | undefined): Observable<Class[]> {
+        let url_ = this.baseUrl + "/GetClassesByClassInfo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetClassesByClassInfo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetClassesByClassInfo(<any>response_);
+                } catch (e) {
+                    return <Observable<Class[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Class[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetClassesByClassInfo(response: HttpResponseBase): Observable<Class[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Class.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Class[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     addStudents(body: StudentRequestBody[] | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/AddStudents";
         url_ = url_.replace(/[?&]$/, "");
@@ -2358,6 +2418,66 @@ export class ApiClient {
     }
 
     protected processGetStudentsByClassInfo(response: HttpResponseBase): Observable<Student[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Student.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Student[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    getStudentsByIds(body: number[] | null | undefined): Observable<Student[]> {
+        let url_ = this.baseUrl + "/GetStudentsByIds";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetStudentsByIds(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetStudentsByIds(<any>response_);
+                } catch (e) {
+                    return <Observable<Student[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Student[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetStudentsByIds(response: HttpResponseBase): Observable<Student[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -3843,6 +3963,66 @@ export class ApiClient {
         }
         return _observableOf<Examination[]>(<any>null);
     }
+
+    /**
+     * @param teacherName (optional) 
+     * @param password (optional) 
+     * @return Success
+     */
+    getTeacherAccountByTeacherNameAndPassword(teacherName: string | null | undefined, password: string | null | undefined, details: string): Observable<TeacherAccount> {
+        let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNameAndPassword/{details}?";
+        if (details === undefined || details === null)
+            throw new Error("The parameter 'details' must be defined.");
+        url_ = url_.replace("{details}", encodeURIComponent("" + details));
+        if (teacherName !== undefined && teacherName !== null)
+            url_ += "teacherName=" + encodeURIComponent("" + teacherName) + "&";
+        if (password !== undefined && password !== null)
+            url_ += "password=" + encodeURIComponent("" + password) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTeacherAccountByTeacherNameAndPassword(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTeacherAccountByTeacherNameAndPassword(<any>response_);
+                } catch (e) {
+                    return <Observable<TeacherAccount>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TeacherAccount>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTeacherAccountByTeacherNameAndPassword(response: HttpResponseBase): Observable<TeacherAccount> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TeacherAccount.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TeacherAccount>(<any>null);
+    }
 }
 
 export class CourseRequestBody implements ICourseRequestBody {
@@ -4521,6 +4701,54 @@ export interface IClass {
     mentor?: Teacher;
 }
 
+export class ClassInfoRequestBody implements IClassInfoRequestBody {
+    classNumber?: string | undefined;
+    department?: string | undefined;
+    grade?: string | undefined;
+    majorName?: string | undefined;
+
+    constructor(data?: IClassInfoRequestBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.classNumber = _data["classNumber"];
+            this.department = _data["department"];
+            this.grade = _data["grade"];
+            this.majorName = _data["majorName"];
+        }
+    }
+
+    static fromJS(data: any): ClassInfoRequestBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new ClassInfoRequestBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["classNumber"] = this.classNumber;
+        data["department"] = this.department;
+        data["grade"] = this.grade;
+        data["majorName"] = this.majorName;
+        return data; 
+    }
+}
+
+export interface IClassInfoRequestBody {
+    classNumber?: string | undefined;
+    department?: string | undefined;
+    grade?: string | undefined;
+    majorName?: string | undefined;
+}
+
 export class StudentRequestBody implements IStudentRequestBody {
     id!: number;
     name!: string;
@@ -4703,54 +4931,6 @@ export interface IStudent {
     bed?: string | undefined;
     classId?: number;
     class?: Class;
-}
-
-export class ClassInfoRequestBody implements IClassInfoRequestBody {
-    classNumber?: string | undefined;
-    department?: string | undefined;
-    grade?: string | undefined;
-    majorName?: string | undefined;
-
-    constructor(data?: IClassInfoRequestBody) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.classNumber = _data["classNumber"];
-            this.department = _data["department"];
-            this.grade = _data["grade"];
-            this.majorName = _data["majorName"];
-        }
-    }
-
-    static fromJS(data: any): ClassInfoRequestBody {
-        data = typeof data === 'object' ? data : {};
-        let result = new ClassInfoRequestBody();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["classNumber"] = this.classNumber;
-        data["department"] = this.department;
-        data["grade"] = this.grade;
-        data["majorName"] = this.majorName;
-        return data; 
-    }
-}
-
-export interface IClassInfoRequestBody {
-    classNumber?: string | undefined;
-    department?: string | undefined;
-    grade?: string | undefined;
-    majorName?: string | undefined;
 }
 
 export class EnrollRequestBody implements IEnrollRequestBody {
