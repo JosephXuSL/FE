@@ -1612,6 +1612,60 @@ export class ApiClient {
     }
 
     /**
+     * @return Success
+     */
+    getTeacherAccountByTeacherNm(name: string | null): Observable<TeacherAccount> {
+        let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNm/{name}";
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTeacherAccountByTeacherNm(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTeacherAccountByTeacherNm(<any>response_);
+                } catch (e) {
+                    return <Observable<TeacherAccount>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TeacherAccount>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTeacherAccountByTeacherNm(response: HttpResponseBase): Observable<TeacherAccount> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TeacherAccount.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TeacherAccount>(<any>null);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -3749,6 +3803,66 @@ export class ApiClient {
      * @param body (optional) 
      * @return Success
      */
+    importExaminations(body: ExaminationImportBody[] | null | undefined): Observable<ExaminationImportBody[]> {
+        let url_ = this.baseUrl + "/ImportExaminations";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processImportExaminations(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processImportExaminations(<any>response_);
+                } catch (e) {
+                    return <Observable<ExaminationImportBody[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ExaminationImportBody[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processImportExaminations(response: HttpResponseBase): Observable<ExaminationImportBody[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ExaminationImportBody.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ExaminationImportBody[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     removeExaminations(body: number[] | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/RemoveExaminations";
         url_ = url_.replace(/[?&]$/, "");
@@ -5387,12 +5501,11 @@ export interface ICourseSelection {
 
 export class ExaminationRequestBody implements IExaminationRequestBody {
     id!: number;
+    semester!: string;
     studentId!: number;
-    examSubject!: string;
-    examDate!: Date;
-    courseResponsibleByTeacherId?: number | undefined;
-    perormance?: string | undefined;
-    score?: number | undefined;
+    majorId!: number;
+    courseId!: number;
+    score?: number;
 
     constructor(data?: IExaminationRequestBody) {
         if (data) {
@@ -5406,11 +5519,10 @@ export class ExaminationRequestBody implements IExaminationRequestBody {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.semester = _data["semester"];
             this.studentId = _data["studentId"];
-            this.examSubject = _data["examSubject"];
-            this.examDate = _data["examDate"] ? new Date(_data["examDate"].toString()) : <any>undefined;
-            this.courseResponsibleByTeacherId = _data["courseResponsibleByTeacherId"];
-            this.perormance = _data["perormance"];
+            this.majorId = _data["majorId"];
+            this.courseId = _data["courseId"];
             this.score = _data["score"];
         }
     }
@@ -5425,11 +5537,10 @@ export class ExaminationRequestBody implements IExaminationRequestBody {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["semester"] = this.semester;
         data["studentId"] = this.studentId;
-        data["examSubject"] = this.examSubject;
-        data["examDate"] = this.examDate ? this.examDate.toISOString() : <any>undefined;
-        data["courseResponsibleByTeacherId"] = this.courseResponsibleByTeacherId;
-        data["perormance"] = this.perormance;
+        data["majorId"] = this.majorId;
+        data["courseId"] = this.courseId;
         data["score"] = this.score;
         return data; 
     }
@@ -5437,24 +5548,79 @@ export class ExaminationRequestBody implements IExaminationRequestBody {
 
 export interface IExaminationRequestBody {
     id: number;
+    semester: string;
     studentId: number;
-    examSubject: string;
-    examDate: Date;
-    courseResponsibleByTeacherId?: number | undefined;
-    perormance?: string | undefined;
-    score?: number | undefined;
+    majorId: number;
+    courseId: number;
+    score?: number;
+}
+
+export class ExaminationImportBody implements IExaminationImportBody {
+    id!: number;
+    semester!: string;
+    studentNumber!: string;
+    majorId!: number;
+    courseId!: number;
+    score?: number;
+
+    constructor(data?: IExaminationImportBody) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.semester = _data["semester"];
+            this.studentNumber = _data["studentNumber"];
+            this.majorId = _data["majorId"];
+            this.courseId = _data["courseId"];
+            this.score = _data["score"];
+        }
+    }
+
+    static fromJS(data: any): ExaminationImportBody {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExaminationImportBody();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["semester"] = this.semester;
+        data["studentNumber"] = this.studentNumber;
+        data["majorId"] = this.majorId;
+        data["courseId"] = this.courseId;
+        data["score"] = this.score;
+        return data; 
+    }
+}
+
+export interface IExaminationImportBody {
+    id: number;
+    semester: string;
+    studentNumber: string;
+    majorId: number;
+    courseId: number;
+    score?: number;
 }
 
 export class Examination implements IExamination {
     id?: number;
+    semester?: string | undefined;
+    majorId?: number;
+    major?: Major;
+    courseId?: number;
+    course?: Course;
     studentId?: number;
     student?: Student;
-    examSubject?: string | undefined;
-    examDate?: Date;
-    courseResponsibleByTeacherId?: number | undefined;
-    teacherCourseInfo?: CourseResponsibleByTeacher;
-    perormance?: string | undefined;
-    score?: number | undefined;
+    score?: number;
 
     constructor(data?: IExamination) {
         if (data) {
@@ -5468,13 +5634,13 @@ export class Examination implements IExamination {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.semester = _data["semester"];
+            this.majorId = _data["majorId"];
+            this.major = _data["major"] ? Major.fromJS(_data["major"]) : <any>undefined;
+            this.courseId = _data["courseId"];
+            this.course = _data["course"] ? Course.fromJS(_data["course"]) : <any>undefined;
             this.studentId = _data["studentId"];
             this.student = _data["student"] ? Student.fromJS(_data["student"]) : <any>undefined;
-            this.examSubject = _data["examSubject"];
-            this.examDate = _data["examDate"] ? new Date(_data["examDate"].toString()) : <any>undefined;
-            this.courseResponsibleByTeacherId = _data["courseResponsibleByTeacherId"];
-            this.teacherCourseInfo = _data["teacherCourseInfo"] ? CourseResponsibleByTeacher.fromJS(_data["teacherCourseInfo"]) : <any>undefined;
-            this.perormance = _data["perormance"];
             this.score = _data["score"];
         }
     }
@@ -5489,13 +5655,13 @@ export class Examination implements IExamination {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["semester"] = this.semester;
+        data["majorId"] = this.majorId;
+        data["major"] = this.major ? this.major.toJSON() : <any>undefined;
+        data["courseId"] = this.courseId;
+        data["course"] = this.course ? this.course.toJSON() : <any>undefined;
         data["studentId"] = this.studentId;
         data["student"] = this.student ? this.student.toJSON() : <any>undefined;
-        data["examSubject"] = this.examSubject;
-        data["examDate"] = this.examDate ? this.examDate.toISOString() : <any>undefined;
-        data["courseResponsibleByTeacherId"] = this.courseResponsibleByTeacherId;
-        data["teacherCourseInfo"] = this.teacherCourseInfo ? this.teacherCourseInfo.toJSON() : <any>undefined;
-        data["perormance"] = this.perormance;
         data["score"] = this.score;
         return data; 
     }
@@ -5503,14 +5669,14 @@ export class Examination implements IExamination {
 
 export interface IExamination {
     id?: number;
+    semester?: string | undefined;
+    majorId?: number;
+    major?: Major;
+    courseId?: number;
+    course?: Course;
     studentId?: number;
     student?: Student;
-    examSubject?: string | undefined;
-    examDate?: Date;
-    courseResponsibleByTeacherId?: number | undefined;
-    teacherCourseInfo?: CourseResponsibleByTeacher;
-    perormance?: string | undefined;
-    score?: number | undefined;
+    score?: number;
 }
 
 export class ApiException extends Error {
