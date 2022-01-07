@@ -17,7 +17,7 @@ import { MajorEditAssociateComponent } from './management-edit/edit-associate/ma
 import { TeacherEditAssociateComponent } from './management-edit/edit-associate/teacher-edit-associate/teacher-edit-associate.component';
 import { StudentEditInfoComponent } from './management-edit/edit-info/student-edit-info/student-edit-info.component';
 import { ClassEditAssociateComponent } from './management-edit/edit-associate/class-edit-associate/class-edit-associate.component';
-import { ScoreImportInfoComponent } from './management-edit/edit-info/score-import-info/score-import-info.component';
+import { ScoreImportInfoComponent } from './management-edit/edit-info/score-edit-info/score-import-info.component';
 import { CourseEditAssociateComponent } from './management-edit/edit-associate/course-edit-associate/course-edit-associate.component';
 
 

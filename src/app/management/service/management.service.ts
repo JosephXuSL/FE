@@ -151,6 +151,8 @@ export class ManagementService {
         return this.addClass(info);
       case 'student':
         return this.addStudent(info);
+      case 'score':
+        return this.addScores(info);
     }
   }
 
@@ -182,6 +184,10 @@ export class ManagementService {
     const saveData = [];
     saveData.push(ManagementServiceMapper.mapStudentOutput(data));
     return this.apiClient.addStudents(saveData);
+  }
+
+  addScores(data: Score[]): Observable<any> {
+    return this.apiClient.importExaminations(ManagementServiceMapper.mapScoreListOutput(data));
   }
 
   // saveInfo(business: string, info: any): Observable<any> {

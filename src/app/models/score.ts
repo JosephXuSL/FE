@@ -21,10 +21,12 @@ export class Score {
 }
 
 export class StudentNumberAndScore {
+    id: number;
     studentNumber: string;
     score: number;
 
     constructor() {
+        this.id = 0;
         this.studentNumber = null;
         this.score = 0;
     }

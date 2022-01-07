@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { Course } from 'src/app/models/course';
 import { Major } from 'src/app/models/major';
+import { Score, StudentNumberAndScore } from 'src/app/models/score';
 
 import { businessList, Business } from '../../models/business';
 import { ManagementService } from '../service/management.service';
@@ -17,7 +19,24 @@ export class ManagementEditComponent implements OnInit {
   business: Business;
   info: any;
   isBasicInformationPage: boolean;
+
+  columnDefs: ColDef[] = [
+    {
+      lockPosition: true,
+      headerName: '序号',
+      field: 'id',
+      cellClass: 'locked-col',
+      width: 60,
+      suppressNavigable: true
+    },
+    {headerName: '学号', field: 'studentNumber', lockPosition: true, editable: true},
+    {headerName: '分数', field: 'score', lockPosition: true, editable: true,  valueParser: this.numberParser}
+  ];
+  rowData = [];
+  count = 0 ;
   private dataIsValid: { [key: string]: boolean } = {};
+  private gridApi: GridApi;
+  private gridColumnApi: ColumnApi;
 
   get isDirty(): boolean {
     return JSON.stringify(this.originalInfo) !== JSON.stringify(this.currentInfo);
@@ -130,6 +149,16 @@ export class ManagementEditComponent implements OnInit {
           this.validateAssociateTab(a.name);
         });
         return;
+      case 'score':
+        if (this.info.semester && this.info.course.id > 0 && this.info.major.id > 0 ) {
+          this.dataIsValid[this.business.subTab] = true;
+        } else {
+          this.dataIsValid[this.business.subTab] = false;
+        }
+        this.business.subAssociateTab.forEach(a => {
+          this.validateAssociateTab(a.name);
+        });
+        return;
     }
   }
 
@@ -156,6 +185,13 @@ export class ManagementEditComponent implements OnInit {
           this.dataIsValid[tab] = false;
         }
         return;
+        case 'courseAssociate':
+          if (this.info.course.id > 0) {
+            this.dataIsValid[tab] = true;
+          } else {
+            this.dataIsValid[tab] = false;
+          }
+          return;
     }
   }
 
@@ -189,5 +225,55 @@ export class ManagementEditComponent implements OnInit {
     this.dataIsValid = null;
     this.currentInfo = null;
     this.originalInfo = null;
+  }
+
+  numberParser(params) {
+    return Number(params.newValue);
+  }
+
+  generateTable() {
+    this.rowData = [];
+    for (let i = 0; i < this.count; i++) {
+      const data = new StudentNumberAndScore();
+      data.id = i + 1;
+      this.rowData.push(data);
+    }
+    this.gridApi.setRowData(this.rowData);
+    this.gridApi.sizeColumnsToFit();
+  }
+
+  importInfo() {
+    if (this.rowData.find(d => !d.studentNumber)) {
+      if (!confirm('数据中有学号为空项， 继续保存将从数据中移除')) {
+          return;
+          }
+      const scoreList = [];
+      for (const data of this.rowData) {
+        if (data.studentNumber) {
+          const scoreData = new Score();
+          scoreData.major = this.info.major;
+          scoreData.semester = this.info.semester;
+          scoreData.course = this.info.course;
+          scoreData.student.studentNumber = data.studentNumber;
+          scoreData.score = data.score;
+          scoreList.push(scoreData);
+        }
+      }
+      this.managementService.addInfo(this.business.name, this.info).subscribe({
+        next: () => this.onSaveComplete(`The new ${this.info.majorName} was saved`)
+      });
+    }
+  }
+
+  onCellValueChanged(event) {
+    const updateDate = this.rowData.find(d => d.id === event.data.id);
+    updateDate.studentNumber = event.data.studentNumber;
+    updateDate.score = event.data.score;
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
   }
 }

@@ -43,7 +43,7 @@ export class ManagementComponent implements OnInit {
     if (this.business.name === 'information') {
       this.isBasicInformation = true;
       if (this.logInUserNm) {
-        if (this.logInUserNm != 'admin') {
+        if (this.logInUserNm !== 'admin') {
           this.getTeacherAccountInfo(this.logInUserNm);
         } else {
           this.isadmin = true;
@@ -61,6 +61,10 @@ export class ManagementComponent implements OnInit {
     this.activatedRoute.data.subscribe(data => {
       this.rowData = data.listResolvedData;
     });
+  }
+
+  onRowDoubleClicked(params)  {
+    console.log(params.data);
   }
 
   onGridReady(params) {

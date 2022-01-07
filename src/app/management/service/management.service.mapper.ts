@@ -129,6 +129,12 @@ export class ManagementServiceMapper {
         return input;
     }
 
+    static mapScoreListOutput(data: Score[]): ExaminationImportBody[] {
+        const output = [];
+        data.forEach(d => output.push(this.mapScoreOutput(d)));
+        return output;
+    }
+
     static mapScoreOutput(data: Score): ExaminationImportBody {
         const output = new ExaminationImportBody();
         output.id = data.id;

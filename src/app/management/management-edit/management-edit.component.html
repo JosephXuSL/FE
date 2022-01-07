@@ -6,21 +6,64 @@
     <div class="card-body"
          *ngIf="info">
       <div class="wizard">
-        <a [routerLink]="[this.business.subTab]"
+        <a [routerLink]="[business.subTab]"
            routerLinkActive="active">
-          基础信息 <span [ngClass]="{'fa fa-exclamation': !isValid(this.business.subTab)}"></span>
+          基础信息 <span [ngClass]="{'fa fa-exclamation': !isValid(business.subTab)}"></span>
         </a>
-        <a *ngFor="let associate of this.business.subAssociateTab" [routerLink]="[associate.name]"
+        <a *ngFor="let associate of business.subAssociateTab" [routerLink]="[associate.name]"
          routerLinkActive="active">
         {{associate.nameforShow}} <span [ngClass]="{'fa fa-exclamation': !isValid(associate.name)}"></span>
       </a>     
       </div>
 
       <router-outlet></router-outlet>
-  
-      <div class="row mb-2" *ngIf="this.business.name!='score'">
-        <div class="col-md-4">
+
+      <div class="card-body" *ngIf="business.name =='score' && info.id === 0">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="nId">导入条数</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="nId"
+                   type="number"
+                   [(ngModel)]=count
+                   name="name" />
+          </div>
           <button class="btn btn-primary mr-3"
+                  style="width:100px"
+                  type="button"
+                  title="初始化导入信息"
+                  [disabled]=" !(count > 0 && info.semester && info.major.id > 0  && info.course.id >0) "
+                  (click)="generateTable()">
+            添加成绩
+          </button>
+        </div>
+        
+        <ag-grid-angular style="width: 500px; height: 500px;"
+                         #agGrid
+                         class="ag-theme-alpine"
+                         [rowData]="rowData"
+                         [columnDefs]="columnDefs"
+                         [singleClickEdit]="true"
+                         (cellValueChanged)="onCellValueChanged($event)"
+                         (gridReady)="onGridReady($event)">
+        </ag-grid-angular>    
+        
+      </div>
+  
+      <div class="row mb-2">
+        <div class="col-md-4">
+          <button *ngIf="business.name =='score' && info.id === 0"
+                  class="btn btn-primary mr-3"
+                  style="width:80px"
+                  type="button"
+                  title="Save your entered data"
+                  [disabled]="rowData.length == 0"
+                  (click)="importInfo()">
+            导入
+          </button>
+          <button *ngIf="!(business.name =='score' && info.id === 0)"
+                  class="btn btn-primary mr-3"
                   style="width:80px"
                   type="button"
                   title="Save your entered data"
@@ -32,9 +75,9 @@
                   style="width:80px"
                   type="button"
                   title="Cancel your edits"
-                  [routerLink]="['/management', this.business.name]">
+                  [routerLink]="['/management', business.name]">
             取消
-          </button>          
+          </button>
         </div>
       </div>
     </div>

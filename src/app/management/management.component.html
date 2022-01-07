@@ -15,10 +15,16 @@
         </div>
     </div>
 
-    <div class="card-body" *ngIf="!isBasicInformation ">
-        <ag-grid-angular style="width: 500px; height: 500px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)">
+    <div class="card-body"
+         *ngIf="!isBasicInformation ">
+        <ag-grid-angular style="width: 500px; height: 500px;"
+                         class="ag-theme-alpine"
+                         [rowData]="rowData"
+                         [columnDefs]="columnDefs"
+                         (rowDoubleClicked)="onRowDoubleClicked($event)"
+                         (gridReady)="onGridReady($event)">
         </ag-grid-angular>
-
+    
     </div>
     <div class="card-body " *ngIf="isBasicInformation ">
         <div class="form-group row ">

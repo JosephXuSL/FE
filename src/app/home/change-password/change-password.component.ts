@@ -30,27 +30,26 @@ export class ChangePasswordComponent implements OnInit {
     if (this.passwordNum && this.accountName) {
       this.showerror = false;
 
-      //const password = loginForm.form.value.password;
+      // const password = loginForm.form.value.password;
 
       if (this.managementService.updateTeacherAccountPassword(this.accountName, this.passwordNum)) {
 
         this.AddErrorMessage();
-      }
-      else {
+      } else {
         this.AddSuccessMessage();
       }
     }
   }
   ResetErrorMessage(): void {
     this.showerror = false;
-    this.errorMessage = ''
+    this.errorMessage = '';
   }
   AddErrorMessage(): void {
     this.showerror = true;
-    this.errorMessage = 'Please enter a valid password.'
+    this.errorMessage = 'Please enter a valid password.';
   }
   AddSuccessMessage(): void {
     this.showerror = true;
-    this.errorMessage = '密码已修改成功！'
+    this.errorMessage = '密码已修改成功！';
   }
 }

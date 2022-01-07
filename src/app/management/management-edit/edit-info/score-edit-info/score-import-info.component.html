@@ -1,0 +1,126 @@
+<div class="card-body">
+    <form novalidate
+          #scoreForm="ngForm">
+        <fieldset>
+            <legend>成绩信息</legend>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"
+                       for="semesterId">学年</label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                           id="semesterId"
+                           type="text"
+                           placeholder="（必填）"
+                           required
+                           [(ngModel)]=score.semester
+                           name="semester"
+                           #semesterVar="ngModel"
+                           [ngClass]="{'is-invalid': (semesterVar.touched || 
+                                                    semesterVar.dirty ||
+                                                      score.id !== 0) && 
+                                                      !semesterVar.valid }" />
+                    <span class="invalid-feedback">
+                        <span *ngIf="semesterVar.errors?.required">
+                            班级不能为空.
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"
+                       for="majorId">专业</label>
+                <div class="col-md-8"
+                     (click)="selectMajor()">
+                    <input class="form-control"
+                           disabled
+                           id="majorId"
+                           type="text"
+                           placeholder="（前往选择）"
+                           required
+                           [(ngModel)]=score.major.majorName
+                           name="major"
+                           #majorVar="ngModel"
+                           [ngClass]="{'is-invalid': (majorVar.touched || 
+                                                    majorVar.dirty ||
+                                                    score.id !== 0) &&
+                                                    !majorVar.valid }" />
+                    <span class="invalid-feedback">
+                        <span *ngIf="majorVar.errors?.required">
+                            请选择专业.
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label"
+                       for="courseId">课程</label>
+                <div class="col-md-8"
+                     (click)="selectCourse()">
+                    <input class="form-control"
+                           disabled
+                           id="courseId"
+                           type="text"
+                           placeholder="（前往选择）"
+                           required
+                           [(ngModel)]=score.course.courseName
+                           name="courseName"
+                           #courseNameVar="ngModel"
+                           [ngClass]="{'is-invalid': (courseNameVar.touched || 
+                                                    courseNameVar.dirty ||
+                                                    score.id !== 0) &&
+                                                    !courseNameVar.valid }" />
+                    <span class="invalid-feedback">
+                        <span *ngIf="courseNameVar.errors?.required">
+                            请选择课程.
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div *ngIf="score.id!==0">
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label"
+                           for="studentId">学生</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               disabled
+                               id="studentId"
+                               type="text"
+                               [(ngModel)]=score.student.name
+                               name="studentName" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label"
+                           for="scoreId">成绩</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="scoreId"
+                               type="number"
+                               required
+                               [(ngModel)]=score.score
+                               name="score"
+                               #scoreVar="ngModel"
+                               [ngClass]="{'is-invalid': (scoreVar.touched || 
+                                                                scoreVar.dirty ||
+                                                                  score.id !== 0) && 
+                                                                  !scoreVar.valid }" />
+                        <span class="invalid-feedback">
+                            <span *ngIf="scoreVar.errors?.required">
+                                成绩不能为空.
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div class='alert alert-danger'
+     *ngIf='errorMessage'>{{errorMessage}}
+</div>
