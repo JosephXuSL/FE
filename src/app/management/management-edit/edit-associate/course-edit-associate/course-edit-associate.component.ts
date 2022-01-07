@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ManagementService } from 'src/app/management/service/management.service';
 import { Business, businessList } from 'src/app/models/business';
-import { Teacher } from 'src/app/models/teacher';
+import { Course } from 'src/app/models/course';
 
 @Component({
-  selector: 'pm-teacher-edit-associate',
-  templateUrl: './teacher-edit-associate.component.html',
-  styleUrls: ['./teacher-edit-associate.component.css']
+  selector: 'pm-course-edit-associate',
+  templateUrl: './course-edit-associate.component.html',
+  styleUrls: ['./course-edit-associate.component.css']
 })
-export class TeacherEditAssociateComponent implements OnInit {
-  searchName: string;
-  searchTeachers: Teacher[];
+export class CourseEditAssociateComponent implements OnInit {
+  searchCourseName: string;
+  searchCourses: Course[];
   currentData: any;
   business: Business;
 
@@ -22,21 +22,22 @@ export class TeacherEditAssociateComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
-      this.searchName = this.currentData.mentor.name;
+      this.searchCourseName = this.currentData.course.courseName;
     });
     this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
   }
 
   searchInfo() {
-    this.managementService.searchTeachers(this.searchName).subscribe(data => {
-        this.searchTeachers = data;
+    this.managementService.searchCourses(this.searchCourseName).subscribe(data => {
+        this.searchCourses = data;
       });
   }
 
-  choseData(teacher: Teacher) {
-    this.currentData.mentor = teacher;
+  choseCourse(course: Course) {
+    this.currentData.course = course;
     this.router.navigate(['/management', this.business.name, 'edit',
     this.currentData.id, this.business.subTab]);
   }
+
 
 }

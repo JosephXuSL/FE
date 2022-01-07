@@ -4,9 +4,10 @@ import { catchError, map } from 'rxjs/operators';
 import { Business } from 'src/app/models/business';
 import { Class } from 'src/app/models/class';
 import { Course } from 'src/app/models/course';
+import { Score } from 'src/app/models/score';
 import { Student } from 'src/app/models/student';
 import { Teacher } from 'src/app/models/teacher';
-import { ApiClient, ClassInfoRequestBody, GetMajorRequestBody} from '../../api-client';
+import { ApiClient, ClassInfoRequestBody, GetMajorRequestBody, TeacherAccount } from '../../api-client';
 import { Major } from '../../models/major';
 import { ManagementServiceMapper } from './management.service.mapper';
 
@@ -26,6 +27,8 @@ export class ManagementService {
         return this.getAllClasses();
       case 'student':
         return this.getAllStudents();
+      case 'score':
+        return this.getAllScore();
     }
   }
 
@@ -65,6 +68,14 @@ export class ManagementService {
     return this.apiClient.getAllStudents().pipe(map(data => {
       return data.map(d => {
         return ManagementServiceMapper.mapStudentInput(d);
+      });
+    }));
+  }
+
+  getAllScore(): Observable<Score[]> {
+    return this.apiClient.getAllExaminations().pipe(map(data => {
+      return data.map(d => {
+        return ManagementServiceMapper.mapScoreInput(d);
       });
     }));
   }
@@ -243,6 +254,14 @@ export class ManagementService {
     }));
   }
 
+  searchCourses(name: string): Observable<Course[]> {
+    return this.apiClient.getCoursesByCourseName(name).pipe(map(data => {
+      return data.map(d => {
+        return ManagementServiceMapper.mapCourseInput(d);
+      });
+    }));
+  }
+
   private handleError(err) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
@@ -271,7 +290,33 @@ export class ManagementService {
         return new Class();
       case 'student':
         return new Student();
+      case 'score':
+        return new Score();
     }
+  }
+  searchTeacherAccountByName(name: string): Observable<TeacherAccount> {
+
+    return this.apiClient
+
+      .getTeacherAccountByTeacherNm(name)
+
+      .pipe(map((res: TeacherAccount) => ManagementServiceMapper.mapTeacherAccountInput(res)));
+
+  }
+
+  public updateTeacherAccountPassword(name: string, passWord: string): boolean {
+    let isscuess: boolean;
+    this.apiClient
+      .updateTeacherAccountPassWord(name, passWord, 'details')
+      .subscribe(t => {
+        if (t) {
+          isscuess = true;
+        } else {
+          isscuess = false;
+        }
+      });
+    return isscuess;
+
   }
 
 

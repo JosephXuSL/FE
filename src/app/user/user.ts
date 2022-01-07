@@ -1,6 +1,8 @@
 /* Defines the user entity */
 export interface User {
-  id: number;
+  id?: number;
   userName: string;
   isAdmin: boolean;
+  isMentor?: boolean;
+  status?: string;
 }

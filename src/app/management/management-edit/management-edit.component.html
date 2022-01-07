@@ -18,7 +18,7 @@
 
       <router-outlet></router-outlet>
   
-      <div class="row mb-2">
+      <div class="row mb-2" *ngIf="this.business.name!='score'">
         <div class="col-md-4">
           <button class="btn btn-primary mr-3"
                   style="width:80px"
@@ -26,14 +26,14 @@
                   title="Save your entered data"
                   [disabled]="!isValid()"
                   (click)="saveInfo()">
-            Save
+            保存
           </button>
           <button class="btn btn-outline-secondary mr-3"
                   style="width:80px"
                   type="button"
                   title="Cancel your edits"
                   [routerLink]="['/management', this.business.name]">
-            Cancel
+            取消
           </button>          
         </div>
       </div>

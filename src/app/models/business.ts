@@ -18,6 +18,22 @@ export interface SubAssociateTab {
 
 export const businessList: Business[] = [
     {
+        name: 'information',
+        nameForShow: '基本信息',
+        subTab: 'informationInfo',
+        subAssociateTab: null,
+        gridHeader: [
+            {
+                headerName: '课程',
+                field: 'courseName'
+            },
+            {
+                headerName: '教材',
+                field: 'textbook'
+            }
+        ]
+    },
+    {
         name: 'course',
         nameForShow: '课程',
         subTab: 'courseInfo',
@@ -190,6 +206,43 @@ export const businessList: Business[] = [
                 field: 'class.classNumber'
             }
 
+        ]
+    },
+    {
+        name: 'score',
+        nameForShow: '成绩',
+        subTab: 'scoreInfo',
+        subAssociateTab: [
+            {
+                name: 'majorAssociate',
+                nameforShow: '选择专业'
+            },
+            {
+                name: 'courseAssociate',
+                nameforShow: '选择学科'
+            }
+        ],
+        gridHeader: [
+            {
+                headerName: '姓名',
+                field: 'student.name'
+            },
+            {
+                headerName: '学科',
+                field: 'course.courseName'
+            },
+            {
+                headerName: '分数',
+                field: 'score'
+            },
+            {
+                headerName: '专业',
+                field: 'major.majorName'
+            },
+            {
+                headerName: '学年',
+                field: 'semester'
+            }
         ]
     }
 ];

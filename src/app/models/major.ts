@@ -11,8 +11,3 @@ export class Major {
         this.majorName = null;
     }
 }
-
-export interface MajorResolved {
-    major: Major;
-    error?: any;
-}

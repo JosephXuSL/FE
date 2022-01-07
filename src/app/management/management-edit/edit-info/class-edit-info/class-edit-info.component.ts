@@ -24,14 +24,16 @@ export class ClassEditInfoComponent implements OnInit {
 
       this.class = data['infoResolvedData'].data;
     });
+
+    console.log(this.activatedRoute.snapshot.parent.paramMap.get('id'));
   }
 
   selectMajor() {
-    this.router.navigate(['/management/class/edit/0/majorAssociate']);
+    this.router.navigate(['/management/class/edit', this.activatedRoute.snapshot.parent.paramMap.get('id'), 'majorAssociate']);
   }
 
   selectTeacher() {
-    this.router.navigate(['/management/class/edit/0/teacherAssociate']);
+    this.router.navigate(['/management/class/edit', this.activatedRoute.snapshot.parent.paramMap.get('id'), 'teacherAssociate']);
   }
 
 }

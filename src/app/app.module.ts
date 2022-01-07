@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ChangePasswordComponent } from './home/change-password/change-password.component';
+
 
 // Imports for loading & configuring the in-memory web api
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -24,12 +27,14 @@ import { MessageModule } from './messages/message.module';
     // InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
     UserModule,
     MessageModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
     WelcomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ChangePasswordComponent
   ],
   bootstrap: [AppComponent]
 })

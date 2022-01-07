@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { ChangePasswordComponent } from './home/change-password/change-password.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthGuard } from './user/auth.guard';
@@ -10,7 +10,13 @@ import { SelectiveStrategy } from './selective-strategy.service';
   imports: [
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
+      {
+        path: 'changePassword',
+        canActivate: [AuthGuard],
+        component: ChangePasswordComponent
+      },
       { path: 'management',
+      canActivate: [AuthGuard],
       loadChildren: () =>
       import('./management/management.module').then(m => m.ManagementModule)
       },

@@ -10,24 +10,23 @@ import { AuthService } from './auth.service';
 export class LoginComponent {
   errorMessage: string;
   pageTitle = 'Log In';
+  public showerror = false;
+  constructor(private authService: AuthService) { }
 
-  constructor(private authService: AuthService,
-              private router: Router) { }
-
-  login(loginForm: NgForm) {
+  login(loginForm: NgForm): void {
     if (loginForm && loginForm.valid) {
+      this.showerror = false;
       const userName = loginForm.form.value.userName;
       const password = loginForm.form.value.password;
-      this.authService.login(userName, password);
-      sessionStorage.setItem( 'user', userName );
-      // Navigate to the Product List page after log in.
-      if (this.authService.redirectUrl) {
-        this.router.navigateByUrl(this.authService.redirectUrl);
-      } else {
-        this.router.navigate(['/products']);
-      }
-    } else {
-      this.errorMessage = 'Please enter a user name and password.';
+      this.authService.login(userName, password).subscribe(t => {
+        if (!t) {
+          this.AddErrorMessage();
+        }
+      });
     }
+  }
+  AddErrorMessage(): void {
+    this.showerror = true;
+    this.errorMessage = '请检查用户名和密码是否正确.';
   }
 }

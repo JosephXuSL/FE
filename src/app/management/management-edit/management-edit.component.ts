@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/models/course';
-import { Major} from 'src/app/models/major';
+import { Major } from 'src/app/models/major';
 
 import { businessList, Business } from '../../models/business';
 import { ManagementService } from '../service/management.service';
@@ -16,7 +16,7 @@ export class ManagementEditComponent implements OnInit {
   errorMessage = '';
   business: Business;
   info: any;
-
+  isBasicInformationPage: boolean;
   private dataIsValid: { [key: string]: boolean } = {};
 
   get isDirty(): boolean {
@@ -48,6 +48,7 @@ export class ManagementEditComponent implements OnInit {
       this.errorMessage = infoResolvedData.error;
       this.onInfoRetrieved(infoResolvedData.data);
     });
+    this.isBasicInformationPage = this.business.name === 'information';
   }
 
   onInfoRetrieved(data: any): void {
@@ -97,7 +98,7 @@ export class ManagementEditComponent implements OnInit {
           this.dataIsValid[this.business.subTab] = false;
         }
         return;
-       case 'teacher':
+      case 'teacher':
         if (this.info.name &&
           this.info.teacherNumber) {
           this.dataIsValid[this.business.subTab] = true;
@@ -148,13 +149,13 @@ export class ManagementEditComponent implements OnInit {
           this.dataIsValid[tab] = false;
         }
         return;
-        case 'classAssociate':
-          if (this.info.class.id > 0) {
-            this.dataIsValid[tab] = true;
-          } else {
-            this.dataIsValid[tab] = false;
-          }
-          return;
+      case 'classAssociate':
+        if (this.info.class.id > 0) {
+          this.dataIsValid[tab] = true;
+        } else {
+          this.dataIsValid[tab] = false;
+        }
+        return;
     }
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ManagementService } from 'src/app/management/service/management.service';
+import { Business, businessList } from 'src/app/models/business';
 import { Class } from 'src/app/models/class';
 
 @Component({
@@ -15,6 +16,7 @@ export class ClassEditAssociateComponent implements OnInit {
   searchClassNumber: string;
   searchClasses: Class[];
   currentData: any;
+  business: Business;
 
   constructor(private managementService: ManagementService,
               private activatedRoute: ActivatedRoute,
@@ -23,12 +25,12 @@ export class ClassEditAssociateComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
-      console.log(this.currentData);
       this.searchGrade = this.currentData.class.major.grade;
       this.searchDepartment = this.currentData.class.major.department;
       this.searchMajorName = this.currentData.class.major.majorName;
       this.searchClassNumber = this.currentData.class.classNumber;
     });
+    this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
   }
 
   searchInfo() {
@@ -40,6 +42,7 @@ export class ClassEditAssociateComponent implements OnInit {
   choseClass(data: Class) {
     this.currentData.class = data;
     this.currentData.major = data.major;
-    this.router.navigate(['/management/student/edit/0/studentInfo']);
+    this.router.navigate(['/management', this.business.name, 'edit',
+    this.currentData.id, this.business.subTab]);
   }
 }

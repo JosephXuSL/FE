@@ -1,0 +1,134 @@
+<div class="card-body">
+    <form novalidate
+          #scoreForm="ngForm">
+      <fieldset>
+        <legend>成绩信息</legend>
+  
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="semesterId">学年</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="semesterId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=score.semester
+                       name="semester"
+                       #semesterVar="ngModel"
+                       [ngClass]="{'is-invalid': (semesterVar.touched || 
+                                                    semesterVar.dirty ||
+                                                      score.id !== 0) && 
+                                                      !semesterVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="semesterVar.errors?.required">
+                        班级不能为空.
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="majorId">专业</label>
+            <div class="col-md-8" (click)= "selectMajor()">
+                <input class="form-control"
+                       disabled
+                       id="majorId"
+                       type="text"
+                       placeholder="（前往选择）"
+                       required
+                       [(ngModel)]=score.major.majorName
+                       name="major"
+                       #majorVar="ngModel"
+                       [ngClass]="{'is-invalid': (majorVar.touched || 
+                                                    majorVar.dirty ||
+                                                    score.id !== 0) &&
+                                                    !majorVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="majorVar.errors?.required">
+                        请选择专业.
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="courseId">课程</label>
+            <div class="col-md-8" (click)= "selectCourse()">
+                <input class="form-control"
+                       disabled
+                       id="courseId"
+                       type="text"
+                       placeholder="（前往选择）"
+                       required
+                       [(ngModel)]=score.course.courseName
+                       name="courseName"
+                       #courseNameVar="ngModel"
+                       [ngClass]="{'is-invalid': (courseNameVar.touched || 
+                                                    courseNameVar.dirty ||
+                                                    score.id !== 0) &&
+                                                    !courseNameVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="courseNameVar.errors?.required">
+                        请选择课程.
+                    </span>
+                </span>
+            </div>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="form-group row">
+        <label class="col-md-2 col-form-label"
+               for="nId">导入条数</label>
+        <div class="col-md-8">
+            <input class="form-control"
+                   id="nId"
+                   type="number"
+                   [(ngModel)]=count
+                   name="name" />
+        </div>
+        <button class="btn btn-primary mr-3"
+                style="width:100px"
+                type="button"
+                title="初始化导入信息"
+                [disabled]="this.count < 1"
+                (click)="generateTable()">
+            添加成绩
+        </button>
+    </div>
+    <ag-grid-angular style="width: 500px; height: 500px;"
+                        #agGrid
+                       class="ag-theme-alpine"
+                       [rowData]="rowData"
+                       [columnDefs]="columnDefs"
+                       [singleClickEdit]="true"
+                       (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-4">
+      <button class="btn btn-primary mr-3"
+              style="width:80px"
+              type="button"
+              title="Save your entered data"
+              [disabled]="this.rowData.length == 0"
+              (click)="saveInfo()">
+        导入
+      </button>
+      <button class="btn btn-outline-secondary mr-3"
+              style="width:80px"
+              type="button"
+              title="Cancel your edits"
+              [routerLink]="['/management/score']">
+        取消
+      </button>          
+    </div>
+  </div>
+  <div class='alert alert-danger'
+       *ngIf='errorMessage'>{{errorMessage}}
+  </div>

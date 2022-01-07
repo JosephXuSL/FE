@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ManagementService } from 'src/app/management/service/management.service';
+import { Business, businessList } from 'src/app/models/business';
 import { Major } from 'src/app/models/major';
 
 @Component({
@@ -14,6 +15,7 @@ export class MajorEditAssociateComponent implements OnInit {
   searchMajorName: string;
   searchMajors: Major[];
   currentData: any;
+  business: Business;
 
   constructor(private managementService: ManagementService,
               private activatedRoute: ActivatedRoute,
@@ -22,11 +24,11 @@ export class MajorEditAssociateComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
-      console.log(this.currentData);
       this.searchGrade = this.currentData.major.grade;
       this.searchDepartment = this.currentData.major.department;
       this.searchMajorName = this.currentData.major.majorName;
     });
+    this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
   }
 
   searchInfo() {
@@ -38,6 +40,7 @@ export class MajorEditAssociateComponent implements OnInit {
 
   choseMajor(major: Major) {
     this.currentData.major = major;
-    this.router.navigate(['/management/class/edit/0/classInfo']);
+    this.router.navigate(['/management', this.business.name, 'edit',
+    this.currentData.id, this.business.subTab]);
   }
 }

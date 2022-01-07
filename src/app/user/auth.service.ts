@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-
+import { Observable, of } from 'rxjs';
+import { ApiClient, GetMajorRequestBody, TeacherAccount } from '../api-client';
+import { map } from 'rxjs/operators';
+import { ManagementServiceMapper } from '../management/service/management.service.mapper';
+import { Router } from '@angular/router';
 import { User } from './user';
 import { MessageService } from '../messages/message.service';
 
@@ -14,9 +18,9 @@ export class AuthService {
     return !!this.currentUser;
   }
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService, private apiClient: ApiClient, private router: Router) { }
 
-  login(userName: string, password: string): void {
+  public login(userName: string, password: string): Observable<boolean> {
     if (userName === 'admin' && password === 'admin') {
       this.currentUser = {
         id: 1,
@@ -24,22 +28,44 @@ export class AuthService {
         isAdmin: true
       };
       this.messageService.addMessage('Admin login');
-      return;
+      if (this.redirectUrl) {
+        this.router.navigateByUrl(this.redirectUrl);
+      } else {
+        this.router.navigate(['/products']);
+      }
+      sessionStorage.setItem('user', userName);
+      return of(true);
     }
+    return this.searchAccount(userName, password).pipe(map(res => {
+      if (res && res.id) {
+        this.currentUser = {
+          id: res.id,
+          isMentor: res.isMentorAccount,
+          status: res.accountStatus,
+          userName: userName,
+          isAdmin: false
+        };
+        this.messageService.addMessage('login Success!');
+        if (this.redirectUrl) {
+          this.router.navigateByUrl(this.redirectUrl);
+        } else {
+          this.router.navigate(['/products']);
+        }
+        sessionStorage.setItem('user', userName);
+        return true;
+      } else {
+        this.messageService.addMessage('Please enter your correct userName and password');
+        return false;
+      }
 
-    if (userName !== password) {
-      this.messageService.addMessage('Please enter your correct userName and password');
-      return;
-    }
-    // this.currentUser = {
-    //   id: 2,
-    //   userName: userName,
-    //   isAdmin: false
-    // };
-    this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
+    }));
   }
-
   logout(): void {
     this.currentUser = null;
+  }
+  public searchAccount(accountName: string, password: string): Observable<TeacherAccount> {
+    return this.apiClient
+    .getTeacherAccountByTeacherNameAndPassword(accountName, password, 'details')
+    .pipe(map((res: TeacherAccount) => ManagementServiceMapper.mapTeacherAccountInput(res)));
   }
 }

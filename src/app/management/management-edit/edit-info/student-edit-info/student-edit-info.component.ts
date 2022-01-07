@@ -27,6 +27,6 @@ export class StudentEditInfoComponent implements OnInit {
   }
 
   selectClass() {
-    this.router.navigate(['/management/student/edit/0/classAssociate']);
+    this.router.navigate(['/management/student/edit', this.activatedRoute.snapshot.parent.paramMap.get('id'), 'classAssociate']);
   }
 }

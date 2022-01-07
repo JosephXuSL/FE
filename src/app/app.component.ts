@@ -16,11 +16,16 @@ export class AppComponent {
   pageTitle = '后台管理';
   loading = true;
   businessList = businessList;
+  username: string;
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
   }
 
+  get isLoggedInSession(): boolean {
+    this.username = sessionStorage.getItem('user');
+    return sessionStorage.getItem('user') && sessionStorage.getItem('user').length > 0;
+  }
   get isMessageDisplayed(): boolean {
     return this.messageService.isDisplayed;
   }
@@ -32,9 +37,10 @@ export class AppComponent {
     return '';
   }
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private messageService: MessageService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService) {
     router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
     });
@@ -46,8 +52,8 @@ export class AppComponent {
     }
 
     if (routerEvent instanceof NavigationEnd ||
-        routerEvent instanceof NavigationCancel ||
-        routerEvent instanceof NavigationError) {
+      routerEvent instanceof NavigationCancel ||
+      routerEvent instanceof NavigationError) {
       this.loading = false;
     }
   }
@@ -65,5 +71,6 @@ export class AppComponent {
   logOut(): void {
     this.authService.logout();
     this.router.navigateByUrl('/welcome');
+    sessionStorage.removeItem('user');
   }
 }

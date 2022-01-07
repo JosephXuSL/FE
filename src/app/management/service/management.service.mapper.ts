@@ -1,13 +1,15 @@
 import {
     Class as ClientClass, ClassRequestBody,
     Course as ClientCourse, CourseRequestBody,
+    Examination, ExaminationImportBody,
     Major as ClientMajor, MajorRequestBody,
     Student as ClientStudent, StudentRequestBody,
-    Teacher as ClientTeacher, TeacherRequestBody
+    Teacher as ClientTeacher, TeacherAccount, TeacherRequestBody
 } from 'src/app/api-client';
 import { Class } from 'src/app/models/class';
 import { Course } from 'src/app/models/course';
 import { Major } from 'src/app/models/major';
+import { Score } from 'src/app/models/score';
 import { Student } from 'src/app/models/student';
 import { Teacher } from 'src/app/models/teacher';
 
@@ -85,7 +87,7 @@ export class ManagementServiceMapper {
         input.id = data.id;
         input.classNumber = data.classNumber;
         input.major = this.mapMajorInput(data.major);
-        input.mentor = this.mapTeacherInput(data.mentor) ;
+        input.mentor = this.mapTeacherInput(data.mentor);
         return input;
     }
 
@@ -124,6 +126,40 @@ export class ManagementServiceMapper {
         input.chamber = data.chamber;
         input.bed = data.bed;
         input.class = this.mapClassInput(data.class);
+        return input;
+    }
+
+    static mapScoreOutput(data: Score): ExaminationImportBody {
+        const output = new ExaminationImportBody();
+        output.id = data.id;
+        output.semester = data.semester;
+        output.score = data.score;
+        output.majorId = data.major.id;
+        output.studentNumber = data.student.studentNumber;
+        output.courseId = data.course.id;
+        return output;
+    }
+
+    static mapScoreInput(data: Examination): Score {
+        const input = new Score();
+        input.id = data.id;
+        input.major = this.mapMajorInput(data.major);
+        input.course = this.mapCourseInput(data.course);
+        input.score = data.score;
+        input.semester = data.semester;
+        input.student = this.mapStudentInput(data.student);
+        return input;
+    }
+    static mapTeacherAccountInput(teacherAccount: TeacherAccount): TeacherAccount {
+        const input = new TeacherAccount();
+        if (teacherAccount) {
+            input.id = teacherAccount.id;
+            input.accountName = teacherAccount.accountName;
+            input.password = teacherAccount.password;
+            input.isMentorAccount = teacherAccount.isMentorAccount;
+            input.accountStatus = teacherAccount.accountStatus;
+
+        }
         return input;
     }
 }
