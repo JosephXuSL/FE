@@ -19,6 +19,7 @@ export class ManagementComponent implements OnInit {
   rowData: any;
   logInUserNm: string;
   isBasicInformation: boolean;
+  isadmin: boolean;
 
   public teacherAccount: TeacherAccount;
 
@@ -32,6 +33,7 @@ export class ManagementComponent implements OnInit {
 
   ngOnInit() {
     this.teacherAccount = new TeacherAccount();
+    this.isadmin = false;
     this.activatedRoute.params.subscribe(param => {
       this.business = businessList.find(b => b.name === param.business);
       this.columnDefs = this.agGrideService.getColumnDefs(this.business);
@@ -40,8 +42,20 @@ export class ManagementComponent implements OnInit {
     if (this.business.name === 'information') {
       this.isBasicInformation = true;
       if (this.logInUserNm) {
-        this.getTeacherAccountInfo(this.logInUserNm);
+        if (this.logInUserNm != 'admin') {
+          this.getTeacherAccountInfo(this.logInUserNm);
+        } else {
+          this.isadmin = true;
+          this.teacherAccount.id = 0;
+          this.teacherAccount.teacherId = 0;
+          this.teacherAccount.isMentorAccount = false;
+          this.teacherAccount.accountStatus = '正常';
+          this.teacherAccount.accountName = '管理员';
+          this.teacherAccount.password = 'admin';
+        }
+
       }
+
     }
     this.activatedRoute.data.subscribe(data => {
       this.rowData = data.listResolvedData;

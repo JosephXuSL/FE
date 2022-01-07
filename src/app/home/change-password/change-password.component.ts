@@ -12,8 +12,8 @@ import { NgForm } from '@angular/forms';
 export class ChangePasswordComponent implements OnInit {
   public showerror = false;
   public teacherAccount: TeacherAccount;
-  public passwordNum:string;
-  accountName:string
+  public passwordNum: string;
+  accountName: string;
   errorMessage: string;
   constructor(private activatedRoute: ActivatedRoute, private managementService: ManagementService) { }
 
@@ -32,16 +32,16 @@ export class ChangePasswordComponent implements OnInit {
 
       //const password = loginForm.form.value.password;
 
-      if(this.managementService.updateTeacherAccountPassword(this.accountName, this.passwordNum)) {
-        
-          this.AddErrorMessage();
-        }
+      if (this.managementService.updateTeacherAccountPassword(this.accountName, this.passwordNum)) {
+
+        this.AddErrorMessage();
+      }
       else {
-          this.AddSuccessMessage();
-        }
+        this.AddSuccessMessage();
+      }
     }
   }
-    ResetErrorMessage(): void {
+  ResetErrorMessage(): void {
     this.showerror = false;
     this.errorMessage = ''
   }

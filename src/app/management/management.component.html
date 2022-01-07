@@ -3,8 +3,7 @@
         <div class="row">
             {{business.nameForShow}}管理
             <div class="ml-auto" *ngIf="!isBasicInformation">
-                <button class="btn btn-outline-primary btn-sm"
-                        [routerLink]="['/management',business.name,'edit',0,this.business.subTab]">
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',0,this.business.subTab]">
                     添加{{business.nameForShow}}
                 </button>
             </div>
@@ -13,17 +12,13 @@
                     修改密码
                 </button>
             </div>
-        </div>    
+        </div>
     </div>
 
     <div class="card-body" *ngIf="!isBasicInformation ">
-      <ag-grid-angular style="width: 500px; height: 500px;"
-                       class="ag-theme-alpine"
-                       [rowData]="rowData"
-                       [columnDefs]="columnDefs"
-                       (gridReady)="onGridReady($event)">
-      </ag-grid-angular>
-      
+        <ag-grid-angular style="width: 500px; height: 500px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+
     </div>
     <div class="card-body " *ngIf="isBasicInformation ">
         <div class="form-group row ">
@@ -44,7 +39,8 @@
 
             <label class="col-md-3 col-form-label ">账户类型：</label>
 
-            <label class="col-md-6 col-form-label ">{{teacherAccount.isMentorAccount?'辅导员':'教师'}}</label>
+            <label class="col-md-6 col-form-label " *ngIf="!isadmin ">{{teacherAccount.isMentorAccount?'辅导员':'教师'}}</label>
+            <label class="col-md-6 col-form-label " *ngIf="isadmin ">管理员</label>
 
         </div>
 
