@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="ml-auto" *ngIf="isBasicInformation">
-                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/changePassword']">
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/changePassword']" disabled="isadmin">
                     修改密码
                 </button>
             </div>

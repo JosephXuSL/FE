@@ -7,11 +7,11 @@
 //----------------------
 // ReSharper disable InconsistentNaming
 
-import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
+import { mergeMap as _observableMergeMap, catchError as _observableCatch, catchError, take } from 'rxjs/operators';
 import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase, HttpBackend } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable({
@@ -20,11 +20,24 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 export class ApiClient {
     private http: HttpClient;
     private baseUrl: string;
+    private appbaseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : 'https://localhost:5001';
+        this.appbaseUrl = sessionStorage.getItem('appConfigPath');
+        
+        if (this.appbaseUrl && this.appbaseUrl!=='undefined' && this.appbaseUrl.length > 0) {
+            this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : this.appbaseUrl;
+        } else {
+            this.http.get('assets/appconfig.json')
+            .subscribe(t=>{
+                this.appbaseUrl = JSON.parse(JSON.stringify(t))['BASE_URL'];
+                sessionStorage.setItem('appConfigPath', this.appbaseUrl);
+                this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : this.appbaseUrl;       
+            });
+            
+        }
     }
 
     /**

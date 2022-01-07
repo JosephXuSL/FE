@@ -23,7 +23,7 @@
                     <label class="col-md-2 col-form--label" for="passwordId">密码</label>
 
                     <div class="col-md-8">
-                        <input class="form-control" id="passwordId" type="password" placeholder="密码（必填项" required ngModel name="password" #passwordVar="ngModel" [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }" />
+                        <input class="form-control" id="passwordId" type="password" placeholder="密码（必填项）" required ngModel name="password" #passwordVar="ngModel" [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }" />
                         <span class="invalid-feedback">
               <span *ngIf="passwordVar.errors?.required">
                 请填入密码.

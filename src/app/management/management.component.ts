@@ -32,6 +32,7 @@ export class ManagementComponent implements OnInit {
     private managementService: ManagementService) { }
 
   ngOnInit() {
+    this.isBasicInformation = false;
     this.teacherAccount = new TeacherAccount();
     this.isadmin = false;
     this.activatedRoute.params.subscribe(param => {
