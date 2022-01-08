@@ -19,6 +19,9 @@ import { StudentEditInfoComponent } from './management-edit/edit-info/student-ed
 import { ClassEditAssociateComponent } from './management-edit/edit-associate/class-edit-associate/class-edit-associate.component';
 import { ScoreImportInfoComponent } from './management-edit/edit-info/score-edit-info/score-import-info.component';
 import { CourseEditAssociateComponent } from './management-edit/edit-associate/course-edit-associate/course-edit-associate.component';
+import { ManagementDetailComponent } from './management-detail/management-detail.component';
+import { DetailAssociateComponent } from './management-detail/detail-associate/detail-associate.component';
+import { AssociateListResolver } from './resolver/associate-list.resolver';
 
 
 @NgModule({
@@ -31,6 +34,15 @@ import { CourseEditAssociateComponent } from './management-edit/edit-associate/c
               path: ':business',
               resolve: { listResolvedData: BusinessListResolver },
               component: ManagementComponent
+             },
+             {
+              path: ':business/:id',
+              component: ManagementDetailComponent
+             },
+             {
+              path: ':business/:id/:associate',
+              resolve: { listResolvedData: AssociateListResolver },
+              component: DetailAssociateComponent
              },
              {
               path: ':business/edit/:id',
@@ -65,7 +77,9 @@ import { CourseEditAssociateComponent } from './management-edit/edit-associate/c
       StudentEditInfoComponent,
       ClassEditAssociateComponent,
       ScoreImportInfoComponent,
-      CourseEditAssociateComponent],
+      CourseEditAssociateComponent,
+      ManagementDetailComponent,
+      DetailAssociateComponent],
     providers: [AgGrideService],
 })
 export class ManagementModule { }

@@ -41,19 +41,8 @@
                        id="majorId"
                        type="text"
                        placeholder="（前往选择）"
-                       required
                        [(ngModel)]=class.major.majorName
-                       name="major"
-                       #majorVar="ngModel"
-                       [ngClass]="{'is-invalid': (majorVar.touched || 
-                                                    majorVar.dirty ||
-                                                    class.id !== 0) &&
-                                                    !majorVar.valid }" />
-                <span class="invalid-feedback">
-                    <span *ngIf="majorVar.errors?.required">
-                        请选择专业.
-                    </span>
-                </span>
+                       name="major"/>                
             </div>
         </div>
         
@@ -66,19 +55,8 @@
                        id="mentorId"
                        type="text"
                        placeholder="（前往选择）"
-                       required
                        [(ngModel)]=class.mentor.name
-                       name="mentor"
-                       #mentorVar="ngModel"
-                       [ngClass]="{'is-invalid': (mentorVar.touched || 
-                                                    mentorVar.dirty ||
-                                                    class.id !== 0) &&
-                                                    !mentorVar.valid }" />
-                <span class="invalid-feedback">
-                    <span *ngIf="mentorVar.errors?.required">
-                        请选择导员.
-                    </span>
-                </span>
+                       name="mentor"/>                
             </div>
         </div>
       </fieldset>

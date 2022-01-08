@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}信息  
+            <div class="ml-auto" >
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                    修改信息
+                </button>
+            </div>          
+        </div>
+    </div>
+    
+    <div class="card-body " >
+        <div class="row ">            
+            <label class="col-md-3 col-form-label ">班级 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.classNumber}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">级 :</label>
+            <label class="col-md-6 col-form-label ">{{detail.major.grade}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">院系 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.major.department}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">专业 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.major.majorName}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">导员 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.mentor.name}}</label> 
+        </div>
+        
+    </div>
+
+    <div class="card-body " >
+        <div class="row">
+            <div *ngFor="let data of associateBusiness">
+                <button class="btn btn-outline-primary mr-4 btn-sm"
+                        style="width:150px"
+                        type="button"
+                        (click)="viewAll(data.name)">
+                    查看{{business.nameForShow}}{{data.nameForShow}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<!-- <div *ngIf="errorMessage"
+       class="alert alert-danger">
+    Error: {{ errorMessage }}
+  </div> -->

@@ -19,6 +19,7 @@ export class ManagementEditComponent implements OnInit {
   business: Business;
   info: any;
   isBasicInformationPage: boolean;
+  hiddenInsertTable = true;
 
   columnDefs: ColDef[] = [
     {
@@ -79,7 +80,7 @@ export class ManagementEditComponent implements OnInit {
       if (this.info.id === 0) {
         this.pageTitle = `添加${this.business.nameForShow}`;
       } else {
-        this.pageTitle = `修改${this.business.nameForShow} : ${this.info.majorName}`;
+        this.pageTitle = `修改${this.business.nameForShow}`;
       }
     }
   }
@@ -197,15 +198,9 @@ export class ManagementEditComponent implements OnInit {
 
   saveInfo() {
     if (this.isValid()) {
-      if (this.info.id === 0) {
-        this.managementService.addInfo(this.business.name, this.info).subscribe({
-          next: () => this.onSaveComplete(`The new ${this.info.majorName} was saved`)
-        });
-      } else {
-        this.managementService.addInfo(this.business.name, this.info).subscribe({
-          next: () => this.onSaveComplete(`The updated ${this.info.majorName} was saved`)
-        });
-      }
+      this.managementService.saveInfo(this.business.name, this.info).subscribe({
+        next: () => this.onSaveComplete(`保存成功`)
+      });
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
@@ -232,6 +227,7 @@ export class ManagementEditComponent implements OnInit {
   }
 
   generateTable() {
+    this.hiddenInsertTable = false;
     this.rowData = [];
     for (let i = 0; i < this.count; i++) {
       const data = new StudentNumberAndScore();
@@ -259,7 +255,7 @@ export class ManagementEditComponent implements OnInit {
           scoreList.push(scoreData);
         }
       }
-      this.managementService.addInfo(this.business.name, this.info).subscribe({
+      this.managementService.addScores(this.info).subscribe({
         next: () => this.onSaveComplete(`The new ${this.info.majorName} was saved`)
       });
     }
@@ -269,6 +265,10 @@ export class ManagementEditComponent implements OnInit {
     const updateDate = this.rowData.find(d => d.id === event.data.id);
     updateDate.studentNumber = event.data.studentNumber;
     updateDate.score = event.data.score;
+  }
+
+  closeTable() {
+    this.hiddenInsertTable = true;
   }
 
   onGridReady(params) {

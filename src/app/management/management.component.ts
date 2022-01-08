@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ColumnApi, GridApi } from 'ag-grid-community';
 import { Observable } from 'rxjs';
 
@@ -29,6 +29,7 @@ export class ManagementComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private agGrideService: AgGrideService,
+    private router: Router,
     private managementService: ManagementService) { }
 
   ngOnInit() {
@@ -63,8 +64,13 @@ export class ManagementComponent implements OnInit {
     });
   }
 
-  onRowDoubleClicked(params)  {
-    console.log(params.data);
+  onRowDoubleClicked(params) {
+    const routerParams: NavigationExtras = {
+      queryParams: {
+        detail: JSON.stringify(params.data)
+      }
+    };
+    this.router.navigate([this.router.url, params.data.id], routerParams);
   }
 
   onGridReady(params) {

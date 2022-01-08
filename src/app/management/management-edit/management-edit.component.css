@@ -73,3 +73,24 @@
 .wizard .active:after {
     border-left-color: #007ACC;
 }
+
+.popup {
+    width: 540px; 
+    height: 590px;
+    box-sizing: border-box;
+    position: absolute;    
+    background: #fff;
+    left: 50%;
+    top: 50%;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+}
+
+.insert {   
+    width: 800px;
+    position: absolute;   
+    left: 580px;
+    top: 87px;
+    z-index: 999;
+}

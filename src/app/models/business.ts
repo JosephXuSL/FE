@@ -4,6 +4,7 @@ export interface Business {
     subTab: string;
     subAssociateTab: SubAssociateTab[];
     gridHeader: GirdeHeader[];
+    associateBusiness: string[];
 }
 
 export interface GirdeHeader {
@@ -31,7 +32,8 @@ export const businessList: Business[] = [
                 headerName: '教材',
                 field: 'textbook'
             }
-        ]
+        ],
+        associateBusiness: null
     },
     {
         name: 'course',
@@ -47,7 +49,8 @@ export const businessList: Business[] = [
                 headerName: '教材',
                 field: 'textbook'
             }
-        ]
+        ],
+        associateBusiness: null
     },
     {
         name: 'major',
@@ -67,7 +70,8 @@ export const businessList: Business[] = [
                 headerName: '专业',
                 field: 'majorName'
             }
-        ]
+        ],
+        associateBusiness: null
     },
     {
         name: 'teacher',
@@ -99,7 +103,8 @@ export const businessList: Business[] = [
                 headerName: '是否是导员',
                 field: 'isMentor'
             }
-        ]
+        ],
+        associateBusiness: null
     },
     {
         name: 'class',
@@ -136,7 +141,8 @@ export const businessList: Business[] = [
                 headerName: '导员',
                 field: 'mentor.name'
             }
-        ]
+        ],
+        associateBusiness: ['student', 'courseSchedule']
     },
     {
         name: 'student',
@@ -206,7 +212,8 @@ export const businessList: Business[] = [
                 field: 'class.classNumber'
             }
 
-        ]
+        ],
+        associateBusiness: null
     },
     {
         name: 'score',
@@ -243,6 +250,7 @@ export const businessList: Business[] = [
                 headerName: '学年',
                 field: 'semester'
             }
-        ]
+        ],
+        associateBusiness: null
     }
 ];

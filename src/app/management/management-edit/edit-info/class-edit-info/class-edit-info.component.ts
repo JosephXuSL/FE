@@ -24,8 +24,6 @@ export class ClassEditInfoComponent implements OnInit {
 
       this.class = data['infoResolvedData'].data;
     });
-
-    console.log(this.activatedRoute.snapshot.parent.paramMap.get('id'));
   }
 
   selectMajor() {

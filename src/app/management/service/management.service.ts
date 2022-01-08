@@ -139,20 +139,61 @@ export class ManagementService {
   //   }));
   // }
 
-  addInfo(business: string, info: any): Observable<any> {
+  getListDataById(business: string, associate: string, id: number): Observable<any> {
+    switch (business + associate) {
+      case 'classstudent':
+        return this.getStudentsByClassID(id);
+      case 'classcouseSchedule':
+        return this.getStudentsByClassID(id);
+    }
+  }
+
+  getStudentsByClassID(id: number) {
+    return this.apiClient.getStudentsByClassId(id).pipe(map(data => {
+      return data.map(d => {
+        return ManagementServiceMapper.mapStudentInput(d);
+      });
+    }));
+  }
+
+  saveInfo(business: string, info: any): Observable<any> {
     switch (business) {
       case 'course':
-        return this.addCourse(info);
+        if (info.id === 0) {
+          return this.addCourse(info);
+        } else {
+          return this.saveCourse(info);
+        }
       case 'major':
-        return this.addMajor(info);
+        if (info.id === 0) {
+          return this.addMajor(info);
+        } else {
+          return this.saveMajor(info);
+        }
       case 'teacher':
-        return this.addTeacher(info);
+        if (info.id === 0) {
+          return this.addTeacher(info);
+        } else {
+          return this.saveTeacher(info);
+        }
       case 'class':
-        return this.addClass(info);
+        if (info.id === 0) {
+          return this.addClass(info);
+        } else {
+          return this.saveClass(info);
+        }
       case 'student':
-        return this.addStudent(info);
+        if (info.id === 0) {
+          return this.addStudent(info);
+        } else {
+          return this.saveStudent(info);
+        }
       case 'score':
-        return this.addScores(info);
+        if (info.id === 0) {
+          return ;
+        } else {
+          return ;
+        }
     }
   }
 
@@ -162,10 +203,22 @@ export class ManagementService {
     return this.apiClient.addCourses(courses);
   }
 
+  saveCourse(course: Course): Observable<any> {
+    const courses = [];
+    courses.push(ManagementServiceMapper.mapCourseOutput(course));
+    return this.apiClient.updateCourses(courses);
+  }
+
   addMajor(major: Major): Observable<any> {
     const majors = [];
     majors.push(ManagementServiceMapper.mapMajorOutput(major));
     return this.apiClient.addMajors(majors);
+  }
+
+  saveMajor(major: Major): Observable<any> {
+    const majors = [];
+    majors.push(ManagementServiceMapper.mapMajorOutput(major));
+    return this.apiClient.updateMajors(majors);
   }
 
   addTeacher(data: Teacher): Observable<any> {
@@ -174,10 +227,22 @@ export class ManagementService {
     return this.apiClient.addTeachers(saveData);
   }
 
+  saveTeacher(info: Teacher): Observable<any> {
+    const data = [];
+    data.push(ManagementServiceMapper.mapTeacherOutput(info));
+    return this.apiClient.updateTeachers(data);
+  }
+
   addClass(data: Class): Observable<any> {
     const saveData = [];
     saveData.push(ManagementServiceMapper.mapClassOutput(data));
     return this.apiClient.addClasses(saveData);
+  }
+
+  saveClass(info: Class): Observable<any> {
+    const data = [];
+    data.push(ManagementServiceMapper.mapClassOutput(info));
+    return this.apiClient.updateClasses(data);
   }
 
   addStudent(data: Student): Observable<any> {
@@ -186,46 +251,15 @@ export class ManagementService {
     return this.apiClient.addStudents(saveData);
   }
 
+  saveStudent(data: Student): Observable<any> {
+    const saveData = [];
+    saveData.push(ManagementServiceMapper.mapStudentOutput(data));
+    return this.apiClient.updateStudents(saveData);
+  }
+
   addScores(data: Score[]): Observable<any> {
     return this.apiClient.importExaminations(ManagementServiceMapper.mapScoreListOutput(data));
   }
-
-  // saveInfo(business: string, info: any): Observable<any> {
-  //   switch (business) {
-  //     case 'course':
-  //       return this.saveCourse(info);
-  //     case 'major':
-  //       return this.saveMajor(info);
-  //     case 'teacher':
-  //       return this.saveTeacher(info);
-  //     case 'class':
-  //       return this.saveClass(info);
-  //   }
-  // }
-
-  // saveCourse(course: Course): Observable<any> {
-  //   const courses = [];
-  //   courses.push(ManagementServiceMapper.mapCourseOutput(course));
-  //   return this.apiClient.updateCourses(courses);
-  // }
-
-  // saveMajor(major: Major): Observable<any> {
-  //   const majors = [];
-  //   majors.push(ManagementServiceMapper.mapMajorOutput(major));
-  //   return this.apiClient.updateMajors(majors);
-  // }
-
-  // saveTeacher(info: Teacher): Observable<any> {
-  //   const data = [];
-  //   data.push(ManagementServiceMapper.mapTeacherOutput(info));
-  //   return this.apiClient.updateTeachers(data);
-  // }
-
-  // saveClass(info: Class): Observable<any> {
-  //   const data = [];
-  //   data.push(ManagementServiceMapper.mapClassOutput(info));
-  //   return this.apiClient.updateClasses(data);
-  // }
 
   searchMajors(grade: string, department: string, majorName: string): Observable<Major[]> {
     const data = new GetMajorRequestBody();
