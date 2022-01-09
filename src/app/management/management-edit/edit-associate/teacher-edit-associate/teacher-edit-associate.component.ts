@@ -20,11 +20,16 @@ export class TeacherEditAssociateComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
-      this.searchName = this.currentData.mentor.name;
+      if (this.business.name === 'class') {
+        this.searchName = this.currentData.mentor.name;
+      }
+      if (this.business.name === 'courseSchedule') {
+        this.searchName = this.currentData.teacherCourseInfo.teacher.name;
+      }
     });
-    this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
   }
 
   searchInfo() {
@@ -34,7 +39,12 @@ export class TeacherEditAssociateComponent implements OnInit {
   }
 
   choseData(teacher: Teacher) {
-    this.currentData.mentor = teacher;
+    if (this.business.name === 'class') {
+      this.currentData.mentor = teacher;
+    }
+    if (this.business.name === 'courseSchedule') {
+      this.currentData.teacherCourseInfo.teacher = teacher;
+    }
     this.router.navigate(['/management', this.business.name, 'edit',
     this.currentData.id, this.business.subTab]);
   }

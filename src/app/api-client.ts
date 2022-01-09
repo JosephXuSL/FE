@@ -40,6 +40,7 @@ export class ApiClient {
         }
     }
 
+
     /**
      * @param body (optional) 
      * @return Success
@@ -5672,7 +5673,8 @@ export interface ICourseResponsibleByTeacher {
 
 export class CourseScheduleRequestBody implements ICourseScheduleRequestBody {
     id!: number;
-    courseResponsibleByTeacherId!: number;
+    teacherCourseInfoId!: number;
+    teacherCourseInfo!: CourseResponsibleByTeacherRequestBody;
     scheduledWeekday!: string;
     scheduledTime!: string;
 
@@ -5683,12 +5685,16 @@ export class CourseScheduleRequestBody implements ICourseScheduleRequestBody {
                     (<any>this)[property] = (<any>data)[property];
             }
         }
+        if (!data) {
+            this.teacherCourseInfo = new CourseResponsibleByTeacherRequestBody();
+        }
     }
 
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.courseResponsibleByTeacherId = _data["courseResponsibleByTeacherId"];
+            this.teacherCourseInfoId = _data["teacherCourseInfoId"];
+            this.teacherCourseInfo = _data["teacherCourseInfo"] ? CourseResponsibleByTeacherRequestBody.fromJS(_data["teacherCourseInfo"]) : new CourseResponsibleByTeacherRequestBody();
             this.scheduledWeekday = _data["scheduledWeekday"];
             this.scheduledTime = _data["scheduledTime"];
         }
@@ -5704,7 +5710,8 @@ export class CourseScheduleRequestBody implements ICourseScheduleRequestBody {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["courseResponsibleByTeacherId"] = this.courseResponsibleByTeacherId;
+        data["teacherCourseInfoId"] = this.teacherCourseInfoId;
+        data["teacherCourseInfo"] = this.teacherCourseInfo ? this.teacherCourseInfo.toJSON() : <any>undefined;
         data["scheduledWeekday"] = this.scheduledWeekday;
         data["scheduledTime"] = this.scheduledTime;
         return data; 
@@ -5713,14 +5720,15 @@ export class CourseScheduleRequestBody implements ICourseScheduleRequestBody {
 
 export interface ICourseScheduleRequestBody {
     id: number;
-    courseResponsibleByTeacherId: number;
+    teacherCourseInfoId: number;
+    teacherCourseInfo: CourseResponsibleByTeacherRequestBody;
     scheduledWeekday: string;
     scheduledTime: string;
 }
 
 export class CourseSchedule implements ICourseSchedule {
     id?: number;
-    courseResponsibleByTeacherId?: number;
+    teacherCourseInfoId?: number;
     teacherCourseInfo?: CourseResponsibleByTeacher;
     scheduledWeekday?: string | undefined;
     scheduledTime?: string | undefined;
@@ -5737,7 +5745,7 @@ export class CourseSchedule implements ICourseSchedule {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.courseResponsibleByTeacherId = _data["courseResponsibleByTeacherId"];
+            this.teacherCourseInfoId = _data["teacherCourseInfoId"];
             this.teacherCourseInfo = _data["teacherCourseInfo"] ? CourseResponsibleByTeacher.fromJS(_data["teacherCourseInfo"]) : <any>undefined;
             this.scheduledWeekday = _data["scheduledWeekday"];
             this.scheduledTime = _data["scheduledTime"];
@@ -5754,7 +5762,7 @@ export class CourseSchedule implements ICourseSchedule {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["courseResponsibleByTeacherId"] = this.courseResponsibleByTeacherId;
+        data["teacherCourseInfoId"] = this.teacherCourseInfoId;
         data["teacherCourseInfo"] = this.teacherCourseInfo ? this.teacherCourseInfo.toJSON() : <any>undefined;
         data["scheduledWeekday"] = this.scheduledWeekday;
         data["scheduledTime"] = this.scheduledTime;
@@ -5764,7 +5772,7 @@ export class CourseSchedule implements ICourseSchedule {
 
 export interface ICourseSchedule {
     id?: number;
-    courseResponsibleByTeacherId?: number;
+    teacherCourseInfoId?: number;
     teacherCourseInfo?: CourseResponsibleByTeacher;
     scheduledWeekday?: string | undefined;
     scheduledTime?: string | undefined;

@@ -135,7 +135,7 @@ export class ManagementEditComponent implements OnInit {
           this.dataIsValid[this.business.subTab] = false;
         }
         this.business.subAssociateTab.forEach(a => {
-          this.validateAssociateTab(a.name);
+          this.validateAssociateTab(a.name, this.info);
         });
         return;
       case 'student':
@@ -147,7 +147,7 @@ export class ManagementEditComponent implements OnInit {
           this.dataIsValid[this.business.subTab] = false;
         }
         this.business.subAssociateTab.forEach(a => {
-          this.validateAssociateTab(a.name);
+          this.validateAssociateTab(a.name, this.info);
         });
         return;
       case 'score':
@@ -157,37 +157,48 @@ export class ManagementEditComponent implements OnInit {
           this.dataIsValid[this.business.subTab] = false;
         }
         this.business.subAssociateTab.forEach(a => {
-          this.validateAssociateTab(a.name);
+          this.validateAssociateTab(a.name, this.info);
         });
         return;
+        case 'courseSchedule':
+          if (this.info.teacherCourseInfo.semester && this.info.teacherCourseInfo.teacher.id > 0
+            && this.info.teacherCourseInfo.course.id > 0 ) {
+            this.dataIsValid[this.business.subTab] = true;
+          } else {
+            this.dataIsValid[this.business.subTab] = false;
+          }
+          this.business.subAssociateTab.forEach(a => {
+            this.validateAssociateTab(a.name, this.info.teacherCourseInfo);
+          });
+          return;
     }
   }
 
-  validateAssociateTab(tab: string): void {
+  validateAssociateTab(tab: string, validationData: any): void {
     switch (tab) {
       case 'majorAssociate':
-        if (this.info.major.id > 0) {
+        if (validationData.major.id > 0) {
           this.dataIsValid[tab] = true;
         } else {
           this.dataIsValid[tab] = false;
         }
         return;
       case 'teacherAssociate':
-        if (this.info.mentor.id > 0) {
+        if ((this.business.name !== 'courseSchedule' && validationData.mentor.id > 0) || validationData.teacher.id > 0) {
           this.dataIsValid[tab] = true;
         } else {
           this.dataIsValid[tab] = false;
         }
         return;
       case 'classAssociate':
-        if (this.info.class.id > 0) {
+        if (validationData.class.id > 0 || this.business.name === 'courseSchedule') {
           this.dataIsValid[tab] = true;
         } else {
           this.dataIsValid[tab] = false;
         }
         return;
         case 'courseAssociate':
-          if (this.info.course.id > 0) {
+          if (validationData.course.id > 0 ) {
             this.dataIsValid[tab] = true;
           } else {
             this.dataIsValid[tab] = false;
@@ -269,6 +280,10 @@ export class ManagementEditComponent implements OnInit {
 
   closeTable() {
     this.hiddenInsertTable = true;
+  }
+
+  openTable() {
+    this.hiddenInsertTable = false;
   }
 
   onGridReady(params) {

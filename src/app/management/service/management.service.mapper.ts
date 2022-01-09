@@ -1,6 +1,10 @@
 import {
     Class as ClientClass, ClassRequestBody,
     Course as ClientCourse, CourseRequestBody,
+    CourseResponsibleByTeacher,
+    CourseResponsibleByTeacherRequestBody,
+    CourseSchedule as ClientCourseSchedule,
+    CourseScheduleRequestBody,
     Examination, ExaminationImportBody,
     Major as ClientMajor, MajorRequestBody,
     Student as ClientStudent, StudentRequestBody,
@@ -8,10 +12,12 @@ import {
 } from 'src/app/api-client';
 import { Class } from 'src/app/models/class';
 import { Course } from 'src/app/models/course';
+import { CourseSchedule } from 'src/app/models/courseSchedule';
 import { Major } from 'src/app/models/major';
 import { Score } from 'src/app/models/score';
 import { Student } from 'src/app/models/student';
 import { Teacher } from 'src/app/models/teacher';
+import { TeacherCourseInfo } from 'src/app/models/teacherCourseInfo';
 
 export class ManagementServiceMapper {
 
@@ -156,6 +162,45 @@ export class ManagementServiceMapper {
         input.student = this.mapStudentInput(data.student);
         return input;
     }
+
+    static mapTeacherCourseOutput(data: TeacherCourseInfo): CourseResponsibleByTeacherRequestBody {
+        const output = new CourseResponsibleByTeacherRequestBody();
+        output.id = data.id;
+        output.semester = data.semester;
+        output.teacherId = data.teacher.id;
+        output.courseId = data.course.id;
+        output.classId = data.class.id;
+        return output;
+    }
+
+    static mapTeacherCourseInput(data: CourseResponsibleByTeacher): TeacherCourseInfo {
+        const input = new TeacherCourseInfo();
+        input.id = data.id;
+        input.semester = data.semester;
+        input.teacher = this.mapTeacherInput(data.teacher);
+        input.course = this.mapCourseInput(data.course);
+        input.class = this.mapClassInput(data.class);
+        return input;
+    }
+
+    static mapCourseScheduleOutput(data: CourseSchedule): CourseScheduleRequestBody {
+        const output = new CourseScheduleRequestBody();
+        output.id = data.id;
+        output.teacherCourseInfo = this.mapTeacherCourseOutput(data.teacherCourseInfo);
+        output.scheduledWeekday = data.scheduledWeekday;
+        output.scheduledTime = data.scheduledTime;
+        return output;
+    }
+
+    static mapCourseScheduleInput(data: ClientCourseSchedule): CourseSchedule {
+        const input = new CourseSchedule();
+        input.id = data.id;
+        input.teacherCourseInfo = this.mapTeacherCourseInput(data.teacherCourseInfo);
+        input.scheduledWeekday = data.scheduledWeekday;
+        input.scheduledTime = data.scheduledTime;
+        return input;
+    }
+
     static mapTeacherAccountInput(teacherAccount: TeacherAccount): TeacherAccount {
         const input = new TeacherAccount();
         if (teacherAccount) {

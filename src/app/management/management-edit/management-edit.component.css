@@ -87,10 +87,4 @@
     border-radius: 4px;
 }
 
-.insert {   
-    width: 800px;
-    position: absolute;   
-    left: 580px;
-    top: 87px;
-    z-index: 999;
-}
+

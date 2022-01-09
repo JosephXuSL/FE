@@ -1,100 +1,113 @@
 <div class="card">
-    <div class="card-header">
-      {{pageTitle}}
-    </div>
-  
-    <div class="card-body"
-         *ngIf="info">
-      <div class="wizard">
-        <a [routerLink]="[business.subTab]"
-           routerLinkActive="active">
-          基础信息 <span [ngClass]="{'fa fa-exclamation': !isValid(business.subTab)}"></span>
-        </a>
-        <a *ngFor="let associate of business.subAssociateTab" [routerLink]="[associate.name]"
-         routerLinkActive="active">
-        {{associate.nameforShow}} <span [ngClass]="{'fa fa-exclamation': !isValid(associate.name)}"></span>
-      </a>     
-      </div>
-
-      <router-outlet></router-outlet>
-
-      <div class="row mb-2">
-        <div class="col-md-4">
-          <button *ngIf="business.name =='score' && info.id === 0"
-                  class="btn btn-primary mr-3"
-                  style="width:80px"
-                  type="button"
-                  title="Save your entered data"
-                  [disabled]="rowData.length == 0"
-                  (click)="importInfo()">
-            导入
-          </button>
-          <button *ngIf="!(business.name =='score' && info.id === 0)"
-                  class="btn btn-primary mr-3"
-                  style="width:80px"
-                  type="button"
-                  title="Save your entered data"
-                  [disabled]="!isValid()"
-                  (click)="saveInfo()">
-            保存
-          </button>
-          <button class="btn btn-outline-secondary mr-3"
-                  style="width:80px"
-                  type="button"
-                  title="Cancel your edits"
-                  [routerLink]="['/management', business.name]">
-            取消
-          </button>
-        </div>
-      </div>
-    </div>
+  <div class="card-header">
+    {{pageTitle}}
   </div>
 
-  <div class="insert" *ngIf="business.name =='score' && info.id === 0">
+  <div class="card-body"
+       *ngIf="info">
+    <div class="wizard">
+      <a [routerLink]="[business.subTab]"
+         routerLinkActive="active">
+        基础信息 <span [ngClass]="{'fa fa-exclamation': !isValid(business.subTab)}"></span>
+      </a>
+      <a *ngFor="let associate of business.subAssociateTab"
+         [routerLink]="[associate.name]"
+         routerLinkActive="active">
+        {{associate.nameforShow}} <span [ngClass]="{'fa fa-exclamation': !isValid(associate.name)}"></span>
+      </a>
+    </div>
+
+    <router-outlet></router-outlet>
+
     <div class="row">
-      <label class="col-md-2 col-form-label"
-             for="nId">导入条数</label>
-      <div class="col-md-2">
-        <input class="form-control"
-               id="nId"
-               type="number"
-               [(ngModel)]=count
-               name="name" />
+      <div class=" mb-2 col-md-4">
+        <button *ngIf="business.name =='score' && info.id === 0"
+                class="btn btn-primary mr-3"
+                style="width:80px"
+                type="button"
+                title="Save your entered data"
+                [disabled]="rowData.length == 0"
+                (click)="importInfo()">
+          导入
+        </button>
+        <button *ngIf="!(business.name =='score' && info.id === 0)"
+                class="btn btn-primary mr-3"
+                style="width:80px"
+                type="button"
+                title="Save your entered data"
+                [disabled]="!isValid()"
+                (click)="saveInfo()">
+          保存
+        </button>
+        <button class="btn btn-outline-secondary mr-3"
+                style="width:80px"
+                type="button"
+                title="Cancel your edits"
+                [routerLink]="['/management', business.name]">
+          取消
+        </button>
       </div>
-      <button class="btn btn-primary mr-3"
+    
+      <label class="col-form-label mr-3 ml-auto" *ngIf="business.name =='score' && info.id === 0"
+             for="nId">导入条数</label>
+      <input class="form-control col-md-1 mr-3 float-right" *ngIf="business.name =='score' && info.id === 0"
+             id="nId"
+             type="number"
+             [(ngModel)]=count
+             name="name" />
+      <button class="btn btn-primary mb-2 mr-3 float-right" *ngIf="business.name =='score' && info.id === 0"
               style="width:100px"
               type="button"
               title="初始化导入信息"
               [disabled]=" !(count > 0 && info.semester && info.major.id > 0  && info.course.id >0) "
               (click)="generateTable()">
-        添加成绩
+        生成表单        
       </button>
-    </div>
-  </div>
-
-
-  <div class="card popup" [hidden]="hiddenInsertTable" *ngIf="business.name =='score' && info.id === 0" >
-    <div class="card-header">插入学生成绩
-      <button class="btn btn-light btn-sm float-right"
+      <button *ngIf="hiddenInsertTable &&(business.name =='score' && info.id === 0)" class="btn btn-outline-secondary mb-2 mr-3 float-right" 
+              style="width:100px"
+              type="button"
+              (click)="openTable()">
+        显示表单        
+      </button>
+      <button *ngIf="!hiddenInsertTable &&(business.name =='score' && info.id === 0)" class="btn btn-outline-secondary mb-2 mr-3 float-right"
+              style="width:100px"
+              type="button"
               (click)="closeTable()">
-        X
-      </button>
+        隐藏表单        
+      </button>    
     </div>
-    <div class="card-body ">
-      <ag-grid-angular style="width: 500px; height: 500px;"
-                       #agGrid
-                       class="ag-theme-alpine"
-                       [rowData]="rowData"
-                       [columnDefs]="columnDefs"
-                       [singleClickEdit]="true"
-                       (cellValueChanged)="onCellValueChanged($event)"
-                       (gridReady)="onGridReady($event)">
-      </ag-grid-angular>
-  
-  
-    </div>
+    
   </div>
-  
-  <div class="alert alert-danger" *ngIf="errorMessage">
-      {{errorMessage}}
+</div>
+
+
+
+
+<div class="card popup"
+     [hidden]="hiddenInsertTable"
+     *ngIf="business.name =='score' && info.id === 0">
+  <div class="card-header">插入学生成绩
+    <button class="btn btn-light btn-sm float-right"
+            (click)="closeTable()">
+      —
+    </button>
   </div>
+  <div class="card-body ">
+    <ag-grid-angular style="width: 500px; height: 500px;"
+                     #agGrid
+                     class="ag-theme-alpine"
+                     [rowData]="rowData"
+                     [columnDefs]="columnDefs"
+                     [singleClickEdit]="true"
+                     (cellValueChanged)="onCellValueChanged($event)"
+                     (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+
+
+  </div>
+</div>
+
+<div class="alert alert-danger"
+     *ngIf="errorMessage">
+  {{errorMessage}}
+</div>

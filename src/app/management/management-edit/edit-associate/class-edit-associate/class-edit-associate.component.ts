@@ -23,14 +23,21 @@ export class ClassEditAssociateComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
-      this.searchGrade = this.currentData.class.major.grade;
-      this.searchDepartment = this.currentData.class.major.department;
-      this.searchMajorName = this.currentData.class.major.majorName;
-      this.searchClassNumber = this.currentData.class.classNumber;
+      if (this.business.name === 'courseSchedule') {
+        this.searchGrade = this.currentData.teacherCourseInfo.class.major.grade;
+        this.searchDepartment = this.currentData.teacherCourseInfo.class.major.department;
+        this.searchMajorName = this.currentData.teacherCourseInfo.class.major.majorName;
+        this.searchClassNumber = this.currentData.teacherCourseInfo.class.classNumber;
+      } else {
+        this.searchGrade = this.currentData.class.major.grade;
+        this.searchDepartment = this.currentData.class.major.department;
+        this.searchMajorName = this.currentData.class.major.majorName;
+        this.searchClassNumber = this.currentData.class.classNumber;
+      }
     });
-    this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
   }
 
   searchInfo() {
@@ -40,8 +47,12 @@ export class ClassEditAssociateComponent implements OnInit {
       });
   }
   choseClass(data: Class) {
-    this.currentData.class = data;
-    this.currentData.major = data.major;
+    if (this.business.name === 'courseSchedule') {
+      this.currentData.teacherCourseInfo.class = data;
+    } else {
+      this.currentData.class = data;
+      this.currentData.major = data.major;
+    }
     this.router.navigate(['/management', this.business.name, 'edit',
     this.currentData.id, this.business.subTab]);
   }

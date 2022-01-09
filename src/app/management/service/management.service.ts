@@ -4,6 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Business } from 'src/app/models/business';
 import { Class } from 'src/app/models/class';
 import { Course } from 'src/app/models/course';
+import { CourseSchedule } from 'src/app/models/courseSchedule';
 import { Score } from 'src/app/models/score';
 import { Student } from 'src/app/models/student';
 import { Teacher } from 'src/app/models/teacher';
@@ -29,6 +30,8 @@ export class ManagementService {
         return this.getAllStudents();
       case 'score':
         return this.getAllScore();
+      case 'courseSchedule':
+        return this.getAllCourseSchedule();
     }
   }
 
@@ -76,6 +79,14 @@ export class ManagementService {
     return this.apiClient.getAllExaminations().pipe(map(data => {
       return data.map(d => {
         return ManagementServiceMapper.mapScoreInput(d);
+      });
+    }));
+  }
+
+  getAllCourseSchedule(): Observable<CourseSchedule[]> {
+    return this.apiClient.getAllCourseSchedule().pipe(map(data => {
+      return data.map(d => {
+        return ManagementServiceMapper.mapCourseScheduleInput(d);
       });
     }));
   }
@@ -332,6 +343,8 @@ export class ManagementService {
         return new Student();
       case 'score':
         return new Score();
+      case 'courseSchedule':
+        return new CourseSchedule();
     }
   }
   searchTeacherAccountByName(name: string): Observable<TeacherAccount> {

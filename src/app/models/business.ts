@@ -252,5 +252,51 @@ export const businessList: Business[] = [
             }
         ],
         associateBusiness: null
+    },
+    {
+        name: 'courseSchedule',
+        nameForShow: '课表',
+        subTab: 'courseScheduleInfo',
+        subAssociateTab: [
+            {
+                name: 'teacherAssociate',
+                nameforShow: '选择教师'
+            },
+            {
+                name: 'courseAssociate',
+                nameforShow: '选择学科'
+            },
+            {
+                name: 'classAssociate',
+                nameforShow: '选择班级'
+            }
+        ],
+        gridHeader: [
+            {
+                headerName: '学年',
+                field: 'teacherCourseInfo.semester'
+            },
+            {
+                headerName: '教师',
+                field: 'teacherCourseInfo.teacher.name'
+            },
+            {
+                headerName: '课程',
+                field: 'teacherCourseInfo.course.courseName'
+            },
+            {
+                headerName: '班级',
+                field: 'teacherCourseInfo.class.classNumber'
+            },
+            {
+                headerName: '天',
+                field: 'scheduledWeekday'
+            },
+            {
+                headerName: '时间',
+                field: 'scheduledTime'
+            }
+        ],
+        associateBusiness: null
     }
 ];
