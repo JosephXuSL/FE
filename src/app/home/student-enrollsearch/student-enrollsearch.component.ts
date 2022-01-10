@@ -20,36 +20,33 @@ export class StudentEnrollsearchComponent implements OnInit {
   errorMessage: string;
   alertMessage: string;
   showPupup: boolean;
-  //nums = ['C', '6', 'Z', 't'];
   nums = Array<string>();
 
   str = '';
 
   ngOnInit() {
-    this.showPupup = false;
-    this.errorMessage = '';
-    this.alertMessage = '';
+    this.resetpagetobegin();
     this.student = new Student();
     this.getyanzhengma();
   }
 
   sbumit(loginForm: NgForm): void {
+    this.student = new Student();
+    this.resetpagetobegin();
     if (loginForm && loginForm.valid) {
       this.loading = true;
       this.showerror = false;
       const userName = loginForm.form.value.userName;
       const yanzhengma = loginForm.form.value.yanzhengma;
       if (yanzhengma != this.str) {
-        this.showerror = true;
-        this.errorMessage = "验证码错误！";
+        this.dispalyErrorMessage("验证码错误！");
         this.getyanzhengma();
         this.loading = false;
       }
       else {
-        this.apiClient.getStudentByIDCardNumber(userName).subscribe(t =>{
+        this.apiClient.getStudentByIDCardNumber(userName).subscribe(t => {
           if (t && t.studentNumber) {
-            this.showPupup=true;
-            this.alertMessage="恭喜您已被录取！";
+            this.dispalyalertMessage("恭喜您已被录取！");
             this.student = new Student();
             this.student.name = t.name;
             this.student.sex = t.sex;
@@ -59,15 +56,17 @@ export class StudentEnrollsearchComponent implements OnInit {
             this.student.major.grade = t.major.grade;
             this.student.major.majorName = t.major.majorName;
             this.student.major.department = t.major.department;
-            this.student.bed= t.bed;
+            this.student.bed = t.bed;
             this.student.apartment = t.apartment;
             this.student.chamber = t.chamber;
 
           } else {
             this.student = new Student();
-            this.errorMessage = '暂无您的相关信息';
+            this.dispalyErrorMessage("暂无您的相关信息");
+            this.closealertMessage();
           }
           this.loading = false;
+          this.getyanzhengma();
         });
       }
 
@@ -122,4 +121,27 @@ export class StudentEnrollsearchComponent implements OnInit {
     let ctx: CanvasRenderingContext2D = this.canvas.getContext("2d");
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
+  resetpagetobegin(): void {
+    this.showPupup = false;
+    this.showerror = false;
+    this.errorMessage = '';
+    this.alertMessage = '';
+  }
+  dispalyErrorMessage(s: string): void {
+    this.showerror = true;
+    this.errorMessage = s;
+  }
+  closeErrorMessage(): void {
+    this.showerror = false;
+    this.errorMessage = '';
+  }
+  dispalyalertMessage(s: string): void {
+    this.showPupup = true;
+    this.alertMessage = s;
+  }
+  closealertMessage(): void {
+    this.showPupup = false;
+    this.alertMessage = '';
+  }
+
 }
