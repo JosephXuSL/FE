@@ -1,0 +1,71 @@
+<div class="card">
+    <div class="card-header">
+        查看所属信息（可使用表头控件进行筛选）
+
+    </div>
+    <div class="card-body" *ngIf="!showPupup">
+        <div class="example-header" style="margin-left: 70px;">
+            选择: {{selectstudentname}}
+            <span id="selectedRows"></span>
+            <button class=" btn btn-primary mr-3 " style="width:180px;margin-left: 700px; " [disabled]="!selectstudentname " type="button " title="查询专业 " (click)="searchInfo() ">
+                查看学生信息
+            </button>
+
+        </div>
+
+        <div class="form-group row " style="margin-left: 70px; ">
+            <ag-grid-angular style="width:900px; height: 500px; " class="ag-theme-alpine " #studentinfoGrid [gridOptions]="gridOptions " (gridReady)="onGridReady($event) " [rowSelection]="rowSelection " (selectionChanged)="onSelectionChanged($event)
+                " [rowData]="rowData " [columnDefs]="columnDefs ">
+            </ag-grid-angular>
+        </div>
+
+    </div>
+    <div class="card-body " *ngIf="showPupup ">
+        <div class="example-header ">
+            查看学生信息
+        </div>
+
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">姓名：</label>
+            <label class="col-md-6 col-form-label ">{{student.name}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">性别：</label>
+            <label class="col-md-6 col-form-label ">{{student.sex}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">学号：</label>
+            <label class="col-md-6 col-form-label ">{{student.studentNumber}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">电话号码：</label>
+            <label class="col-md-6 col-form-label ">{{student.phoneNumber}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">年级：</label>
+            <label class="col-md-6 col-form-label ">{{student.major.grade}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">专业：</label>
+            <label class="col-md-6 col-form-label ">{{student.major.majorName}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">学院：</label>
+            <label class="col-md-6 col-form-label ">{{student.major.department}}</label>
+        </div>
+        <button class="btn btn-outline-secondary " type="button " style="width:80px; align-items: flex-end; " (click)="back() ">
+            返回
+          </button>
+    </div>
+</div>
+<div class='alert alert-danger' *ngIf='errorMessage'>
+    {{errorMessage}}
+</div>
+<span class="fa fa-spinner spinner " *ngIf="loading "></span>

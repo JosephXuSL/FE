@@ -1,48 +1,42 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-import { ProductListComponent } from './product-list.component';
-import { ProductDetailComponent } from './product-detail.component';
-import { ProductEditComponent } from './product-edit/product-edit.component';
-import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
-import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
 import { ProductResolver } from './product-resolver.service';
-
+import { AgGridModule } from 'ag-grid-angular';
 import { SharedModule } from '../shared/shared.module';
-import { ProductEditGuard } from './product-edit/product-edit.guard';
+import { StudentInfoComponent } from './teacher/student-info/student-info.component';
+import { CourseInfoComponent } from './teacher/course-info/course-info.component';
+import { CourseInfobyMentorComponent } from './teacher/course-infoby-mentor/course-infoby-mentor.component';
+import { ClassinfobymentorComponent } from './teacher/classinfobymentor/classinfobymentor.component';
 
 @NgModule({
   imports: [
     SharedModule,
+    AgGridModule.withComponents([]),
     RouterModule.forChild([
       {
-        path: '',
-        component: ProductListComponent
-      },
+        path: 'studentInfo',
+        component: StudentInfoComponent,
+      },      
       {
-        path: ':id',
-        component: ProductDetailComponent,
-        resolve: { resolvedData: ProductResolver }
-      },
+        path: 'courseInfo',
+        component: CourseInfoComponent,
+      },      
       {
-        path: ':id/edit',
-        component: ProductEditComponent,
-        canDeactivate: [ProductEditGuard],
-        resolve: { resolvedData: ProductResolver },
-        children: [
-          { path: '', redirectTo: 'info', pathMatch: 'full' },
-          { path: 'info', component: ProductEditInfoComponent },
-          { path: 'tags', component: ProductEditTagsComponent }
-        ]
+        path: 'courseInfobyMentor',
+        component: CourseInfobyMentorComponent,
+      },      
+      {
+        path: 'classInfobyMentor',
+        component: ClassinfobymentorComponent,
       }
+     
     ])
   ],
   declarations: [
-    ProductListComponent,
-    ProductDetailComponent,
-    ProductEditComponent,
-    ProductEditInfoComponent,
-    ProductEditTagsComponent
+    StudentInfoComponent,
+    CourseInfoComponent,
+    CourseInfobyMentorComponent,
+    ClassinfobymentorComponent
   ]
 })
 export class ProductModule { }

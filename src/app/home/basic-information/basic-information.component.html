@@ -1,0 +1,54 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            基本信息管理
+            <div class="ml-auto">
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/changePassword']" [disabled]="isadmin()">
+                    修改密码
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body ">
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">姓名：</label>
+            <label class="col-md-6 col-form-label ">{{teacherAccount.teacher.name}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">登录名：</label>
+            <label class="col-md-6 col-form-label ">{{teacherAccount.teacher.teacherNumber}}</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">联系方式：</label>
+            <label class="col-md-6 col-form-label ">{{teacherAccount.teacher.phoneNumber}}</label>
+        </div>
+
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">账户状态：</label>
+            <label class="col-md-6 col-form-label ">{{teacherAccount.accountStatus}}</label>
+        </div>
+
+        <div class="form-group row ">
+
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">账户类型：</label>
+            <label class="col-md-6 col-form-label " *ngIf="!isadmin() ">{{teacherAccount.isMentorAccount?'辅导员':'教师'}}</label>
+            <label class="col-md-6 col-form-label " *ngIf="isadmin() ">管理员</label>
+        </div>
+        <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">备注：</label>
+            <label class="col-md-6 col-form-label ">{{teacherAccount.teacher.teacherComment}}</label>
+        </div>
+    </div>
+</div>
+
+<!-- <div *ngIf="errorMessage"
+       class="alert alert-danger">
+    Error: {{ errorMessage }}
+  </div> -->

@@ -5,11 +5,19 @@ import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthGuard } from './user/auth.guard';
 import { SelectiveStrategy } from './selective-strategy.service';
+import { BasicInformationComponent } from './home/basic-information/basic-information.component';
+import { StudentEnrollsearchComponent } from './home/student-enrollsearch/student-enrollsearch.component';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
+      { path: 'enrollsearchfrostudent', component: StudentEnrollsearchComponent },
+      {
+        path: 'basicInfo',
+        canActivate: [AuthGuard],
+        component: BasicInformationComponent
+      },
       {
         path: 'changePassword',
         canActivate: [AuthGuard],

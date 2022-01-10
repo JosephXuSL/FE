@@ -1,0 +1,121 @@
+<div class="card">
+    <div class="card-header" *ngIf="!viewStudentclick ">
+        查看所有信息（可使用表头控件进行筛选）
+    </div>
+    <div class="card-header " *ngIf="viewStudentclick ">
+        学生信息
+    </div>
+    <div class="card-body ">
+
+        <div class="table-responsive " style="text-align:center " *ngIf="!lookbuttonclick&&!viewStudentclick ">
+            <table class="table mb-0 ">
+                <thead>
+                    <tr>
+                        <th>级</th>
+                        <th>院系</th>
+                        <th>专业</th>
+                        <th>班级</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of allClasses ">
+
+                        <td>{{ data.grade }}</td>
+                        <td>{{ data.department }}</td>
+                        <td>{{ data.majorName}}</td>
+                        <td>{{ data.classNumber}}</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm " (click)="choseClass(data) ">
+                查看该班级学生名单
+              </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-body " *ngIf="lookbuttonclick ">
+            <div class="example-header " style="margin-left: 70px; ">
+                选择: {{selectstudentname}}
+                <span id="selectedRows "></span>
+
+            </div>
+            <div class="example-header ">
+                <button class="btn btn-primary mr-3 " style="width:180px;margin-left: 770px; " [disabled]="!selectstudentname " type="button " title="查询专业 " (click)="searchInfo() ">
+                    查看个人信息
+                </button>
+
+            </div>
+            <div class="form-group row " style="margin-left: 70px; ">
+                <ag-grid-angular style="width:900px; height: 500px; " class="ag-theme-alpine " #courseGrid [gridOptions]="gridOptions " (gridReady)="onGridReady($event) " [rowData]="rowData " [rowSelection]="rowSelection " (selectionChanged)="onSelectionChanged($event)
+        " [columnDefs]="columnDefs ">
+                </ag-grid-angular>
+            </div>
+            <button class="btn btn-outline-secondary " type="button " style="width:80px; align-items: flex-end; " (click)="backtoclass() ">
+                返回
+              </button>
+        </div>
+        <div class="card-body " *ngIf="viewStudentclick ">
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">姓名：</label>
+                <label class="col-md-6 col-form-label ">{{student.name}}</label>
+            </div>
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">性别：</label>
+                <label class="col-md-6 col-form-label ">{{student.sex}}</label>
+            </div>
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label  "></label>
+                <label class="col-md-3 col-form-label ">学号：</label>
+                <label class="col-md-6 col-form-label ">{{student.studentNumber}}</label>
+            </div>
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">电话号码：</label>
+                <label class="col-md-6 col-form-label ">{{student.phoneNumber}}</label>
+            </div>
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">身份证号码：</label>
+                <label class="col-md-6 col-form-label ">{{student.identityCardNumber}}</label>
+            </div>
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">年级：</label>
+                <label class="col-md-6 col-form-label ">{{student.major.grade}}</label>
+            </div>
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">专业：</label>
+                <label class="col-md-6 col-form-label ">{{student.major.majorName}}</label>
+            </div>
+
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">学院：</label>
+                <label class="col-md-6 col-form-label ">{{student.major.department}}</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 col-form-label "></label>
+                <label class="col-md-3 col-form-label ">状态：</label>
+                <label class="col-md-6 col-form-label ">{{student.studentStatus}}</label>
+            </div>
+            <button class="btn btn-outline-secondary " type="button " style="width:80px; align-items: flex-end; " (click)="backtostudentlist() ">
+            返回
+          </button>
+        </div>
+    </div>
+</div>
+<span class="fa fa-spinner spinner " *ngIf="loading "></span>
+<div class="alert alert-danger " *ngIf="errorMessage ">
+    {{errorMessage}}
+</div>

@@ -209,6 +209,8 @@ export class ManagementServiceMapper {
             input.password = teacherAccount.password;
             input.isMentorAccount = teacherAccount.isMentorAccount;
             input.accountStatus = teacherAccount.accountStatus;
+            input.teacher = teacherAccount.teacher;
+            input.teacherId = teacherAccount.teacherId;
 
         }
         return input;

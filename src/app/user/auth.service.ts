@@ -34,24 +34,34 @@ export class AuthService {
         this.router.navigate(['/products']);
       }
       sessionStorage.setItem('user', userName);
+      sessionStorage.setItem('isadmin', '1');
+      sessionStorage.setItem('teachernumber', userName);
+      sessionStorage.setItem('ismentor', '0');
       return of(true);
     }
     return this.searchAccount(userName, password).pipe(map(res => {
       if (res && res.id) {
         this.currentUser = {
           id: res.id,
-          isMentor: res.isMentorAccount,
+          isMentor: res.teacher.isMentor,
           status: res.accountStatus,
-          userName: userName,
+          userName: res.teacher.name,
+          //要改的
+          //isAdmin: res.isMentorAccount
           isAdmin: false
         };
         this.messageService.addMessage('login Success!');
         if (this.redirectUrl) {
           this.router.navigateByUrl(this.redirectUrl);
         } else {
-          this.router.navigate(['/products']);
+          this.router.navigate(['/welcome']);
         }
-        sessionStorage.setItem('user', userName);
+        sessionStorage.setItem('user', res.teacher.name);
+        sessionStorage.setItem('teachernumber', userName);
+        sessionStorage.setItem('teacherid', res.teacher.id.toString());
+        sessionStorage.setItem('isadmin', this.currentUser.isAdmin ? '1' : '0');
+        sessionStorage.setItem('ismentor', this.currentUser.isMentor ? '1' : '0');
+
         return true;
       } else {
         this.messageService.addMessage('Please enter your correct userName and password');
@@ -62,6 +72,7 @@ export class AuthService {
   }
   logout(): void {
     this.currentUser = null;
+    sessionStorage.clear();
   }
   public searchAccount(accountName: string, password: string): Observable<TeacherAccount> {
     return this.apiClient

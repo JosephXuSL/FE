@@ -14,12 +14,16 @@ export class CourseEditAssociateComponent implements OnInit {
   searchCourses: Course[];
   currentData: any;
   business: Business;
+  loading:boolean;
+  errorMessage:string;
 
   constructor(private managementService: ManagementService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
+    this.loading = true;
+    this.errorMessage = '';
     this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
@@ -29,11 +33,18 @@ export class CourseEditAssociateComponent implements OnInit {
         this.searchCourseName = this.currentData.course.courseName;
       }
     });
+    this.loading = false;
   }
 
   searchInfo() {
+    this.loading = true;
+    this.errorMessage = '';
     this.managementService.searchCourses(this.searchCourseName).subscribe(data => {
         this.searchCourses = data;
+        if (this.searchCourses == null || this.searchCourses.length <= 0) {
+          this.errorMessage = '无查询结果';
+        }
+        this.loading = false;
       });
   }
 

@@ -30,8 +30,23 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/welcome']" routerLinkActive="active">主页</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/basicInfo']" routerLinkActive="active">基本信息管理</a>
+            </li>
             <li *ngFor=" let business of businessList" class="nav-item">
                 <a class="nav-link" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理</a>
+            </li>
+            <li class="nav-item" *ngIf="!isadmin()">
+                <a class="nav-link" [routerLink]="['/products/studentInfo']" routerLinkActive="active">学生管理</a>
+            </li>
+            <li class="nav-item" *ngIf="!isadmin()&&ismentor()">
+                <a class="nav-link" [routerLink]="['/products/classInfobyMentor']" routerLinkActive="active">班级及学生管理</a>
+            </li>
+            <li class="nav-item" *ngIf="!isadmin()&&!ismentor()">
+                <a class="nav-link" [routerLink]="['/products/courseInfo']" routerLinkActive="active">课程表管理</a>
+            </li>
+            <li class="nav-item" *ngIf="!isadmin()&&ismentor()">
+                <a class="nav-link" [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">课程表管理</a>
             </li>
         </ul>
     </div>

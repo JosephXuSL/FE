@@ -16,12 +16,16 @@ export class MajorEditAssociateComponent implements OnInit {
   searchMajors: Major[];
   currentData: any;
   business: Business;
+  loading:boolean;
+  errorMessage:string;
 
   constructor(private managementService: ManagementService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
+    this.loading = true;
+    this.errorMessage = '';
     this.activatedRoute.parent.data.subscribe(data => {
       this.currentData = data['infoResolvedData'].data;
       this.searchGrade = this.currentData.major.grade;
@@ -29,12 +33,19 @@ export class MajorEditAssociateComponent implements OnInit {
       this.searchMajorName = this.currentData.major.majorName;
     });
     this.business = businessList.find(b => b.name === this.activatedRoute.snapshot.parent.paramMap.get('business'));
+    this.loading = false;
   }
 
   searchInfo() {
+    this.loading = true;
+    this.errorMessage = '';
     this.managementService.searchMajors(this.searchGrade,
       this.searchDepartment, this.searchMajorName).subscribe(data => {
         this.searchMajors = data;
+        if (this.searchMajors == null || this.searchMajors.length <= 0) {
+          this.errorMessage = '无查询结果';
+        }
+        this.loading = false;
       });
   }
 

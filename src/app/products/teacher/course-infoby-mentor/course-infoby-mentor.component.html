@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header">
+        查看所属信息（可使用表头控件进行筛选）
+    </div>
+    <div class="card-body" *ngIf="!showPupup">
+        <div class="example-header" style="margin-left: 70px;">
+            选择: {{selectclassname}}
+            <span id="selectedRows"></span>
+
+        </div>
+        <div class="example-header">
+            <button class="btn btn-primary mr-3" style="width:180px;margin-left: 770px;" [disabled]="!selectclassname" type="button" title="查询专业" (click)="searchInfo()">
+                查看班级课程安排
+            </button>
+
+        </div>
+
+        <div class="form-group row" style="margin-left: 70px;">
+            <ag-grid-angular style="width:900px; height: 500px;" class="ag-theme-alpine" #studentinfoGrid [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" [rowData]="rowData"
+                [columnDefs]="columnDefs">
+            </ag-grid-angular>
+        </div>
+
+    </div>
+    <div class="card-body" *ngIf="showPupup">
+        <div class="example-header">
+            课程安排
+        </div>
+
+        <div class="card-body">
+            <div *ngFor="let result of results; let i=index" style="text-align: center;">
+                <label class="col-md-3 col-form-label front">课程名称</label>
+                <label class="col-md-3 col-form-label front">使用教材</label>
+                <label class="col-md-3 col-form-label front">计划课程安排</label>
+                <label class="col-md-3 col-form-label front">上课时间</label>
+                <div style="border:1px solid #CCC"></div>
+                <div *ngIf="i<10" class="message-row">
+                    <label class="col-md-3 col-form-label ">{{result.courseName}}</label>
+                    <label class="col-md-3 col-form-label ">{{result.textbook}}</label>
+                    <label class="col-md-3 col-form-label ">{{result.scheduledWeekday}}</label>
+                    <label class="col-md-3 col-form-label ">{{result.scheduledTime}}</label>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-outline-secondary" type="button" style="width:80px; align-items: flex-end;" (click)="back()">
+            返回
+          </button>
+    </div>
+</div>
+<div class='alert alert-danger' *ngIf='errorMessage'>
+    {{errorMessage}}
+</div>
+<span class="fa fa-spinner spinner" *ngIf="loading"></span>

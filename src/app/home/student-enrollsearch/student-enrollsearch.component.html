@@ -1,0 +1,51 @@
+<div class="card">
+    <div class="card-header">
+        录取查询
+    </div>
+
+    <div class="card-body">
+        <form novalidate (ngSubmit)="login(loginForm)" #loginForm="ngForm" autocomplete="off">
+            <fieldset>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="userNameId">身份证号码：</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="userNameId" type="text" placeholder="身份证号（必填）" required ngModel name="userName" #userNameVar="ngModel" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }" />
+                        <span class="invalid-feedback">
+              <span *ngIf="userNameVar.errors?.required">
+                请填入身份证号码.
+              </span>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-2">
+                        <button class="btn btn-primary mr-3" type="submit" style="width:280px;text-align: center;" [disabled]="!loginForm.valid">
+              查询录取结果
+            </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <form action="">
+        <div class="js5-input-div">
+            <span class="js5-input-divSpan">验证码：</span>
+            <input type="text" placeholder="不区分大小写" class="js5-form3-input" id="js5-form3-input" ng-model="writeCode" maxlength="6" ng-keyup="mykey($event)">
+            <div id="verificationCode" class="codeimg" (click)="clickme()">
+                <canvas width="100" height="43" id="verifyCanvas"></canvas>
+                <img id="code_img">
+            </div>
+            <span class="spanShift" ng-click="changeVerify()">获取</span>
+        </div>
+        <div id="verificationCode" class="codeimg" (click)="clickme()">
+            <canvas width="100" height="43" id="verifyCanvas"></canvas>
+            <img id="code_img">
+        </div>​
+    </form>
+
+    <div class="alert alert-danger" *ngIf="showerror">{{errorMessage}}
+    </div>
+</div>

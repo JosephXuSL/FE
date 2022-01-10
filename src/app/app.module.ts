@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './home/change-password/change-password.component';
+import { BasicInformationComponent } from './home/basic-information/basic-information.component';
+import { StudentEnrollsearchComponent } from './home/student-enrollsearch/student-enrollsearch.component';
 
 
 // Imports for loading & configuring the in-memory web api
@@ -34,7 +36,9 @@ import { MessageModule } from './messages/message.module';
     AppComponent,
     WelcomeComponent,
     PageNotFoundComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    BasicInformationComponent,
+    StudentEnrollsearchComponent
   ],
   bootstrap: [AppComponent]
 })

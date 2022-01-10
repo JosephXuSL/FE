@@ -1,54 +1,47 @@
 <div class="card-body">
-    
+
     <fieldset>
-      <div class="row">
-          <legend>查找学科</legend>
-      </div>
-      <div class="form-group row">
-          <label class="col-md-2 col-form-label"
-                 for="nameId">课程名</label>
-          <div class="col-md-8">
-              <input class="form-control"
-                     id="nameId"
-                     type="text"
-                     [(ngModel)]=searchCourseName
-                     name="name"/>                
-          </div>
-          <button class="btn btn-primary mr-3"
-                style="width:80px"
-                type="button"
-                title="查询学科"
-                (click)="searchInfo()">
+        <div class="row">
+            <legend>查找学科</legend>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="nameId">课程名</label>
+            <div class="col-md-8">
+                <input class="form-control" id="nameId" type="text" [(ngModel)]=searchCourseName name="name" />
+            </div>
+            <button class="btn btn-primary mr-3" style="width:80px" type="button" title="查询学科" (click)="searchInfo()">
           查找
       </button>
-      </div>
-      
+        </div>
+
     </fieldset>
 
     <div class="table-responsive">
-      <table class="table mb-0"
-             *ngIf="searchCourses && searchCourses.length">
-        <thead>
-          <tr>             
-            <th>课程</th>
-            <th>教材信息</th>            
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of searchCourses">
-            
-            <td>{{ data.courseName }}</td>
-            <td>{{ data.textbook }}</td>
-            <td>
-              <button class="btn btn-outline-primary btn-sm"
-                      (click)= "choseCourse(data)">
+        <table class="table mb-0" *ngIf="searchCourses && searchCourses.length">
+            <thead>
+                <tr>
+                    <th>课程</th>
+                    <th>教材信息</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of searchCourses">
+
+                    <td>{{ data.courseName }}</td>
+                    <td>{{ data.textbook }}</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm" (click)="choseCourse(data)">
                 选择
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>  
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<span class="fa fa-spinner spinner" *ngIf="loading"></span>
+<div class="alert alert-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+</div>

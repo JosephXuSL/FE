@@ -18,7 +18,7 @@ export class ChangePasswordComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private managementService: ManagementService) { }
 
   ngOnInit() {
-    this.accountName = sessionStorage.getItem('user');
+    this.accountName = sessionStorage.getItem('teachernumber');
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.teacherAccount.teacherId = params['id'];
     //   //this.teacherAccount.accountName = params['name'];

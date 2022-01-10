@@ -31,8 +31,8 @@ export class AppComponent {
   }
 
   get userName(): string {
-    if (this.authService.currentUser) {
-      return this.authService.currentUser.userName;
+    if (sessionStorage.getItem('user')) {
+      return sessionStorage.getItem('user');
     }
     return '';
   }
@@ -71,6 +71,18 @@ export class AppComponent {
   logOut(): void {
     this.authService.logout();
     this.router.navigateByUrl('/welcome');
-    sessionStorage.removeItem('user');
+    sessionStorage.clear();
+  }
+  ismentor(): boolean {
+    if (sessionStorage.getItem('ismentor') === '1') {
+      return true;
+    }
+    return false;
+  }
+  isadmin(): boolean {
+    if (sessionStorage.getItem('isadmin') === '1') {
+      return true;
+    }
+    return false;
   }
 }

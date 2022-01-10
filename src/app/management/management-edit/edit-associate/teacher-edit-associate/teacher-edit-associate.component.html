@@ -1,60 +1,52 @@
 <div class="card-body">
-    
+
     <fieldset>
-      <div class="row">
-          <legend>查找教师</legend>
-      </div>
-      <div class="form-group row">
-          <label class="col-md-2 col-form-label"
-                 for="nameId">姓名</label>
-          <div class="col-md-8">
-              <input class="form-control"
-                     id="nameId"
-                     type="text"
-                     [(ngModel)]=searchName
-                     name="name"/>                
-          </div>
-          <button class="btn btn-primary mr-3"
-                style="width:80px"
-                type="button"
-                title="查询专业"
-                (click)="searchInfo()">
+        <div class="row">
+            <legend>查找教师</legend>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="nameId">姓名</label>
+            <div class="col-md-8">
+                <input class="form-control" id="nameId" type="text" [(ngModel)]=searchName name="name" />
+            </div>
+            <button class="btn btn-primary mr-3" style="width:80px" type="button" title="查询专业" (click)="searchInfo()">
           查找
       </button>
-      </div>
-      
+        </div>
+
     </fieldset>
 
     <div class="table-responsive">
-      <table class="table mb-0"
-             *ngIf="searchTeachers && searchTeachers.length">
-        <thead>
-          <tr>             
-            <th>姓名</th>
-            <th>工号</th>
-            <th>状态</th>
-            <th>是否是导员</th>              
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let teacher of searchTeachers">
-            
-            <td>{{ teacher.name }}</td>
-            <td>{{ teacher.teacherNumber }}</td>
-            <td>{{ teacher.teacherStatus}}</td>
-            <td>{{ teacher.isMentor}}</td>              
-            <td>
-              <button class="btn btn-outline-primary btn-sm"
-                      (click)= "choseData(teacher)">
+        <table class="table mb-0" *ngIf="searchTeachers && searchTeachers.length">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>工号</th>
+                    <th>状态</th>
+                    <th>是否是导员</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let teacher of searchTeachers">
+
+                    <td>{{ teacher.name }}</td>
+                    <td>{{ teacher.teacherNumber }}</td>
+                    <td>{{ teacher.teacherStatus}}</td>
+                    <td>{{ teacher.isMentor}}</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm" (click)="choseData(teacher)">
                 选择
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-  
-</div>
 
+</div>
+<span class="fa fa-spinner spinner" *ngIf="loading"></span>
+<div class="alert alert-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+</div>

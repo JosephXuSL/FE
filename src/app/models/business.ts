@@ -19,23 +19,6 @@ export interface SubAssociateTab {
 
 export const businessList: Business[] = [
     {
-        name: 'information',
-        nameForShow: '基本信息',
-        subTab: 'informationInfo',
-        subAssociateTab: null,
-        gridHeader: [
-            {
-                headerName: '课程',
-                field: 'courseName'
-            },
-            {
-                headerName: '教材',
-                field: 'textbook'
-            }
-        ],
-        associateBusiness: null
-    },
-    {
         name: 'course',
         nameForShow: '课程',
         subTab: 'courseInfo',
