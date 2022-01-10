@@ -48,6 +48,9 @@
             <li class="nav-item" *ngIf="!isadmin()&&ismentor()">
                 <a class="nav-link" [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">课程表管理</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/enrollsearchfrostudent']" routerLinkActive="active">录取查询</a>
+            </li>
         </ul>
     </div>
 

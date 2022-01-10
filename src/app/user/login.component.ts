@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class LoginComponent {
   errorMessage: string;
-  pageTitle = 'Log In';
+  pageTitle = '登录';
   public showerror = false;
   constructor(private authService: AuthService) { }
 
