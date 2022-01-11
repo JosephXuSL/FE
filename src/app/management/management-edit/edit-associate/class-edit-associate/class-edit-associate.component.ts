@@ -17,8 +17,8 @@ export class ClassEditAssociateComponent implements OnInit {
   searchClasses: Class[];
   currentData: any;
   business: Business;
-  loading:boolean;
-  errorMessage:string;
+  loading: boolean;
+  errorMessage: string;
 
   constructor(private managementService: ManagementService,
               private activatedRoute: ActivatedRoute,

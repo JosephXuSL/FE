@@ -87,4 +87,17 @@
     border-radius: 4px;
 }
 
+.table-popup {
+    width: 540px; 
+    height: 350px;
+    box-sizing: border-box;
+    position: absolute;    
+    background: #fff;
+    left: 50%;
+    top: 50%;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+}
+
 

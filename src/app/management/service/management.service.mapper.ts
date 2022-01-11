@@ -192,6 +192,12 @@ export class ManagementServiceMapper {
         return output;
     }
 
+    static mapCourseScheduleListOutput(data: CourseSchedule[]): CourseScheduleRequestBody[] {
+        const output = [];
+        data.forEach(d => output.push(this.mapCourseScheduleOutput(d)));
+        return output;
+    }
+
     static mapCourseScheduleInput(data: ClientCourseSchedule): CourseSchedule {
         const input = new CourseSchedule();
         input.id = data.id;

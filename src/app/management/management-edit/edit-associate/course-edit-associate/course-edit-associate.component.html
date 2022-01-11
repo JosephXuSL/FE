@@ -9,7 +9,7 @@
             <div class="col-md-8">
                 <input class="form-control" id="nameId" type="text" [(ngModel)]=searchCourseName name="name" />
             </div>
-            <button class="btn btn-primary mr-3" style="width:80px" type="button" title="查询学科" (click)="searchInfo()">
+            <button class="btn btn-primary mr-3" [disabled]="!searchCourseName " style="width:80px" type="button" title="查询学科" (click)="searchInfo()">
           查找
       </button>
         </div>

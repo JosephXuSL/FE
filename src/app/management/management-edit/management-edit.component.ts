@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { Course } from 'src/app/models/course';
+import { CourseSchedule, Schedule } from 'src/app/models/courseSchedule';
 import { Major } from 'src/app/models/major';
 import { Score, StudentNumberAndScore } from 'src/app/models/score';
 
@@ -20,6 +21,8 @@ export class ManagementEditComponent implements OnInit {
   info: any;
   isBasicInformationPage: boolean;
   hiddenInsertTable = true;
+  hiddenCourseScheduleTable = true;
+  scheduleTable: Schedule[];
 
   columnDefs: ColDef[] = [
     {
@@ -62,6 +65,9 @@ export class ManagementEditComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(param => {
       this.business = businessList.find(b => b.name === param.business);
+      if (this.business.name === 'courseSchedule') {
+        this.scheduleTable = Schedule.newScheduleTable();
+      }
     });
     this.activatedRoute.data.subscribe(data => {
       const infoResolvedData: any = data['infoResolvedData'];
@@ -184,7 +190,8 @@ export class ManagementEditComponent implements OnInit {
         }
         return;
       case 'teacherAssociate':
-        if ((this.business.name !== 'courseSchedule' && validationData.mentor.id > 0) || validationData.teacher.id > 0) {
+        if ((this.business.name !== 'courseSchedule' && validationData.mentor.id > 0)
+        || (this.business.name !== 'class' && validationData.teacher.id > 0)) {
           this.dataIsValid[tab] = true;
         } else {
           this.dataIsValid[tab] = false;
@@ -250,40 +257,73 @@ export class ManagementEditComponent implements OnInit {
   }
 
   importInfo() {
+    if (this.rowData.filter(d => d.studentNumber).length === 0) {
+      alert('请填入成绩信息');
+      return;
+    }
     if (this.rowData.find(d => !d.studentNumber)) {
       if (!confirm('数据中有学号为空项， 继续保存将从数据中移除')) {
-          return;
-          }
-      const scoreList = [];
-      for (const data of this.rowData) {
-        if (data.studentNumber) {
-          const scoreData = new Score();
-          scoreData.major = this.info.major;
-          scoreData.semester = this.info.semester;
-          scoreData.course = this.info.course;
-          scoreData.student.studentNumber = data.studentNumber;
-          scoreData.score = data.score;
-          scoreList.push(scoreData);
-        }
+        return;
       }
-      this.managementService.addScores(this.info).subscribe({
+    }
+    const scoreList = [];
+    for (const data of this.rowData) {
+      if (data.studentNumber) {
+        const scoreData = new Score();
+        scoreData.major = this.info.major;
+        scoreData.semester = this.info.semester;
+        scoreData.course = this.info.course;
+        scoreData.student.studentNumber = data.studentNumber;
+        scoreData.score = data.score;
+        scoreList.push(scoreData);
+      }
+    }
+    this.managementService.addScores(scoreList).subscribe(data => {
+      if (data.length > 0) {
+        this.rowData = this.rowData.filter(d => data.indexOf(d));
+        this.gridApi.setRowData(this.rowData);
+        alert('表单剩余学生信息不存在，请核实');
+        this.hiddenInsertTable = false;
+      } else {
+        this.onSaveComplete(`The new ${this.info.majorName} was saved`);
+      }
+    });
+  }
+
+  importCourseSchedule() {
+    if (!this.scheduleTable.find(d => d.value)) {
+      alert('课表时间为空');
+      return;
+    }
+    const courseScheduleList = [];
+    for (const data of this.scheduleTable) {
+      if (data.value) {
+        const courseSchedule = new CourseSchedule();
+        courseSchedule.teacherCourseInfo = this.info.teacherCourseInfo;
+        courseSchedule.scheduledTime = data.scheduledTime;
+        courseSchedule.scheduledWeekday = data.scheduledDay;
+        courseScheduleList.push(courseSchedule);
+      }
+    }
+    this.managementService.addCourseScheduleList(courseScheduleList).subscribe({
         next: () => this.onSaveComplete(`The new ${this.info.majorName} was saved`)
       });
-    }
   }
 
   onCellValueChanged(event) {
     const updateDate = this.rowData.find(d => d.id === event.data.id);
     updateDate.studentNumber = event.data.studentNumber;
-    updateDate.score = event.data.score;
+    updateDate.score = Number(event.data.score);
   }
 
   closeTable() {
     this.hiddenInsertTable = true;
+    this.hiddenCourseScheduleTable = true;
   }
 
   openTable() {
     this.hiddenInsertTable = false;
+    this.hiddenCourseScheduleTable = false;
   }
 
   onGridReady(params) {

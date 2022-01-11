@@ -205,6 +205,12 @@ export class ManagementService {
         } else {
           return ;
         }
+      case 'courseSchedule':
+        if (info.id === 0) {
+          return this.addCourseSchedule(info);
+        } else {
+          return this.saveCourseSchedule(info);
+        }
     }
   }
 
@@ -268,8 +274,24 @@ export class ManagementService {
     return this.apiClient.updateStudents(saveData);
   }
 
-  addScores(data: Score[]): Observable<any> {
+  addScores(data: Score[]): Observable<string[]> {
     return this.apiClient.importExaminations(ManagementServiceMapper.mapScoreListOutput(data));
+  }
+
+  addCourseSchedule(data: CourseSchedule): Observable<any> {
+    const saveData = [];
+    saveData.push(ManagementServiceMapper.mapCourseScheduleOutput(data));
+    return this.apiClient.addCourseSchedule(saveData);
+  }
+  addCourseScheduleList(data: CourseSchedule[]): Observable<any> {
+    return this.apiClient.addCourseSchedule(ManagementServiceMapper.mapCourseScheduleListOutput(data));
+  }
+
+
+  saveCourseSchedule(data: CourseSchedule): Observable<any> {
+    const saveData = [];
+    saveData.push(ManagementServiceMapper.mapCourseScheduleOutput(data));
+    return this.apiClient.updateCourseSchedule(saveData);
   }
 
   searchMajors(grade: string, department: string, majorName: string): Observable<Major[]> {

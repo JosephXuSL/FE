@@ -40,7 +40,6 @@ export class ApiClient {
         }
     }
 
-
     /**
      * @param body (optional) 
      * @return Success
@@ -556,6 +555,61 @@ export class ApiClient {
     }
 
     protected processGetAllTeachers(response: HttpResponseBase): Observable<Teacher[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Teacher.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Teacher[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllNoAccountTeachers(): Observable<Teacher[]> {
+        let url_ = this.baseUrl + "/GetAllNoAccountTeachers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllNoAccountTeachers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllNoAccountTeachers(<any>response_);
+                } catch (e) {
+                    return <Observable<Teacher[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Teacher[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllNoAccountTeachers(response: HttpResponseBase): Observable<Teacher[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4171,7 +4225,7 @@ export class ApiClient {
      * @param body (optional) 
      * @return Success
      */
-    importExaminations(body: ExaminationImportBody[] | null | undefined): Observable<ExaminationImportBody[]> {
+    importExaminations(body: ExaminationImportBody[] | null | undefined): Observable<string[]> {
         let url_ = this.baseUrl + "/ImportExaminations";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4194,14 +4248,14 @@ export class ApiClient {
                 try {
                     return this.processImportExaminations(<any>response_);
                 } catch (e) {
-                    return <Observable<ExaminationImportBody[]>><any>_observableThrow(e);
+                    return <Observable<string[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ExaminationImportBody[]>><any>_observableThrow(response_);
+                return <Observable<string[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processImportExaminations(response: HttpResponseBase): Observable<ExaminationImportBody[]> {
+    protected processImportExaminations(response: HttpResponseBase): Observable<string[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4215,7 +4269,7 @@ export class ApiClient {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(ExaminationImportBody.fromJS(item));
+                    result200!.push(item);
             }
             return _observableOf(result200);
             }));
@@ -4224,7 +4278,7 @@ export class ApiClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ExaminationImportBody[]>(<any>null);
+        return _observableOf<string[]>(<any>null);
     }
 
     /**

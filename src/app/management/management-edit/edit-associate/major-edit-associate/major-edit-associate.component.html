@@ -9,7 +9,7 @@
         <div class="form-group row">
             <label class="col-md-2 col-form-label" for="gradeId">级</label>
             <div class="col-md-8">
-                <input class="form-control" id="gradeId" type="text" [(ngModel)]=s earchGrade name="Grade" />
+                <input class="form-control" id="gradeId" type="text" [(ngModel)]=searchGrade name="Grade" />
             </div>
         </div>
 
@@ -25,7 +25,7 @@
             <div class="col-md-8">
                 <input class="form-control" id="majorNameId" type="text" [(ngModel)]=searchMajorName name="majorName" />
             </div>
-            <button class="btn btn-primary mr-3" style="width:80px" type="button" title="查询专业" (click)="searchInfo()">
+            <button class="btn btn-primary mr-3" [disabled]="!(searchGrade || searchMajorName || searchDepartment)" style="width:80px" type="button" title="查询专业" (click)="searchInfo()">
             查找
         </button>
         </div>

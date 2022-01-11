@@ -70,6 +70,53 @@
             </div>
         </div>
 
+        <div class="form-group row" *ngIf="courseSchedule.id!==0">
+            <label class="col-md-2 col-form-label"
+                   for="dayId">课程日</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="dayId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=courseSchedule.scheduledWeekday
+                       name="day"
+                       #dayVar="ngModel"
+                       [ngClass]="{'is-invalid': (dayVar.touched || 
+                                                dayVar.dirty ||
+                                                courseSchedule.id !== 0) && 
+                                                  !dayVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="dayVar.errors?.required">
+                        课程日不能为空.
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group row" *ngIf="courseSchedule.id!==0">
+            <label class="col-md-2 col-form-label"
+                   for="timeId">课程时间</label>
+            <div class="col-md-8">
+                <input class="form-control"
+                       id="timeId"
+                       type="text"
+                       placeholder="（必填）"
+                       required
+                       [(ngModel)]=courseSchedule.scheduledTime
+                       name="time"
+                       #timeVar="ngModel"
+                       [ngClass]="{'is-invalid': (timeVar.touched || 
+                                                timeVar.dirty ||
+                                                courseSchedule.id !== 0) && 
+                                                  !timeVar.valid }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="timeVar.errors?.required">
+                        课程时间不能为空.
+                    </span>
+                </span>
+            </div>
+        </div>
       </fieldset>
     </form>
   </div>
