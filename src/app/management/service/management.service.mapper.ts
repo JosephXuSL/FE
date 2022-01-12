@@ -6,6 +6,7 @@ import {
     CourseSchedule as ClientCourseSchedule,
     CourseScheduleRequestBody,
     Examination, ExaminationImportBody,
+    ExaminationRequestBody,
     Major as ClientMajor, MajorRequestBody,
     Student as ClientStudent, StudentRequestBody,
     Teacher as ClientTeacher, TeacherAccount, TeacherRequestBody
@@ -92,8 +93,8 @@ export class ManagementServiceMapper {
         const input = new Class();
         input.id = data.id;
         input.classNumber = data.classNumber;
-        input.major = this.mapMajorInput(data.major);
-        input.mentor = this.mapTeacherInput(data.mentor);
+        input.major = data.major ? this.mapMajorInput(data.major) : null;
+        input.mentor = data.mentor ? this.mapTeacherInput(data.mentor) : null;
         return input;
     }
 
@@ -127,11 +128,11 @@ export class ManagementServiceMapper {
         input.homeAddress = data.homeAddress;
         input.phoneNumber = data.phoneNumber;
         input.portrait = data.portrait;
-        input.major = this.mapMajorInput(data.major);
+        input.major = data.major ? this.mapMajorInput(data.major) : null;
         input.apartment = data.apartment;
         input.chamber = data.chamber;
         input.bed = data.bed;
-        input.class = this.mapClassInput(data.class);
+        input.class = data.class ? this.mapClassInput(data.class) : null;
         return input;
     }
 
@@ -141,13 +142,13 @@ export class ManagementServiceMapper {
         return output;
     }
 
-    static mapScoreOutput(data: Score): ExaminationImportBody {
-        const output = new ExaminationImportBody();
+    static mapScoreOutput(data: Score): ExaminationRequestBody {
+        const output = new ExaminationRequestBody();
         output.id = data.id;
         output.semester = data.semester;
         output.score = data.score;
         output.majorId = data.major.id;
-        output.studentNumber = data.student.studentNumber;
+        output.studentId = data.student.id;
         output.courseId = data.course.id;
         return output;
     }
@@ -155,11 +156,11 @@ export class ManagementServiceMapper {
     static mapScoreInput(data: Examination): Score {
         const input = new Score();
         input.id = data.id;
-        input.major = this.mapMajorInput(data.major);
-        input.course = this.mapCourseInput(data.course);
+        input.major = data.major ? this.mapMajorInput(data.major) : null;
+        input.course = data.course ? this.mapCourseInput(data.course) : null;
         input.score = data.score;
         input.semester = data.semester;
-        input.student = this.mapStudentInput(data.student);
+        input.student = data.student ? this.mapStudentInput(data.student) : null;
         return input;
     }
 
@@ -177,16 +178,16 @@ export class ManagementServiceMapper {
         const input = new TeacherCourseInfo();
         input.id = data.id;
         input.semester = data.semester;
-        input.teacher = this.mapTeacherInput(data.teacher);
-        input.course = this.mapCourseInput(data.course);
-        input.class = this.mapClassInput(data.class);
+        input.teacher = data.teacher ? this.mapTeacherInput(data.teacher) : null;
+        input.course = data.course ? this.mapCourseInput(data.course) : null;
+        input.class = data.class ? this.mapClassInput(data.class) : null;
         return input;
     }
 
     static mapCourseScheduleOutput(data: CourseSchedule): CourseScheduleRequestBody {
         const output = new CourseScheduleRequestBody();
         output.id = data.id;
-        output.teacherCourseInfo = this.mapTeacherCourseOutput(data.teacherCourseInfo);
+        output.teacherCourseInfo = data.teacherCourseInfo ? this.mapTeacherCourseOutput(data.teacherCourseInfo) : null;
         output.scheduledWeekday = data.scheduledWeekday;
         output.scheduledTime = data.scheduledTime;
         return output;
@@ -201,7 +202,7 @@ export class ManagementServiceMapper {
     static mapCourseScheduleInput(data: ClientCourseSchedule): CourseSchedule {
         const input = new CourseSchedule();
         input.id = data.id;
-        input.teacherCourseInfo = this.mapTeacherCourseInput(data.teacherCourseInfo);
+        input.teacherCourseInfo = data.teacherCourseInfo ? this.mapTeacherCourseInput(data.teacherCourseInfo) : null;
         input.scheduledWeekday = data.scheduledWeekday;
         input.scheduledTime = data.scheduledTime;
         return input;

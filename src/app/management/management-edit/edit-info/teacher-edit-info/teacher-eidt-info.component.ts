@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ManagementService } from 'src/app/management/service/management.service';
 import { Teacher } from 'src/app/models/teacher';
 
 @Component({
@@ -13,8 +14,9 @@ export class TeacherEidtInfoComponent implements OnInit {
 
   errorMessage: string;
   teacher: Teacher;
+  teacherNumberExist = false;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private managementService: ManagementService) { }
 
   ngOnInit() {
     this.activatedRoute.parent.data.subscribe(data => {
@@ -24,5 +26,12 @@ export class TeacherEidtInfoComponent implements OnInit {
 
       this.teacher = data['infoResolvedData'].data;
     });
+  }
+  checkTeacherNumber() {
+    if (this.teacher.teacherNumber) {
+      this.managementService.checkTeacherExistByTeacherNumber(this.teacher.teacherNumber).subscribe(data => {
+        this.teacherNumberExist = data;
+      });
+    }
   }
 }

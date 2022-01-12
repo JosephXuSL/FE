@@ -757,6 +757,62 @@ export class ApiClient {
      * @param body (optional) 
      * @return Success
      */
+    checkTeacherByteacherNumber(body: string | null | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/CheckTeacherByteacherNumber";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCheckTeacherByteacherNumber(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCheckTeacherByteacherNumber(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCheckTeacherByteacherNumber(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     addMajors(body: MajorRequestBody[] | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/AddMajors";
         url_ = url_.replace(/[?&]$/, "");
@@ -3846,6 +3902,66 @@ export class ApiClient {
      * @param body (optional) 
      * @return Success
      */
+    getCourseScheduleByIds(body: number[] | null | undefined): Observable<CourseSchedule[]> {
+        let url_ = this.baseUrl + "/GetCourseScheduleByIds";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCourseScheduleByIds(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCourseScheduleByIds(<any>response_);
+                } catch (e) {
+                    return <Observable<CourseSchedule[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CourseSchedule[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCourseScheduleByIds(response: HttpResponseBase): Observable<CourseSchedule[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CourseSchedule.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CourseSchedule[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     addCourseSelection(body: CourseSelectionRequestBody[] | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/AddCourseSelection";
         url_ = url_.replace(/[?&]$/, "");
@@ -4505,40 +4621,96 @@ export class ApiClient {
      * @param password (optional) 
      * @return Success
      */
-    getTeacherAccountByTeacherNameAndPassword(teacherName: string | null | undefined, password: string | null | undefined, details: string): Observable<TeacherAccount> {
-        let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNameAndPassword/{details}?";
-        if (details === undefined || details === null)
-            throw new Error("The parameter 'details' must be defined.");
-        url_ = url_.replace("{details}", encodeURIComponent("" + details));
-        if (teacherName !== undefined && teacherName !== null)
-            url_ += "teacherName=" + encodeURIComponent("" + teacherName) + "&";
-        if (password !== undefined && password !== null)
-            url_ += "password=" + encodeURIComponent("" + password) + "&";
+ getTeacherAccountByTeacherNameAndPassword(teacherName: string | null | undefined, password: string | null | undefined, details: string): Observable<TeacherAccount> {
+    let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNameAndPassword/{details}?";
+    if (details === undefined || details === null)
+        throw new Error("The parameter 'details' must be defined.");
+    url_ = url_.replace("{details}", encodeURIComponent("" + details));
+    if (teacherName !== undefined && teacherName !== null)
+        url_ += "teacherName=" + encodeURIComponent("" + teacherName) + "&";
+    if (password !== undefined && password !== null)
+        url_ += "password=" + encodeURIComponent("" + password) + "&";
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_ : any = {
+        observe: "response",
+        responseType: "blob",
+        headers: new HttpHeaders({
+            "Accept": "application/json"
+        })
+    };
+
+    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.processGetTeacherAccountByTeacherNameAndPassword(response_);
+    })).pipe(_observableCatch((response_: any) => {
+        if (response_ instanceof HttpResponseBase) {
+            try {
+                return this.processGetTeacherAccountByTeacherNameAndPassword(<any>response_);
+            } catch (e) {
+                return <Observable<TeacherAccount>><any>_observableThrow(e);
+            }
+        } else
+            return <Observable<TeacherAccount>><any>_observableThrow(response_);
+    }));
+}
+
+protected processGetTeacherAccountByTeacherNameAndPassword(response: HttpResponseBase): Observable<TeacherAccount> {
+    const status = response.status;
+    const responseBlob =
+        response instanceof HttpResponse ? response.body :
+        (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+    if (status === 200) {
+        return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        let result200: any = null;
+        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+        result200 = TeacherAccount.fromJS(resultData200);
+        return _observableOf(result200);
+        }));
+    } else if (status !== 200 && status !== 204) {
+        return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }));
+    }
+    return _observableOf<TeacherAccount>(<any>null);
+}
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    getExaminationsByIds(body: number[] | null | undefined): Observable<Examination[]> {
+        let url_ = this.baseUrl + "/GetExaminationsByIds";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTeacherAccountByTeacherNameAndPassword(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExaminationsByIds(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetTeacherAccountByTeacherNameAndPassword(<any>response_);
+                    return this.processGetExaminationsByIds(<any>response_);
                 } catch (e) {
-                    return <Observable<TeacherAccount>><any>_observableThrow(e);
+                    return <Observable<Examination[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<TeacherAccount>><any>_observableThrow(response_);
+                return <Observable<Examination[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetTeacherAccountByTeacherNameAndPassword(response: HttpResponseBase): Observable<TeacherAccount> {
+    protected processGetExaminationsByIds(response: HttpResponseBase): Observable<Examination[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4549,7 +4721,11 @@ export class ApiClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TeacherAccount.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Examination.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4557,8 +4733,128 @@ export class ApiClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<TeacherAccount>(<any>null);
+        return _observableOf<Examination[]>(<any>null);
     }
+}
+
+export class Teacher implements ITeacher {
+    id?: number;
+    name?: string | undefined;
+    teacherNumber?: string | undefined;
+    teacherStatus?: string | undefined;
+    teacherComment?: string | undefined;
+    phoneNumber?: string | undefined;
+    isMentor?: boolean;
+
+    constructor(data?: ITeacher) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.teacherNumber = _data["teacherNumber"];
+            this.teacherStatus = _data["teacherStatus"];
+            this.teacherComment = _data["teacherComment"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.isMentor = _data["isMentor"];
+        }
+    }
+
+    static fromJS(data: any): Teacher {
+        data = typeof data === 'object' ? data : {};
+        let result = new Teacher();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["teacherNumber"] = this.teacherNumber;
+        data["teacherStatus"] = this.teacherStatus;
+        data["teacherComment"] = this.teacherComment;
+        data["phoneNumber"] = this.phoneNumber;
+        data["isMentor"] = this.isMentor;
+        return data; 
+    }
+}
+
+export interface ITeacher {
+    id?: number;
+    name?: string | undefined;
+    teacherNumber?: string | undefined;
+    teacherStatus?: string | undefined;
+    teacherComment?: string | undefined;
+    phoneNumber?: string | undefined;
+    isMentor?: boolean;
+}
+
+export class TeacherAccount implements ITeacherAccount {
+    id?: number;
+    teacherId?: number;
+    teacher?: Teacher;
+    accountName?: string | undefined;
+    password?: string | undefined;
+    accountStatus?: string | undefined;
+    isMentorAccount?: boolean;
+
+    constructor(data?: ITeacherAccount) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.teacherId = _data["teacherId"];
+            this.teacher = _data["teacher"] ? Teacher.fromJS(_data["teacher"]) : <any>undefined;
+            this.accountName = _data["accountName"];
+            this.password = _data["password"];
+            this.accountStatus = _data["accountStatus"];
+            this.isMentorAccount = _data["isMentorAccount"];
+        }
+    }
+
+    static fromJS(data: any): TeacherAccount {
+        data = typeof data === 'object' ? data : {};
+        let result = new TeacherAccount();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["teacherId"] = this.teacherId;
+        data["teacher"] = this.teacher ? this.teacher.toJSON() : <any>undefined;
+        data["accountName"] = this.accountName;
+        data["password"] = this.password;
+        data["accountStatus"] = this.accountStatus;
+        data["isMentorAccount"] = this.isMentorAccount;
+        return data; 
+    }
+}
+
+export interface ITeacherAccount {
+    id?: number;
+    teacherId?: number;
+    teacher?: Teacher;
+    accountName?: string | undefined;
+    password?: string | undefined;
+    accountStatus?: string | undefined;
+    isMentorAccount?: boolean;
 }
 
 export class CourseRequestBody implements ICourseRequestBody {
@@ -4703,66 +4999,6 @@ export interface ITeacherRequestBody {
     id: number;
     name: string;
     teacherNumber: string;
-    teacherStatus?: string | undefined;
-    teacherComment?: string | undefined;
-    phoneNumber?: string | undefined;
-    isMentor?: boolean;
-}
-
-export class Teacher implements ITeacher {
-    id?: number;
-    name?: string | undefined;
-    teacherNumber?: string | undefined;
-    teacherStatus?: string | undefined;
-    teacherComment?: string | undefined;
-    phoneNumber?: string | undefined;
-    isMentor?: boolean;
-
-    constructor(data?: ITeacher) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-            this.teacherNumber = _data["teacherNumber"];
-            this.teacherStatus = _data["teacherStatus"];
-            this.teacherComment = _data["teacherComment"];
-            this.phoneNumber = _data["phoneNumber"];
-            this.isMentor = _data["isMentor"];
-        }
-    }
-
-    static fromJS(data: any): Teacher {
-        data = typeof data === 'object' ? data : {};
-        let result = new Teacher();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        data["teacherNumber"] = this.teacherNumber;
-        data["teacherStatus"] = this.teacherStatus;
-        data["teacherComment"] = this.teacherComment;
-        data["phoneNumber"] = this.phoneNumber;
-        data["isMentor"] = this.isMentor;
-        return data; 
-    }
-}
-
-export interface ITeacher {
-    id?: number;
-    name?: string | undefined;
-    teacherNumber?: string | undefined;
     teacherStatus?: string | undefined;
     teacherComment?: string | undefined;
     phoneNumber?: string | undefined;
@@ -5071,66 +5307,6 @@ export interface ITeacherAccountRequestBody {
     password: string;
     accountStatus?: string | undefined;
     isMentorAccount: boolean;
-}
-
-export class TeacherAccount implements ITeacherAccount {
-    id?: number;
-    teacherId?: number;
-    teacher?: Teacher;
-    accountName?: string | undefined;
-    password?: string | undefined;
-    accountStatus?: string | undefined;
-    isMentorAccount?: boolean;
-
-    constructor(data?: ITeacherAccount) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.teacherId = _data["teacherId"];
-            this.teacher = _data["teacher"] ? Teacher.fromJS(_data["teacher"]) : <any>undefined;
-            this.accountName = _data["accountName"];
-            this.password = _data["password"];
-            this.accountStatus = _data["accountStatus"];
-            this.isMentorAccount = _data["isMentorAccount"];
-        }
-    }
-
-    static fromJS(data: any): TeacherAccount {
-        data = typeof data === 'object' ? data : {};
-        let result = new TeacherAccount();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["teacherId"] = this.teacherId;
-        data["teacher"] = this.teacher ? this.teacher.toJSON() : <any>undefined;
-        data["accountName"] = this.accountName;
-        data["password"] = this.password;
-        data["accountStatus"] = this.accountStatus;
-        data["isMentorAccount"] = this.isMentorAccount;
-        return data; 
-    }
-}
-
-export interface ITeacherAccount {
-    id?: number;
-    teacherId?: number;
-    teacher?: Teacher;
-    accountName?: string | undefined;
-    password?: string | undefined;
-    accountStatus?: string | undefined;
-    isMentorAccount?: boolean;
 }
 
 export class ClassRequestBody implements IClassRequestBody {

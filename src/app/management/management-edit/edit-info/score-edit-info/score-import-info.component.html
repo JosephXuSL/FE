@@ -40,17 +40,7 @@
                            placeholder="（前往选择）"
                            required
                            [(ngModel)]=score.major.majorName
-                           name="major"
-                           #majorVar="ngModel"
-                           [ngClass]="{'is-invalid': (majorVar.touched || 
-                                                    majorVar.dirty ||
-                                                    score.id !== 0) &&
-                                                    !majorVar.valid }" />
-                    <span class="invalid-feedback">
-                        <span *ngIf="majorVar.errors?.required">
-                            请选择专业.
-                        </span>
-                    </span>
+                           name="major"/>
                 </div>
             </div>
 
@@ -66,17 +56,7 @@
                            placeholder="（前往选择）"
                            required
                            [(ngModel)]=score.course.courseName
-                           name="courseName"
-                           #courseNameVar="ngModel"
-                           [ngClass]="{'is-invalid': (courseNameVar.touched || 
-                                                    courseNameVar.dirty ||
-                                                    score.id !== 0) &&
-                                                    !courseNameVar.valid }" />
-                    <span class="invalid-feedback">
-                        <span *ngIf="courseNameVar.errors?.required">
-                            请选择课程.
-                        </span>
-                    </span>
+                           name="courseName"/>
                 </div>
             </div>
 

@@ -104,8 +104,12 @@ export class ManagementService {
         return this.getTeacher(id);
       case 'class':
         return this.getClass(id);
-      // case 'student':
-      //   return this.getStudent(id);
+        case 'student':
+          return this.getStudent(id);
+        case 'score':
+          return this.getScore(id);
+        case 'courseSchedule':
+          return this.getCourseSchedule(id);
     }
 
   }
@@ -142,13 +146,29 @@ export class ManagementService {
     }));
   }
 
-  // getStudent(id: number): Observable<Student> {
-  //   const idList = [];
-  //   idList.push(id);
-  //   return this.apiClient.getStudnetByIds(idList).pipe(map(data => {
-  //     return ManagementServiceMapper.mapClassInput(data[0]);
-  //   }));
-  // }
+  getStudent(id: number): Observable<Student> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.getStudentsByIds(idList).pipe(map(data => {
+      return ManagementServiceMapper.mapStudentInput(data[0]);
+    }));
+  }
+
+  getScore(id: number): Observable<Score> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.getExaminationsByIds(idList).pipe(map(data => {
+      return ManagementServiceMapper.mapScoreInput(data[0]);
+    }));
+  }
+
+  getCourseSchedule(id: number): Observable<CourseSchedule> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.getCourseScheduleByIds(idList).pipe(map(data => {
+      return ManagementServiceMapper.mapCourseScheduleInput(data[0]);
+    }));
+  }
 
   getListDataById(business: string, associate: string, id: number): Observable<any> {
     switch (business + associate) {
@@ -201,9 +221,9 @@ export class ManagementService {
         }
       case 'score':
         if (info.id === 0) {
-          return ;
+          return of(null);
         } else {
-          return ;
+          return this.saveScore(info) ;
         }
       case 'courseSchedule':
         if (info.id === 0) {
@@ -278,15 +298,21 @@ export class ManagementService {
     return this.apiClient.importExaminations(ManagementServiceMapper.mapScoreListOutput(data));
   }
 
+  saveScore(data: Score): Observable<any> {
+    const saveData = [];
+    saveData.push(ManagementServiceMapper.mapScoreOutput(data));
+    return this.apiClient.updateExaminations(saveData);
+  }
+
   addCourseSchedule(data: CourseSchedule): Observable<any> {
     const saveData = [];
     saveData.push(ManagementServiceMapper.mapCourseScheduleOutput(data));
     return this.apiClient.addCourseSchedule(saveData);
   }
+
   addCourseScheduleList(data: CourseSchedule[]): Observable<any> {
     return this.apiClient.addCourseSchedule(ManagementServiceMapper.mapCourseScheduleListOutput(data));
   }
-
 
   saveCourseSchedule(data: CourseSchedule): Observable<any> {
     const saveData = [];
@@ -333,6 +359,10 @@ export class ManagementService {
         return ManagementServiceMapper.mapCourseInput(d);
       });
     }));
+  }
+
+  checkTeacherExistByTeacherNumber(teacherNumber: string) {
+    return this.apiClient.checkTeacherByteacherNumber(teacherNumber);
   }
 
   private handleError(err) {

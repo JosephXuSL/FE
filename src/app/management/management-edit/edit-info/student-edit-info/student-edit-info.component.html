@@ -212,19 +212,8 @@
                        id="classId"
                        type="text"
                        placeholder="（前往选择）"
-                       required
                        [(ngModel)]=student.class.classNumber
-                       name="class"
-                       #classVar="ngModel"
-                       [ngClass]="{'is-invalid': (classVar.touched || 
-                                                    classVar.dirty ||
-                                                    student.id !== 0) &&
-                                                    !classVar.valid }" />
-                <span class="invalid-feedback">
-                    <span *ngIf="classVar.errors?.required">
-                        请选择班级.
-                    </span>
-                </span>
+                       name="class" />                
             </div>
         </div>
       </fieldset>

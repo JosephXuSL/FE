@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" name="class" *ngIf="business.name==='class'">
     <div class="card-header">
         <div class="row">
             {{business.nameForShow}}信息  
@@ -53,6 +53,359 @@
     </div>
     
 </div>
+
+<div class="card" name="course" *ngIf="business.name==='course'">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}信息  
+            <div class="ml-auto" >
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                    修改信息
+                </button>
+            </div>          
+        </div>
+    </div>
+    
+    <div class="card-body " >
+        <div class="row ">            
+            <label class="col-md-3 col-form-label ">课程 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.courseName}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">教材 :</label>
+            <label class="col-md-6 col-form-label ">{{detail.textbook}}</label>
+        </div> 
+    </div>
+
+    <div class="card-body " >
+        <div class="row">
+            <div *ngFor="let data of associateBusiness">
+                <button class="btn btn-outline-primary mr-4 btn-sm"
+                        style="width:150px"
+                        type="button"
+                        (click)="viewAll(data.name)">
+                    查看{{business.nameForShow}}{{data.nameForShow}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<div class="card" name="major" *ngIf="business.name==='major'">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}信息  
+            <div class="ml-auto" >
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                    修改信息
+                </button>
+            </div>          
+        </div>
+    </div>
+    
+    <div class="card-body " >       
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">级 :</label>
+            <label class="col-md-6 col-form-label ">{{detail.grade}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">院系 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.department}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">专业 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.majorName}}</label> 
+        </div>
+    </div>
+
+    <div class="card-body " >
+        <div class="row">
+            <div *ngFor="let data of associateBusiness">
+                <button class="btn btn-outline-primary mr-4 btn-sm"
+                        style="width:150px"
+                        type="button"
+                        (click)="viewAll(data.name)">
+                    查看{{business.nameForShow}}{{data.nameForShow}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<div class="card" name="teacher" *ngIf="business.name==='teacher'">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}信息  
+            <div class="ml-auto" >
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                    修改信息
+                </button>
+            </div>          
+        </div>
+    </div>
+    
+    <div class="card-body " >
+        <div class="row ">            
+            <label class="col-md-3 col-form-label ">姓名 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.name}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">教师编号 :</label>
+            <label class="col-md-6 col-form-label ">{{detail.teacherNumber}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">教师状态 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.teacherStatus}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">简介 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.teacherComment}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">电话 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.phoneNumber}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">是否是导员 ：</label>
+            <label class="col-md-6 col-form-label " *ngIf="detail.isMentor">是</label>
+            <label class="col-md-6 col-form-label " *ngIf="!detail.isMentor">否</label>  
+        </div>
+        
+    </div>
+
+    <div class="card-body " >
+        <div class="row">
+            <div *ngFor="let data of associateBusiness">
+                <button class="btn btn-outline-primary mr-4 btn-sm"
+                        style="width:150px"
+                        type="button"
+                        (click)="viewAll(data.name)">
+                    查看{{business.nameForShow}}{{data.nameForShow}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<div class="card" name="student" *ngIf="business.name==='student'">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}信息  
+            <div class="ml-auto" >
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                    修改信息
+                </button>
+            </div>          
+        </div>
+    </div>
+    
+    <div class="card-body " >
+        <div class="row ">            
+            <label class="col-md-3 col-form-label ">姓名 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.name}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">性别 :</label>
+            <label class="col-md-6 col-form-label ">{{detail.sex}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">身份证号 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.identityCardNumber}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">学号 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.studentNumber}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">学生状态 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.studentStatus}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">家庭住址 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.homeAddress}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">联系电话 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.phoneNumber}}</label> 
+        </div>
+        
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">宿舍信息 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.apartment}} {{detail.chamber}} {{detail.bed}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">班级信息 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.class.major.grade}} {{detail.class.major.department}} {{detail.class.classNumber}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">专业 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.major.majorName}}</label> 
+        </div>
+    </div>
+
+    <div class="card-body " >
+        <div class="row">
+            <div *ngFor="let data of associateBusiness">
+                <button class="btn btn-outline-primary mr-4 btn-sm"
+                        style="width:150px"
+                        type="button"
+                        (click)="viewAll(data.name)">
+                    查看{{business.nameForShow}}{{data.nameForShow}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<div class="card" name="score" *ngIf="business.name ==='score'">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}信息  
+            <div class="ml-auto" >
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                    修改信息
+                </button>
+            </div>          
+        </div>
+    </div>
+    
+    <div class="card-body " >
+        <div class="row ">            
+            <label class="col-md-3 col-form-label ">姓名 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.student.name}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">学科 :</label>
+            <label class="col-md-6 col-form-label ">{{detail.course.courseName}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">分数 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.score}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">专业 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.major.grade}} {{detail.major.department}} {{detail.major.majorName}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">学年 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.semester}}</label> 
+        </div>
+
+        
+    </div>
+
+    <div class="card-body " >
+        <div class="row">
+            <div *ngFor="let data of associateBusiness">
+                <button class="btn btn-outline-primary mr-4 btn-sm"
+                        style="width:150px"
+                        type="button"
+                        (click)="viewAll(data.name)">
+                    查看{{business.nameForShow}}{{data.nameForShow}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<div class="card" name="courseSchedule" *ngIf="business.name==='courseSchedule'">
+    <div class="card-header">
+        <div class="row">
+            {{business.nameForShow}}信息  
+            <div class="ml-auto" >
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                    修改信息
+                </button>
+            </div>          
+        </div>
+    </div>
+    
+    <div class="card-body " >
+        <div class="row ">            
+            <label class="col-md-3 col-form-label ">学年 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.teacherCourseInfo.semester}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">讲师 :</label>
+            <label class="col-md-6 col-form-label ">{{detail.teacherCourseInfo.teacher.name}}</label>
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">课程 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.teacherCourseInfo.course.courseName}}</label> 
+        </div>
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">班级信息 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.teacherCourseInfo.class.major.grade}} {{detail.teacherCourseInfo.class.major.department}} {{detail.teacherCourseInfo.class.classNumber}}</label> 
+        </div>       
+
+        <div class="row ">
+            <label class="col-md-3 col-form-label ">上课时间 ：</label>
+            <label class="col-md-6 col-form-label ">{{detail.scheduledWeekday}} {{detail.scheduledTime}}</label> 
+        </div>      
+
+        
+    </div>
+
+    <div class="card-body " >
+        <div class="row">
+            <div *ngFor="let data of associateBusiness">
+                <button class="btn btn-outline-primary mr-4 btn-sm"
+                        style="width:150px"
+                        type="button"
+                        (click)="viewAll(data.name)">
+                    查看{{business.nameForShow}}{{data.nameForShow}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<div class="card-body">
+    <button class="btn btn-outline-secondary mr-3"
+    style="width:80px"
+    type="button"
+    title="Cancel your edits"
+    [routerLink]="['/management', business.name]">
+    返回
+    </button>
+</div>
+
 
 <!-- <div *ngIf="errorMessage"
        class="alert alert-danger">
