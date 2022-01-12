@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ApiClient, Teacher, TeacherAccount } from 'src/app/api-client';
 
 @Component({

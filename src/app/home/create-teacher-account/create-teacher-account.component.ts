@@ -80,7 +80,7 @@ export class CreateTeacherAccountComponent implements OnInit {
     });
   }
   getAllteacherInfo(): void {
-    this.apiClient.getAllTeachers().subscribe(t => {
+    this.apiClient.getAllNoAccountTeachers().subscribe(t => {
       if (t && t.length > 0) {
         this.generateAllteacherowdata(t);
       }
