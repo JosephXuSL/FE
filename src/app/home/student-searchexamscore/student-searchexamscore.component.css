@@ -1,0 +1,82 @@
+.example-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#studentinfoGrid {
+    flex: 1 1 0px;
+    width: 100%;
+}
+
+.example-header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.popup-maskContentBox {
+    position: relative;
+}
+
+.close-icon {
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+    border-radius: 50%;
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.close-icon:hover {
+    cursor: pointer;
+}
+
+.ag-cell-label-container {
+    /*Necessary to allow for text to grow vertically*/
+    height: 100%;
+}
+
+.ag-header-cell-label {
+    /*Necessary to allow for text to grow vertically*/
+    height: 100%;
+    padding: 0 !important;
+    text-align: center;
+}
+
+.ag-header-cell-label .ag-header-cell-text {
+    /*Force the width corresponding at how much width
+      we need once the text is laid out vertically*/
+    width: 55px;
+    writing-mode: vertical-lr;
+    -ms-writing-mode: tb-lr;
+    line-height: 2em;
+    margin-top: 60px;
+    text-align: center;
+    text-align: center;
+}
+
+
+/* Spinner */
+
+.spinner {
+    font-size: 300%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10
+}
+
+.fa-spinner {
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
+}
+
+.front {
+    font-weight: 700;
+}

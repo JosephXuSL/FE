@@ -190,22 +190,22 @@ export class ManagementEditComponent implements OnInit {
         }
         return;
       case 'teacherAssociate':
-        if ((this.business.name !== 'courseSchedule' && validationData.mentor.id > 0)
-        || (this.business.name !== 'class' && validationData.teacher.id > 0)) {
+        if ((this.business.name !== 'courseSchedule' && validationData.mentor && validationData.mentor.id > 0)
+        || (this.business.name !== 'class' && validationData.teacher && validationData.teacher.id > 0)) {
           this.dataIsValid[tab] = true;
         } else {
           this.dataIsValid[tab] = false;
         }
         return;
       case 'classAssociate':
-        if (validationData.class.id > 0 || this.business.name === 'courseSchedule') {
+        if ((validationData.class && validationData.class.id > 0 ) || this.business.name === 'courseSchedule') {
           this.dataIsValid[tab] = true;
         } else {
           this.dataIsValid[tab] = false;
         }
         return;
         case 'courseAssociate':
-          if (validationData.course.id > 0 ) {
+          if (validationData.course && validationData.course.id > 0 ) {
             this.dataIsValid[tab] = true;
           } else {
             this.dataIsValid[tab] = false;

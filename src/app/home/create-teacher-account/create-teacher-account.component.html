@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-header">
+        创建教师账号
+    </div>
+    <div class="card-body" *ngIf="!showPupup">
+
+        <div class="example-header" style="margin-left: 70px;">
+            <b>请在以下教师列表中选择：</b>
+            <br>注：请先在“教师管理”中创建教师信息，再创建账户。账号名为教师编号，默认密码：123456 </div>
+        <div class="row">
+            <label class="col-md-2 col-form--label">
+                
+            </label>
+            <label class="col-md-2 col-form--label">
+                <input type="radio" value="admin" name="gender" [(ngModel)]="gender" required><b>教务账号</b>
+                
+
+            </label>
+            <label class="col-md-4 col-form--label" for="passwordId">
+                <input type="radio" value="notadmin" name="gender" [(ngModel)]="gender" required> <b>教师账号（含授课教师及辅导员）</b>
+
+            </label>
+            <label class="col-md-2 col-form--label" for="passwordId">
+                <button class="btn btn-primary mr-3" type="submit" style="width:180px" [disabled]="!(selectedrowids&&selectedrowids.length>0)" (click)="submit()">
+                    确认创建
+                </button>
+            </label>
+
+        </div>
+        <div class='alert alert-danger' *ngIf='errorMessage'>
+            {{errorMessage}}
+        </div>
+        <div class="form-group row">
+            <ag-grid-angular style="width:800px; height: 500px;margin-left: 70px;" class="ag-theme-alpine" #studentinfoGrid [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
+                [rowData]="rowData" [columnDefs]="columnDefs" rowMultiSelectWithClick="true">
+            </ag-grid-angular>
+        </div>
+
+    </div>
+
+</div>
+
+<span class="fa fa-spinner spinner" *ngIf="loading"></span>

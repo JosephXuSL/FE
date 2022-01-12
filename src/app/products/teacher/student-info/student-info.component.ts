@@ -23,10 +23,10 @@ export class StudentInfoComponent implements OnInit {
   public selectedRows: Array<studentundercourse>;
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '学科', field: 'xueke', sortable: true, filter: 'agTextColumnFilter' },
-    { headerName: '年级', field: 'nianji', sortable: true, filter: 'agTextColumnFilter' },
-    { headerName: '专业', field: 'zhuanye', sortable: true, filter: 'agTextColumnFilter' },
-    { headerName: '学生姓名', field: 'xingming', sortable: true, filter: 'agTextColumnFilter' }
+    { headerName: '学科', field: 'xueke', sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
+    { headerName: '年级', field: 'nianji', sortable: true,  minWidth: 50,maxWidth: 150,filter: 'agTextColumnFilter' },
+    { headerName: '专业', field: 'zhuanye', sortable: true, minWidth: 100,maxWidth: 250, filter: 'agTextColumnFilter' },
+    { headerName: '学生姓名', field: 'xingming', sortable: true, maxWidth: 200,filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   result: Array<any>;

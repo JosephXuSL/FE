@@ -5,16 +5,18 @@
     </div>
     <div class="card-body" *ngIf="!showPupup">
         <div class="example-header" style="margin-left: 70px;">
-            选择: {{selectstudentname}}
+            <label class="col-md-8 col-form-label ">选择: {{selectstudentname}}</label>
             <span id="selectedRows"></span>
-            <button class=" btn btn-primary mr-3 " style="width:180px;margin-left: 700px; " [disabled]="!selectstudentname " type="button " title="查询专业 " (click)="searchInfo() ">
+
+            <button class=" btn btn-primary mr-3 col-md-2 col-form-label" style="width:180px; " [disabled]="!selectstudentname " type="button " title="查询专业 " (click)="searchInfo() ">
                 查看学生信息
             </button>
 
+
         </div>
 
-        <div class="form-group row " style="margin-left: 70px; ">
-            <ag-grid-angular style="width:900px; height: 500px; " class="ag-theme-alpine " #studentinfoGrid [gridOptions]="gridOptions " (gridReady)="onGridReady($event) " [rowSelection]="rowSelection " (selectionChanged)="onSelectionChanged($event)
+        <div class="form-group row " style="align-items: center;">
+            <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; " class="ag-theme-alpine " #studentinfoGrid [gridOptions]="gridOptions " (gridReady)="onGridReady($event) " [rowSelection]="rowSelection " (selectionChanged)="onSelectionChanged($event)
                 " [rowData]="rowData " [columnDefs]="columnDefs ">
             </ag-grid-angular>
         </div>
@@ -22,7 +24,7 @@
     </div>
     <div class="card-body " *ngIf="showPupup ">
         <div class="example-header ">
-            查看学生信息
+            学生信息：
         </div>
 
         <div class="form-group row ">

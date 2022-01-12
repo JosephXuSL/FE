@@ -31,7 +31,7 @@ export class AuthService {
       if (this.redirectUrl) {
         this.router.navigateByUrl(this.redirectUrl);
       } else {
-        this.router.navigate(['/products']);
+        this.router.navigate(['/welcome']);
       }
       sessionStorage.setItem('user', userName);
       sessionStorage.setItem('isadmin', '1');
@@ -47,8 +47,7 @@ export class AuthService {
           status: res.accountStatus,
           userName: res.teacher.name,
           //要改的
-          //isAdmin: res.isMentorAccount
-          isAdmin: false
+          isAdmin: res.isMentorAccount
         };
         this.messageService.addMessage('login Success!');
         if (this.redirectUrl) {

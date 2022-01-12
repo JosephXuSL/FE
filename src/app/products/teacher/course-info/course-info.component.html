@@ -3,8 +3,8 @@
         查看课程信息（可使用表头控件进行筛选）
     </div>
     <div class="card-body">
-        <div class="form-group row" style="margin-left: 70px;">
-            <ag-grid-angular style="width:900px; height: 500px;" class="ag-theme-alpine" #courseGrid [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" [rowData]="rowData" [columnDefs]="columnDefs">
+        <div class="form-group row" style="align-items: center;">
+            <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; " class="ag-theme-alpine" #courseGrid [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" [rowData]="rowData" [columnDefs]="columnDefs">
             </ag-grid-angular>
         </div>
 

@@ -45,6 +45,18 @@
             <label class="col-md-3 col-form-label ">备注：</label>
             <label class="col-md-6 col-form-label ">{{teacherAccount.teacher.teacherComment}}</label>
         </div>
+        <!-- <div class="form-group row ">
+            <label class="col-md-3 col-form-label "></label>
+            <label class="col-md-3 col-form-label ">上传头像：</label>
+
+            <label class="col-md-6 col-form-label ">
+                <input type="file" (change)="fileChange($event)">
+                <img [src]="imgUrl" alt="" width="200px" height="200px">
+            </label>
+        </div> -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+            Error: {{ errorMessage }}
+        </div>
     </div>
 </div>
 

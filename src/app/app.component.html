@@ -26,30 +26,36 @@
 </div>
 <div class="row">
     <div class="page-sidebar col-md-2 bg-light">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav header-list">
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/welcome']" routerLinkActive="active">主页</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="islogin()">
                 <a class="nav-link" [routerLink]="['/basicInfo']" routerLinkActive="active">基本信息管理</a>
             </li>
             <li *ngFor=" let business of businessList" class="nav-item">
-                <a class="nav-link" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理</a>
+                <a *ngIf="isadmin()&&islogin()" class="nav-link" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理</a>
             </li>
-            <li class="nav-item" *ngIf="!isadmin()">
+            <li class="nav-item" *ngIf="isadmin()&&islogin()">
+                <a class="nav-link" [routerLink]="['/createteacheraccount']" routerLinkActive="active">教师账号管理</a>
+            </li>
+            <li class="nav-item" *ngIf="!isadmin()&&islogin()&&!ismentor()">
                 <a class="nav-link" [routerLink]="['/products/studentInfo']" routerLinkActive="active">学生管理</a>
             </li>
-            <li class="nav-item" *ngIf="!isadmin()&&ismentor()">
+            <li class="nav-item" *ngIf="!isadmin()&&ismentor()&&islogin()">
                 <a class="nav-link" [routerLink]="['/products/classInfobyMentor']" routerLinkActive="active">班级及学生管理</a>
             </li>
-            <li class="nav-item" *ngIf="!isadmin()&&!ismentor()">
+            <li class="nav-item" *ngIf="!isadmin()&&!ismentor()&&islogin()">
                 <a class="nav-link" [routerLink]="['/products/courseInfo']" routerLinkActive="active">课程表管理</a>
             </li>
-            <li class="nav-item" *ngIf="!isadmin()&&ismentor()">
+            <li class="nav-item" *ngIf="!isadmin()&&ismentor()&&islogin()">
                 <a class="nav-link" [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">课程表管理</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/enrollsearchfrostudent']" routerLinkActive="active">录取查询</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/examsearchfrostudent']" routerLinkActive="active">成绩查询</a>
             </li>
         </ul>
     </div>

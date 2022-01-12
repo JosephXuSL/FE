@@ -22,10 +22,10 @@ export class CourseInfoComponent implements OnInit {
 
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '课程名称', field: 'courseName', sortable: true, filter: 'agTextColumnFilter' },
-    { textbook: '使用教材', field: 'textbook', sortable: true, filter: 'agTextColumnFilter' },
-    { scheduledWeekday: '计划课程安排', field: 'scheduledWeekday', sortable: true, filter: 'agTextColumnFilter' },
-    { headerName: '上课时间', field: 'scheduledTime', sortable: true, filter: 'agTextColumnFilter' }
+    { headerName: '课程名称', field: 'courseName', sortable: true,maxWidth: 200, filter: 'agTextColumnFilter' },
+    { headerName: '使用教材', field: 'textbook', sortable: true,maxWidth: 200, filter: 'agTextColumnFilter' },
+    { headerName: '计划课程安排', field: 'scheduledWeekday', maxWidth: 200,sortable: true, filter: 'agTextColumnFilter' },
+    { headerName: '上课时间', field: 'scheduledTime', sortable: true,maxWidth: 250, filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   constructor(private apiClient: ApiClient) { }

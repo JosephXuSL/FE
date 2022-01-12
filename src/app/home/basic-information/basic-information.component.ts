@@ -8,8 +8,11 @@ import { ApiClient, Teacher, TeacherAccount } from 'src/app/api-client';
 })
 export class BasicInformationComponent implements OnInit {
   logInUserNm: string;
+  imgUrl;
+  errorMessage: string;
+  public showerror = false;
   public teacherAccount: TeacherAccount;
-  constructor(private apiClient: ApiClient) { }
+  constructor(private apiClient: ApiClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.teacherAccount = new TeacherAccount();
@@ -62,5 +65,26 @@ export class BasicInformationComponent implements OnInit {
         });
     }
 
+  }
+  fileChange(event) {
+    let file = event.target.files[0];
+    let isimg = file.type === 'image/jpeg';
+    if (!isimg) {
+      this.AddErrorMessage('只允许上传JPG文件!');
+      return;
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      this.AddErrorMessage('请上传小于2M的图片');
+
+      return;
+    }
+    let imgUrl = window.URL.createObjectURL(file);
+    let sanitizerUrl = this.sanitizer.bypassSecurityTrustUrl(imgUrl);
+    this.imgUrl = sanitizerUrl;
+  }
+  AddErrorMessage(st:string): void {
+    this.showerror = true;
+    this.errorMessage = st;
   }
 }

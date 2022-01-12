@@ -7,12 +7,17 @@ import { AuthGuard } from './user/auth.guard';
 import { SelectiveStrategy } from './selective-strategy.service';
 import { BasicInformationComponent } from './home/basic-information/basic-information.component';
 import { StudentEnrollsearchComponent } from './home/student-enrollsearch/student-enrollsearch.component';
-
+import { StudentSearchexamscoreComponent } from './home/student-searchexamscore/student-searchexamscore.component';
+import { CreateTeacherAccountComponent } from './home/create-teacher-account/create-teacher-account.component';
 @NgModule({
   imports: [
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
       { path: 'enrollsearchfrostudent', component: StudentEnrollsearchComponent },
+      { path: 'examsearchfrostudent', component: StudentSearchexamscoreComponent },
+      { path: 'createteacheraccount',
+      canActivate: [AuthGuard],
+      component: CreateTeacherAccountComponent },
       {
         path: 'basicInfo',
         canActivate: [AuthGuard],

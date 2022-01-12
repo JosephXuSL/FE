@@ -85,4 +85,10 @@ export class AppComponent {
     }
     return false;
   }
+  islogin(): boolean {
+    if (sessionStorage.getItem('user')) {
+      return true;
+    }
+    return false;
+  }
 }
