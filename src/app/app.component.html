@@ -1,73 +1,82 @@
-<span class="fa fa-spinner spinner" *ngIf="loading"></span>
+<nz-layout>
+    <div nz-row>
 
-<nav class="navbar navbar-expand navbar-light bg-light">
-    <a class="navbar-brand">{{pageTitle}}</a>
+        <nz-header>
+            <div class="logo" style="font-size: x-large; color: white;"><span>学校教务管理系统</span></div>
 
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item" *ngIf="isLoggedIn||isLoggedInSession">
-            <a class="nav-link">欢迎 {{ username }}</a>
-        </li>
-        <!-- <li class="nav-item" *ngIf="!isMessageDisplayed">
-            <a class="nav-link" (click)="displayMessages()">显示提示信息</a>
-        </li>
-        <li class="nav-item" *ngIf="isMessageDisplayed">
-            <a class="nav-link" (click)="hideMessages()">隐藏提示信息</a>
-        </li> -->
-        <li class="nav-item" *ngIf="!(isLoggedIn || isLoggedInSession)">
-            <a class="nav-link" [routerLink]="['/login']">登录</a>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn||isLoggedInSession">
-            <a class="nav-link" (click)="logOut()">注销</a>
-        </li>
-    </ul>
-</nav>
-<div class="container">
+            <ul style="margin-left: 75%; font-size:medium" nz-menu nzTheme="dark" nzMode="horizontal">
+                <li nz-menu-item *ngIf="isLoggedIn||isLoggedInSession">欢迎 {{ username }}</li>
+                <li nz-menu-item *ngIf="!(isLoggedIn || isLoggedInSession)" [routerLink]="['/login']">
+                    登录</li>
+                <li nz-menu-item *ngIf="isLoggedIn||isLoggedInSession" (click)="logOut()">注销</li>
+            </ul>
+        </nz-header>
 
-</div>
-<div class="row">
-    <div class="page-sidebar col-md-2 bg-light">
-        <ul class="navbar-nav header-list">
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/welcome']" routerLinkActive="active">主页</a>
-            </li>
-            <li class="nav-item" *ngIf="islogin()">
-                <a class="nav-link" [routerLink]="['/basicInfo']" routerLinkActive="active">基本信息管理</a>
-            </li>
-            <li *ngFor=" let business of businessList" class="nav-item">
-                <a *ngIf="isadmin()&&islogin()" class="nav-link" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理</a>
-            </li>
-            <li class="nav-item" *ngIf="isadmin()&&islogin()">
-                <a class="nav-link" [routerLink]="['/createteacheraccount']" routerLinkActive="active">教师账号管理</a>
-            </li>
-            <li class="nav-item" *ngIf="!isadmin()&&islogin()&&!ismentor()">
-                <a class="nav-link" [routerLink]="['/products/studentInfo']" routerLinkActive="active">学生管理</a>
-            </li>
-            <li class="nav-item" *ngIf="!isadmin()&&ismentor()&&islogin()">
-                <a class="nav-link" [routerLink]="['/products/classInfobyMentor']" routerLinkActive="active">班级及学生管理</a>
-            </li>
-            <li class="nav-item" *ngIf="!isadmin()&&!ismentor()&&islogin()">
-                <a class="nav-link" [routerLink]="['/products/courseInfo']" routerLinkActive="active">课程表管理</a>
-            </li>
-            <li class="nav-item" *ngIf="!isadmin()&&ismentor()&&islogin()">
-                <a class="nav-link" [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">课程表管理</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/enrollsearchfrostudent']" routerLinkActive="active">录取查询</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/examsearchfrostudent']" routerLinkActive="active">成绩查询</a>
-            </li>
-        </ul>
     </div>
 
-    <div class="col-md-10">
-        <div class="row">
-            <div class="col-md-10" [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''">
-                <router-outlet #o="outlet"></router-outlet>
-            </div>
-            <div class="col-md-2">
-                <router-outlet name="popup"></router-outlet>
-            </div>
-        </div>
-    </div>
-</div>
+    <nz-layout>
+        <nz-sider nzWidth="200px" nzTheme="light">
+            <ul nz-menu nzMode="inline" class="sider-menu">
+                <li nz-submenu nzOpen nzIcon="home" nzTitle="首页">
+                    <ul>
+                        <li nz-menu-item nzSelected [routerLink]="['/welcome']" routerLinkActive="active">
+                            欢迎页面
+                        </li>
+                    </ul>
+                </li>
+                <li nz-submenu nzOpen nzIcon="user" nzTitle="基本信息管理" *ngIf="islogin()">
+                    <ul>
+                        <li nz-menu-item [routerLink]="['/basicInfo']" routerLinkActive="active">
+                            个人信息及密码
+                        </li>
+                    </ul>
+                </li>
+                <li nz-submenu nzTitle="教务服务" nzIcon="laptop" *ngIf="isadmin()&&islogin()">
+                    <ul>
+                        <li nz-menu-item *ngFor=" let business of businessList">
+                            <a *ngIf="isadmin()&&islogin()" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理</a>
+                        </li>
+                        <li nz-menu-item *ngIf="isadmin()&&islogin()">
+                            <a [routerLink]="['/createteacheraccount']" routerLinkActive="active">教师账号管理</a>
+                        </li>
+                    </ul>
+                </li>
+                <li nz-submenu nzTitle="教师服务" nzIcon="book" *ngIf="!isadmin()&&islogin()">
+                    <ul>
+                        <li nz-menu-item *ngIf="!isadmin()&&islogin()&&!ismentor()">
+                            <a [routerLink]="['/products/studentInfo']" routerLinkActive="active">学生管理</a>
+                        </li>
+                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()">
+                            <a [routerLink]="['/products/classInfobyMentor']" routerLinkActive="active">班级及学生管理</a>
+                        </li>
+                        <li nz-menu-item *ngIf="!isadmin()&&!ismentor()&&islogin()">
+                            <a [routerLink]="['/products/courseInfo']" routerLinkActive="active">课程表管理</a>
+                        </li>
+                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()">
+                            <a [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">课程表管理</a>
+                        </li>
+                    </ul>
+                </li>
+                <li nz-submenu nzTitle="公共服务" nzIcon="heart">
+                    <ul>
+                        <li nz-menu-item>
+                            <a [routerLink]="['/enrollsearchfrostudent']" routerLinkActive="active">录取查询</a>
+                        </li>
+                        <li nz-menu-item>
+                            <a [routerLink]="['/examsearchfrostudent']" routerLinkActive="active">成绩查询</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </nz-sider>
+        <nz-layout class="inner-layout">
+            <nz-content>
+                <div class="inner-content">
+                    <router-outlet></router-outlet>
+                </div>
+            </nz-content>
+        </nz-layout>
+    </nz-layout>
+</nz-layout>

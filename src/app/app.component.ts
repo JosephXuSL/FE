@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
+import { NzLayoutComponent } from 'ng-zorro-antd';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 
 import { AuthService } from './user/auth.service';
 import { slideInAnimation } from './app.animation';
 import { MessageService } from './messages/message.service';
 import { businessList } from './models/business';
-
 @Component({
   selector: 'pm-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  animations: [slideInAnimation]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  isCollapsed = false;
   pageTitle = '后台管理';
   loading = true;
   businessList = businessList;

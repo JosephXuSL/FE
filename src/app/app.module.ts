@@ -21,6 +21,12 @@ import { CreateTeacherAccountComponent } from './home/create-teacher-account/cre
 /* Feature Modules */
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
+import { IconsProviderModule } from './icons-provider.module';
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+
+registerLocaleData(zh);
 
 @NgModule({
   imports: [
@@ -32,7 +38,9 @@ import { MessageModule } from './messages/message.module';
     UserModule,
     MessageModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    IconsProviderModule,
+    NgZorroAntdModule
   ],
   declarations: [
     AppComponent,
@@ -44,6 +52,7 @@ import { MessageModule } from './messages/message.module';
     StudentSearchexamscoreComponent,
     CreateTeacherAccountComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [{ provide: NZ_I18N, useValue: zh_CN }]
 })
 export class AppModule { }
