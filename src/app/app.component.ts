@@ -85,6 +85,12 @@ export class AppComponent {
     }
     return false;
   }
+  issuperadmin(): boolean {
+    if (sessionStorage.getItem('issuperadmin') === '1') {
+      return true;
+    }
+    return false;
+  }
   islogin(): boolean {
     if (sessionStorage.getItem('user')) {
       return true;

@@ -3,7 +3,7 @@
         <div class="row">
             基本信息管理
             <div class="ml-auto">
-                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/changePassword']" [disabled]="isadmin()">
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/changePassword']" [disabled]="issuperadmin()">
                     修改密码
                 </button>
             </div>

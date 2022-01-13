@@ -34,6 +34,7 @@ export class AuthService {
         this.router.navigate(['/welcome']);
       }
       sessionStorage.setItem('user', userName);
+      sessionStorage.setItem('issuperadmin', '1');
       sessionStorage.setItem('isadmin', '1');
       sessionStorage.setItem('teachernumber', userName);
       sessionStorage.setItem('ismentor', '0');
@@ -58,6 +59,7 @@ export class AuthService {
         sessionStorage.setItem('user', res.teacher.name);
         sessionStorage.setItem('teachernumber', userName);
         sessionStorage.setItem('teacherid', res.teacher.id.toString());
+        sessionStorage.setItem('issuperadmin', '0');
         sessionStorage.setItem('isadmin', this.currentUser.isAdmin ? '1' : '0');
         sessionStorage.setItem('ismentor', this.currentUser.isMentor ? '1' : '0');
 

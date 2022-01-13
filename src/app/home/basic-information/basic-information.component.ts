@@ -44,6 +44,13 @@ export class BasicInformationComponent implements OnInit {
     }
     return false;
   }
+  issuperadmin(): boolean {
+    let issuperadmin = sessionStorage.getItem('issuperadmin');
+    if (issuperadmin == '1') {
+      return true;
+    }
+    return false;
+  }
   getTeacherAccountInfo(name: string) {
     let teacherid = sessionStorage.getItem('teachernumber');
     if (teacherid) {

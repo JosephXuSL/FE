@@ -42,6 +42,7 @@ export class ChangePasswordComponent implements OnInit {
       }
       this.loading = false;
     }
+    this.loading = false;
   }
   ResetErrorMessage(): void {
     this.showerror = false;
