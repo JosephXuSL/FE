@@ -16,20 +16,19 @@ import { ClassinfobymentorComponent } from './teacher/classinfobymentor/classinf
       {
         path: 'studentInfo',
         component: StudentInfoComponent,
-      },      
+      },
       {
         path: 'courseInfo',
         component: CourseInfoComponent,
-      },      
+      },
       {
         path: 'courseInfobyMentor',
         component: CourseInfobyMentorComponent,
-      },      
+      },
       {
         path: 'classInfobyMentor',
         component: ClassinfobymentorComponent,
       }
-     
     ])
   ],
   declarations: [

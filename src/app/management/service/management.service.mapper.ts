@@ -138,7 +138,18 @@ export class ManagementServiceMapper {
 
     static mapScoreListOutput(data: Score[]): ExaminationImportBody[] {
         const output = [];
-        data.forEach(d => output.push(this.mapScoreOutput(d)));
+        data.forEach(d => output.push(this.mapScoreImportOutput(d)));
+        return output;
+    }
+
+    static mapScoreImportOutput(data: Score): ExaminationImportBody {
+        const output = new ExaminationImportBody();
+        output.id = data.id;
+        output.semester = data.semester;
+        output.score = data.score;
+        output.majorId = data.major.id;
+        output.studentNumber = data.student.studentNumber;
+        output.courseId = data.course.id;
         return output;
     }
 

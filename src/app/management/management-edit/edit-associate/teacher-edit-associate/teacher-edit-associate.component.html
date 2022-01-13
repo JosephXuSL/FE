@@ -16,8 +16,8 @@
 
     </fieldset>
 
-    <div class="table-responsive">
-        <table class="table mb-0" *ngIf="searchTeachers && searchTeachers.length">
+    <div class="table-responsive card-body">
+        <table class="table mb-0" >
             <thead>
                 <tr>
                     <th>姓名</th>
@@ -27,7 +27,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="searchTeachers && searchTeachers.length">
                 <tr *ngFor="let teacher of searchTeachers">
 
                     <td>{{ teacher.name }}</td>

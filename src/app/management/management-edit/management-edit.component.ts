@@ -18,7 +18,6 @@ export class ManagementEditComponent implements OnInit {
   pageTitle = '修改';
   errorMessage = '';
   business: Business;
-  info: any;
   isBasicInformationPage: boolean;
   hiddenInsertTable = true;
   hiddenCourseScheduleTable = true;
@@ -34,8 +33,8 @@ export class ManagementEditComponent implements OnInit {
       resizable: true,
       suppressNavigable: true
     },
-    {headerName: '学号', field: 'studentNumber',resizable: true, lockPosition: true, editable: true},
-    {headerName: '分数', field: 'score', resizable: true,lockPosition: true, editable: true,  valueParser: this.numberParser}
+    {headerName: '学号', field: 'studentNumber', resizable: true, lockPosition: true, editable: true},
+    {headerName: '分数', field: 'score', resizable: true, lockPosition: true, editable: true,  valueParser: this.numberParser}
   ];
   rowData = [];
   count = 0 ;
@@ -50,10 +49,10 @@ export class ManagementEditComponent implements OnInit {
   private currentInfo: any;
   private originalInfo: any;
 
-  get product(): any {
+  get info(): any {
     return this.currentInfo;
   }
-  set product(value: any) {
+  set info(value: any) {
     this.currentInfo = value;
     // Clone the object to retain a copy
     this.originalInfo = { ...value };
@@ -247,6 +246,11 @@ export class ManagementEditComponent implements OnInit {
 
   generateTable() {
     this.hiddenInsertTable = false;
+    if (this.rowData.length > 0 && this.rowData.find(d => d.studentNumber !== null) ) {
+      if ( !confirm('表单中存在数据未保存， 是否继续生成新表单？')) {
+        return;
+      }
+    }
     this.rowData = [];
     for (let i = 0; i < this.count; i++) {
       const data = new StudentNumberAndScore();

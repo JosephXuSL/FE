@@ -39,8 +39,8 @@
 
     </fieldset>
 
-    <div class="table-responsive">
-        <table class="table mb-0" *ngIf="searchClasses && searchClasses.length">
+    <div class="table-responsive card-body">
+        <table class="table mb-0">
             <thead>
                 <tr>
                     <th>级</th>
@@ -50,7 +50,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="searchClasses && searchClasses.length">
                 <tr *ngFor="let data of searchClasses">
 
                     <td>{{ data.major.grade }}</td>

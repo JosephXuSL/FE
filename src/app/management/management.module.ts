@@ -23,6 +23,7 @@ import { ManagementDetailComponent } from './management-detail/management-detail
 import { DetailAssociateComponent } from './management-detail/detail-associate/detail-associate.component';
 import { AssociateListResolver } from './resolver/associate-list.resolver';
 import { CourseScheduleEditInfoComponent } from './management-edit/edit-info/course-schedule-edit-info/course-schedule-edit-info.component';
+import { EditGuard } from './service/edit-guard.service';
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import { CourseScheduleEditInfoComponent } from './management-edit/edit-info/cou
              {
               path: ':business/edit/:id',
               component: ManagementEditComponent,
-            //   canDeactivate: [ProductEditGuard],
+              canDeactivate: [EditGuard],
               resolve: { infoResolvedData: BusinessInfoResolver },
               children: [
                 // { path: '', redirectTo: 'majorInfo', pathMatch: 'full' },
