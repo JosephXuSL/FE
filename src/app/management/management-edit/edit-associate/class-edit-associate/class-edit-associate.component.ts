@@ -48,8 +48,10 @@ export class ClassEditAssociateComponent implements OnInit {
   searchInfo() {
     this.loading = true;
     this.errorMessage = '';
-    this.managementService.searchClasses(this.searchGrade,
-      this.searchDepartment, this.searchMajorName, this.searchClassNumber).subscribe(data => {
+    this.managementService.searchClasses(this.searchGrade && this.searchGrade.length != 0 ? this.searchGrade : null,
+      this.searchDepartment && this.searchDepartment.length != 0 ? this.searchDepartment : null, 
+      this.searchMajorName && this.searchMajorName.length != 0 ?  this.searchMajorName : null,
+      this.searchClassNumber && this.searchClassNumber.length != 0 ?  this.searchClassNumber : null).subscribe(data => {
         this.searchClasses = data;
         if (this.searchClasses == null || this.searchClasses.length <= 0) {
           this.errorMessage = '无查询结果';

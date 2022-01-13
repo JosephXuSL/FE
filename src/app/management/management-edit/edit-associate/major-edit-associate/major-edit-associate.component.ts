@@ -39,8 +39,10 @@ export class MajorEditAssociateComponent implements OnInit {
   searchInfo() {
     this.loading = true;
     this.errorMessage = '';
-    this.managementService.searchMajors(this.searchGrade,
-      this.searchDepartment, this.searchMajorName).subscribe(data => {
+    this.managementService.searchMajors(this.searchGrade && this.searchGrade.length != 0 ? this.searchGrade : null,
+      this.searchDepartment && this.searchDepartment.length != 0 ? this.searchDepartment : null , 
+      this.searchMajorName && this.searchMajorName.length != 0 ?  this.searchMajorName : null)
+      .subscribe(data => {
         this.searchMajors = data;
         if (this.searchMajors == null || this.searchMajors.length <= 0) {
           this.errorMessage = '无查询结果';
