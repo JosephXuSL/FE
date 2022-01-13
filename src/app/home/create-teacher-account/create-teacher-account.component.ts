@@ -23,10 +23,10 @@ export class CreateTeacherAccountComponent implements OnInit {
   // newaccounts: TeacherAccountRequestBody[];
   rowSelection = 'multiple';
   columnDefs = [
-    { headerName: '教师id', checkboxSelection: true, headerCheckboxSelection: true, field: 'teacherid', sortable: true, filter: 'agNumberColumnFilter', hidden: true },
-    { headerName: '教师编号', field: 'teacherNumber', sortable: true, filter: 'agNumberColumnFilter' },
-    { headerName: '教师姓名', field: 'teacherName', sortable: true, filter: 'agNumberColumnFilter' },
-    { headerName: '状态', field: 'status', sortable: true, filter: 'agTextColumnFilter' }
+    { headerName: '教师id', checkboxSelection: true, resizable: true, headerCheckboxSelection: true, field: 'teacherid', sortable: true, filter: 'agNumberColumnFilter', hidden: true },
+    { headerName: '教师编号', field: 'teacherNumber', resizable: true,sortable: true, filter: 'agNumberColumnFilter' },
+    { headerName: '教师姓名', field: 'teacherName',resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
+    { headerName: '状态', field: 'status',resizable: true, sortable: true, filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   str = '';

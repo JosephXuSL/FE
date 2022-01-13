@@ -31,10 +31,11 @@ export class ManagementEditComponent implements OnInit {
       field: 'id',
       cellClass: 'locked-col',
       width: 60,
+      resizable: true,
       suppressNavigable: true
     },
-    {headerName: '学号', field: 'studentNumber', lockPosition: true, editable: true},
-    {headerName: '分数', field: 'score', lockPosition: true, editable: true,  valueParser: this.numberParser}
+    {headerName: '学号', field: 'studentNumber',resizable: true, lockPosition: true, editable: true},
+    {headerName: '分数', field: 'score', resizable: true,lockPosition: true, editable: true,  valueParser: this.numberParser}
   ];
   rowData = [];
   count = 0 ;

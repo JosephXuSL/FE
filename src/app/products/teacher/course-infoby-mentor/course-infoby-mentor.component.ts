@@ -26,10 +26,10 @@ export class CourseInfobyMentorComponent implements OnInit {
 
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '班级', field: 'banji', sortable: true, minWidth: 100, maxWidth: 150,filter: 'agTextColumnFilter' },
-    { headerName: '年级', field: 'nianji', sortable: true, minWidth: 100, maxWidth: 150,filter: 'agTextColumnFilter' },
-    { headerName: '专业', field: 'zhuanye', sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
-    { headerName: '学院', field: 'xueyuan', sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' }
+    { headerName: '班级', field: 'banji', resizable: true, sortable: true, minWidth: 100, maxWidth: 150,filter: 'agTextColumnFilter' },
+    { headerName: '年级', field: 'nianji', resizable: true, sortable: true, minWidth: 100, maxWidth: 200,filter: 'agTextColumnFilter' },
+    { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
+    { headerName: '学院', field: 'xueyuan', resizable: true, sortable: true,  maxWidth: 300,filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   constructor(private apiClient: ApiClient) { }

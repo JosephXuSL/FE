@@ -26,10 +26,10 @@ export class StudentSearchexamscoreComponent implements OnInit {
   private gridColumnApi;
   result: Array<any>;
   rowSelection = 'single';
-    columnDefs = [
-    { headerName: '课 程 名 称', field: 'courseName', sortable: true, filter: 'agTextColumnFilter' },
-    { headerName: '分      数', field: 'score', sortable: true, filter: 'agNumberColumnFilter' },
-    { headerName: '学      期', field: 'semester', sortable: true, filter: 'agTextColumnFilter' }
+  columnDefs = [
+    { headerName: '课 程 名 称', field: 'courseName', resizable: true, sortable: true, filter: 'agTextColumnFilter' },
+    { headerName: '分      数', field: 'score', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
+    { headerName: '学      期', field: 'semester', resizable: true, sortable: true, filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   str = '';

@@ -13,6 +13,8 @@ export class AgGrideService {
             field: h.field,
             sortable: true,
             filter: true,
+            resizable: true,
+            Width: 150,
             filterParams:
             {
                 filterOptions: [

@@ -7,12 +7,12 @@
         <li class="nav-item" *ngIf="isLoggedIn||isLoggedInSession">
             <a class="nav-link">欢迎 {{ username }}</a>
         </li>
-        <li class="nav-item" *ngIf="!isMessageDisplayed">
+        <!-- <li class="nav-item" *ngIf="!isMessageDisplayed">
             <a class="nav-link" (click)="displayMessages()">显示提示信息</a>
         </li>
         <li class="nav-item" *ngIf="isMessageDisplayed">
             <a class="nav-link" (click)="hideMessages()">隐藏提示信息</a>
-        </li>
+        </li> -->
         <li class="nav-item" *ngIf="!(isLoggedIn || isLoggedInSession)">
             <a class="nav-link" [routerLink]="['/login']">登录</a>
         </li>

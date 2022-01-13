@@ -26,11 +26,11 @@ export class ClassinfobymentorComponent implements OnInit {
   constructor(private apiClient: ApiClient) { }
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '姓名', field: 'xingming', sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
-    { headerName: '学号', field: 'xuehao', sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
-    { headerName: '性别', field: 'xingbie', sortable: true, minWidth: 80, maxWidth: 120,filter: 'agTextColumnFilter' },
-    { headerName: '身份证号码', field: 'shenfenzheng', sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
-    { headerName: '电话号码', field: 'dianhua', sortable: true,minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' }
+    { headerName: '姓名', field: 'xingming', resizable: true, sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
+    { headerName: '学号', field: 'xuehao', resizable: true, sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
+    { headerName: '性别', field: 'xingbie', resizable: true, sortable: true, minWidth: 80, maxWidth: 120,filter: 'agTextColumnFilter' },
+    { headerName: '身份证号码', field: 'shenfenzheng', resizable: true, sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
+    { headerName: '电话号码', field: 'dianhua', resizable: true, sortable: true,minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   ngOnInit() {

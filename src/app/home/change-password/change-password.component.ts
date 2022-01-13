@@ -15,6 +15,7 @@ export class ChangePasswordComponent implements OnInit {
   public passwordNum: string;
   accountName: string;
   errorMessage: string;
+  loading: boolean;
   constructor(private activatedRoute: ActivatedRoute, private managementService: ManagementService) { }
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class ChangePasswordComponent implements OnInit {
     // });
   }
   submit(): void {
+    this.loading = true;
     this.ResetErrorMessage();
 
     if (this.passwordNum && this.accountName) {
@@ -38,6 +40,7 @@ export class ChangePasswordComponent implements OnInit {
       } else {
         this.AddSuccessMessage();
       }
+      this.loading = false;
     }
   }
   ResetErrorMessage(): void {
@@ -51,5 +54,6 @@ export class ChangePasswordComponent implements OnInit {
   AddSuccessMessage(): void {
     this.showerror = true;
     this.errorMessage = '密码已修改成功！';
+    this.passwordNum='';
   }
 }

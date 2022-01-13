@@ -22,10 +22,11 @@ export class CourseInfoComponent implements OnInit {
 
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '课程名称', field: 'courseName', sortable: true,maxWidth: 200, filter: 'agTextColumnFilter' },
-    { headerName: '使用教材', field: 'textbook', sortable: true,maxWidth: 200, filter: 'agTextColumnFilter' },
-    { headerName: '计划课程安排', field: 'scheduledWeekday', maxWidth: 200,sortable: true, filter: 'agTextColumnFilter' },
-    { headerName: '上课时间', field: 'scheduledTime', sortable: true,maxWidth: 250, filter: 'agTextColumnFilter' }
+    { headerName: '课程名称', field: 'courseName', resizable: true, sortable: true,maxWidth: 200, filter: 'agTextColumnFilter' },
+    { headerName: '使用教材', field: 'textbook', resizable: true, sortable: true,maxWidth: 200, filter: 'agTextColumnFilter' },
+    { headerName: '学期', field: 'semester', resizable: true, maxWidth: 130,sortable: true, filter: 'agTextColumnFilter' },
+    { headerName: '计划课程安排', field: 'scheduledWeekday', resizable: true, maxWidth: 200,sortable: true, filter: 'agTextColumnFilter' },
+    { headerName: '上课时间', field: 'scheduledTime', resizable: true, sortable: true,maxWidth: 250, filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   constructor(private apiClient: ApiClient) { }
@@ -57,6 +58,7 @@ export class CourseInfoComponent implements OnInit {
         courseName: i.teacherCourseInfo.course.courseName,
         textbook: i.teacherCourseInfo.course.textbook,
         scheduledWeekday: i.scheduledWeekday,
+        semester:i.teacherCourseInfo.semester,
         scheduledTime: i.scheduledTime
       }
       this.result.push(info);
