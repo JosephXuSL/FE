@@ -24,9 +24,9 @@ export class CreateTeacherAccountComponent implements OnInit {
   rowSelection = 'multiple';
   columnDefs = [
     { headerName: '教师id', checkboxSelection: true, resizable: true, headerCheckboxSelection: true, field: 'teacherid', sortable: true, filter: 'agNumberColumnFilter', hidden: true },
-    { headerName: '教师编号', field: 'teacherNumber', resizable: true,sortable: true, filter: 'agNumberColumnFilter' },
-    { headerName: '教师姓名', field: 'teacherName',resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
-    { headerName: '状态', field: 'status',resizable: true, sortable: true, filter: 'agTextColumnFilter' }
+    { headerName: '教师编号', field: 'teacherNumber', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
+    { headerName: '教师姓名', field: 'teacherName', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
+    { headerName: '状态', field: 'status', resizable: true, sortable: true, filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   str = '';
@@ -39,16 +39,18 @@ export class CreateTeacherAccountComponent implements OnInit {
     this.getAllteacherInfo();
   }
   submit(): void {
-
+    this.loading = true;
     let newaccounts = this.generatenewteacherAccounts();
-    
+
     this.addTeacherAccount(newaccounts).subscribe(a => {
       this.errorMessage = "以下编号账户已创建成功：";
       newaccounts.forEach(t => {
         this.apiClient.getTeacherAccountByTeacherNm(t.accountName).subscribe(i => {
           if (i && i.id && i.accountName) {
-            this.errorMessage =  this.errorMessage + "教师编号-"+i.accountName+";";
+            this.errorMessage = this.errorMessage + "教师编号-" + i.accountName + ";";
           }
+          this.selectedrowids = new Array<number>();
+          this.getAllteacherInfo();
         });
 
         this.selectedrowids = new Array<number>();
@@ -83,12 +85,14 @@ export class CreateTeacherAccountComponent implements OnInit {
     this.apiClient.getAllNoAccountTeachers().subscribe(t => {
       if (t && t.length > 0) {
         this.generateAllteacherowdata(t);
+      } else {
+        this.gridApi.setRowData(null);
       }
       this.loading = false;
     });
   }
   generateAllteacherowdata(infolist: any[]): void {
-
+    this.loading = true;
     this.result = new Array<any>();
     infolist.forEach(i => {
 
@@ -102,6 +106,7 @@ export class CreateTeacherAccountComponent implements OnInit {
     });
     this.rowData = this.result;
     this.gridApi.setRowData(this.rowData);
+    this.loading = false;
   }
   generatenewteacherAccounts(): TeacherAccountRequestBody[] {
     let newaccounts = new Array<TeacherAccountRequestBody>();

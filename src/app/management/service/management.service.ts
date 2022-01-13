@@ -174,8 +174,8 @@ export class ManagementService {
     switch (business + associate) {
       case 'classstudent':
         return this.getStudentsByClassID(id);
-      case 'classcouseSchedule':
-        return this.getStudentsByClassID(id);
+      case 'classcourseSchedule':
+        return this.getCourseScheduleByClassID(id);
     }
   }
 
@@ -183,6 +183,13 @@ export class ManagementService {
     return this.apiClient.getStudentsByClassId(id).pipe(map(data => {
       return data.map(d => {
         return ManagementServiceMapper.mapStudentInput(d);
+      });
+    }));
+  }
+  getCourseScheduleByClassID(id: number) {
+    return this.apiClient.getCourseScheduleByClassId(id).pipe(map(data => {
+      return data.map(d => {
+        return ManagementServiceMapper.mapCourseScheduleInput(d);
       });
     }));
   }

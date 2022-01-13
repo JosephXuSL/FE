@@ -20,7 +20,7 @@ export class ManagementDetailComponent implements OnInit {
     });
     this.activatedRoute.params.subscribe(param => {
       this.business = businessList.find(b => b.name === param.business);
-      this.associateBusiness = businessList.filter(b => this.business.associateBusiness.indexOf( b.name) !== -1);
+      this.associateBusiness = businessList.filter(b => this.business.associateBusiness && this.business.associateBusiness.indexOf( b.name) !== -1);
     });
   }
 

@@ -54,6 +54,6 @@ export class ChangePasswordComponent implements OnInit {
   AddSuccessMessage(): void {
     this.showerror = true;
     this.errorMessage = '密码已修改成功！';
-    this.passwordNum='';
+    this.passwordNum = '';
   }
 }
