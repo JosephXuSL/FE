@@ -4804,7 +4804,7 @@ export class TeacherAccount implements ITeacherAccount {
     accountName?: string | undefined;
     password?: string | undefined;
     accountStatus?: string | undefined;
-    isMentorAccount?: boolean;
+    isAdminAccount?: boolean;
 
     constructor(data?: ITeacherAccount) {
         if (data) {
@@ -4823,7 +4823,7 @@ export class TeacherAccount implements ITeacherAccount {
             this.accountName = _data["accountName"];
             this.password = _data["password"];
             this.accountStatus = _data["accountStatus"];
-            this.isMentorAccount = _data["isMentorAccount"];
+            this.isAdminAccount = _data["isAdminAccount"];
         }
     }
 
@@ -4842,7 +4842,7 @@ export class TeacherAccount implements ITeacherAccount {
         data["accountName"] = this.accountName;
         data["password"] = this.password;
         data["accountStatus"] = this.accountStatus;
-        data["isMentorAccount"] = this.isMentorAccount;
+        data["isAdminAccount"] = this.isAdminAccount;
         return data; 
     }
 }
@@ -4854,7 +4854,7 @@ export interface ITeacherAccount {
     accountName?: string | undefined;
     password?: string | undefined;
     accountStatus?: string | undefined;
-    isMentorAccount?: boolean;
+    isAdminAccount?: boolean;
 }
 
 export class CourseRequestBody implements ICourseRequestBody {
@@ -5259,7 +5259,7 @@ export class TeacherAccountRequestBody implements ITeacherAccountRequestBody {
     accountName!: string;
     password!: string;
     accountStatus?: string | undefined;
-    isMentorAccount!: boolean;
+    isAdminAccount!: boolean;
 
     constructor(data?: ITeacherAccountRequestBody) {
         if (data) {
@@ -5277,7 +5277,7 @@ export class TeacherAccountRequestBody implements ITeacherAccountRequestBody {
             this.accountName = _data["accountName"];
             this.password = _data["password"];
             this.accountStatus = _data["accountStatus"];
-            this.isMentorAccount = _data["isMentorAccount"];
+            this.isAdminAccount = _data["isAdminAccount"];
         }
     }
 
@@ -5295,7 +5295,7 @@ export class TeacherAccountRequestBody implements ITeacherAccountRequestBody {
         data["accountName"] = this.accountName;
         data["password"] = this.password;
         data["accountStatus"] = this.accountStatus;
-        data["isMentorAccount"] = this.isMentorAccount;
+        data["isAdminAccount"] = this.isAdminAccount;
         return data; 
     }
 }
@@ -5306,7 +5306,7 @@ export interface ITeacherAccountRequestBody {
     accountName: string;
     password: string;
     accountStatus?: string | undefined;
-    isMentorAccount: boolean;
+    isAdminAccount: boolean;
 }
 
 export class ClassRequestBody implements IClassRequestBody {

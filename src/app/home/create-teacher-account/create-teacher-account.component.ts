@@ -23,6 +23,7 @@ export class CreateTeacherAccountComponent implements OnInit {
   // newaccounts: TeacherAccountRequestBody[];
   rowSelection = 'multiple';
   columnDefs = [
+    // tslint:disable-next-line:max-line-length
     { headerName: '教师id', checkboxSelection: true, resizable: true, headerCheckboxSelection: true, field: 'teacherid', sortable: true, filter: 'agNumberColumnFilter', hidden: true },
     { headerName: '教师编号', field: 'teacherNumber', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
     { headerName: '教师姓名', field: 'teacherName', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
@@ -40,14 +41,14 @@ export class CreateTeacherAccountComponent implements OnInit {
   }
   submit(): void {
     this.loading = true;
-    let newaccounts = this.generatenewteacherAccounts();
+    const newaccounts = this.generatenewteacherAccounts();
 
     this.addTeacherAccount(newaccounts).subscribe(a => {
-      this.errorMessage = "以下编号账户已创建成功：";
+      this.errorMessage = '以下编号账户已创建成功：';
       newaccounts.forEach(t => {
         this.apiClient.getTeacherAccountByTeacherNm(t.accountName).subscribe(i => {
           if (i && i.id && i.accountName) {
-            this.errorMessage = this.errorMessage + "教师编号-" + i.accountName + ";";
+            this.errorMessage = this.errorMessage + '教师编号-' + i.accountName + ';';
           }
           this.selectedrowids = new Array<number>();
           this.getAllteacherInfo();
@@ -73,11 +74,11 @@ export class CreateTeacherAccountComponent implements OnInit {
     this.selectedrowids = new Array<any>();
     const selectedRows = this.gridApi.getSelectedRows();
     selectedRows.forEach(e => {
-      let info = {
+      const info = {
         teacherid: e.teacherid,
         teacherNumber: e.teacherNumber,
-        isAdmin: this.gender == 'admin'
-      }
+        isAdmin: this.gender === 'admin'
+      };
       this.selectedrowids.push(info);
     });
   }
@@ -96,12 +97,12 @@ export class CreateTeacherAccountComponent implements OnInit {
     this.result = new Array<any>();
     infolist.forEach(i => {
 
-      let info = {
+      const info = {
         teacherid: i.id,
         teacherNumber: i.teacherNumber,
         teacherName: i.name,
         status: i.teacherStatus,
-      }
+      };
       this.result.push(info);
     });
     this.rowData = this.result;
@@ -109,16 +110,16 @@ export class CreateTeacherAccountComponent implements OnInit {
     this.loading = false;
   }
   generatenewteacherAccounts(): TeacherAccountRequestBody[] {
-    let newaccounts = new Array<TeacherAccountRequestBody>();
+    const newaccounts = new Array<TeacherAccountRequestBody>();
     this.selectedrowids.forEach(i => {
 
-      let newteacherAccount = new TeacherAccountRequestBody();
+      const newteacherAccount = new TeacherAccountRequestBody();
       newteacherAccount.id = 0;
       newteacherAccount.accountName = i.teacherNumber;
       newteacherAccount.teacherId = i.teacherid;
-      newteacherAccount.isMentorAccount = this.gender == 'admin';
-      newteacherAccount.accountStatus = "在职";
-      newteacherAccount.password = "123456";
+      newteacherAccount.isAdminAccount = this.gender === 'admin';
+      newteacherAccount.accountStatus = '在职';
+      newteacherAccount.password = '123456';
 
       newaccounts.push(newteacherAccount);
     });

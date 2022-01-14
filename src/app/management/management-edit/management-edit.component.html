@@ -76,7 +76,7 @@
     </div>
 </div>
 
-<div class="card table-popup" [hidden]="hiddenCourseScheduleTable" *ngIf="business.name =='courseSchedule' && info.id === 0">
+<div class="card table-popup" [hidden]="hiddenCourseScheduleTable" *ngIf="business.name =='courseSchedule' && (!info ||(info && info.id === 0))">
     <div class="card-header">选择上课时间
         <button class="btn btn-light btn-sm float-right" (click)="closeTable()">
       —

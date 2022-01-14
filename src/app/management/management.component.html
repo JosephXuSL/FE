@@ -45,7 +45,7 @@
 
             <label class="col-md-3 col-form-label ">账户类型：</label>
 
-            <label class="col-md-6 col-form-label " *ngIf="!isadmin ">{{teacherAccount.isMentorAccount?'辅导员':'教师'}}</label>
+            <label class="col-md-6 col-form-label " *ngIf="!isadmin ">{{teacherAccount.isAdminAccount?'辅导员':'教师'}}</label>
             <label class="col-md-6 col-form-label " *ngIf="isadmin ">管理员</label>
 
         </div>

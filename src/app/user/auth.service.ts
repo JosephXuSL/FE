@@ -47,8 +47,8 @@ export class AuthService {
           isMentor: res.teacher.isMentor,
           status: res.accountStatus,
           userName: res.teacher.name,
-          //要改的
-          isAdmin: res.isMentorAccount
+          // 要改的
+          isAdmin: res.isAdminAccount
         };
         this.messageService.addMessage('login Success!');
         if (this.redirectUrl) {

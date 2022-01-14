@@ -50,7 +50,7 @@ export class ManagementComponent implements OnInit {
           this.isadmin = true;
           this.teacherAccount.id = 0;
           this.teacherAccount.teacherId = 0;
-          this.teacherAccount.isMentorAccount = false;
+          this.teacherAccount.isAdminAccount = false;
           this.teacherAccount.accountStatus = '正常';
           this.teacherAccount.accountName = '管理员';
           this.teacherAccount.password = 'admin';
@@ -83,7 +83,7 @@ export class ManagementComponent implements OnInit {
       if (t) {
         this.teacherAccount.id = t.id;
         this.teacherAccount.teacherId = t.teacherId;
-        this.teacherAccount.isMentorAccount = t.isMentorAccount;
+        this.teacherAccount.isAdminAccount = t.isAdminAccount;
         this.teacherAccount.accountStatus = t.accountStatus;
         this.teacherAccount.accountName = t.accountName;
         this.teacherAccount.password = t.password;
