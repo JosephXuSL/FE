@@ -11,11 +11,13 @@ export class BasicInformationComponent implements OnInit {
   logInUserNm: string;
   imgUrl;
   errorMessage: string;
+  loading: boolean;
   public showerror = false;
   public teacherAccount: TeacherAccount;
   constructor(private apiClient: ApiClient, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
+    this.loading = true;
     this.teacherAccount = new TeacherAccount();
     this.teacherAccount.teacher = new Teacher()
     this.logInUserNm = sessionStorage.getItem('teachernumber');
@@ -32,7 +34,7 @@ export class BasicInformationComponent implements OnInit {
         this.teacherAccount.teacher.teacherNumber = '0';
         this.teacherAccount.teacher.phoneNumber = '';
         this.teacherAccount.teacher.teacherComment = '';
-
+        this.loading = false;
       }
     }
 
@@ -69,7 +71,7 @@ export class BasicInformationComponent implements OnInit {
             this.teacherAccount.password = t.password;
 
           }
-
+          this.loading = false;
         });
     }
 
@@ -91,7 +93,7 @@ export class BasicInformationComponent implements OnInit {
     let sanitizerUrl = this.sanitizer.bypassSecurityTrustUrl(imgUrl);
     this.imgUrl = sanitizerUrl;
   }
-  AddErrorMessage(st:string): void {
+  AddErrorMessage(st: string): void {
     this.showerror = true;
     this.errorMessage = st;
   }

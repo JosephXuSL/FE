@@ -119,4 +119,7 @@
     <div class="alert alert-danger" *ngIf="showerror">{{errorMessage}}
     </div>
 </div>
-<span class="fa fa-spinner spinner" *ngIf="loading"></span>
+<div *ngIf='loading'>
+    <span class="fa fa-spinner spinner">
+    </span>
+</div>

@@ -40,7 +40,6 @@ export class ChangePasswordComponent implements OnInit {
       } else {
         this.AddSuccessMessage();
       }
-      this.loading = false;
     }
     this.loading = false;
   }
