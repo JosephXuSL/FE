@@ -1,10 +1,13 @@
+<span class="fa fa-spinner spinner"
+      *ngIf="loading"></span>
+
 <nz-layout>
     <div nz-row>
 
         <nz-header>
             <div class="logo" style="font-size: x-large; color: white;"><span>学校教务管理系统</span></div>
 
-            <ul style="margin-left: 75%; font-size:medium" nz-menu nzTheme="dark" nzMode="horizontal">
+            <ul style="margin-left: 75%; font-size:medium; padding:9px" nz-menu nzTheme="dark" nzMode="horizontal">
                 <li nz-menu-item *ngIf="isLoggedIn||isLoggedInSession">欢迎 {{ username }}</li>
                 <li nz-menu-item *ngIf="!(isLoggedIn || isLoggedInSession)" [routerLink]="['/login']">
                     登录</li>
