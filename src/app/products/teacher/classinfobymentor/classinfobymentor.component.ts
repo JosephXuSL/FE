@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ClassInfoRequestBody, Major, Student } from 'src/app/api-client';
-import { Class } from 'src/app/models/class';
-import { ApiClient, CourseSchedule } from 'src/app/api-client';
-import { map } from 'rxjs/operators';
+import { Major, Student } from 'src/app/api-client';
+import { ApiClient } from 'src/app/api-client';
 import { GridReadyEvent } from 'ag-grid-community';
 @Component({
   selector: 'pm-classinfobymentor',

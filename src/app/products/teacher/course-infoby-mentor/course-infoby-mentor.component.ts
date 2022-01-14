@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GridReadyEvent } from 'ag-grid-community';
-import { ApiClient, Class, CourseSelection, Student } from 'src/app/api-client';
+import { ApiClient, Class, Student } from 'src/app/api-client';
 import { studentundercourse } from 'src/app/models/studentundercourse';
 
 @Component({

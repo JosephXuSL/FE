@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ApiClient, CourseSelection } from 'src/app/api-client';
 import { studentundercourse } from 'src/app/models/studentundercourse';
-import { GridOptions, GridReadyEvent } from 'ag-grid-community';
+import { GridReadyEvent } from 'ag-grid-community';
 import { Student } from 'src/app/models/student';
 @Component({
   selector: 'pm-student-info',

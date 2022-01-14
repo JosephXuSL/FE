@@ -31,8 +31,8 @@
             {{errorMessage}}
         </div>
         <div class="form-group row">
-            <ag-grid-angular style="width:800px; height: 500px;margin-left: 70px;" class="ag-theme-alpine" #studentinfoGrid [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
-                [rowData]="rowData" [columnDefs]="columnDefs" rowMultiSelectWithClick="true">
+            <ag-grid-angular style="width:800px; height: 500px;margin-left: 70px;" class="ag-theme-alpine" #studentinfoGrid (gridReady)="onGridReady($event)" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" [rowData]="rowData" [columnDefs]="columnDefs"
+                rowMultiSelectWithClick="true">
             </ag-grid-angular>
         </div>
 

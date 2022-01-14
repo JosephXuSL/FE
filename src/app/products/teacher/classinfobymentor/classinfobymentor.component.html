@@ -43,7 +43,7 @@
                 </button>
             </div>
             <div class="form-group row " style="align-items: center; ">
-                <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; " class="ag-theme-alpine " #courseGrid [gridOptions]="gridOptions " (gridReady)="onGridReady($event) " [rowData]="rowData " [rowSelection]="rowSelection
+                <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; " class="ag-theme-alpine " #courseGrid (gridReady)="onGridReady($event) " [rowData]="rowData " [rowSelection]="rowSelection
                     " (selectionChanged)="onSelectionChanged($event) " [columnDefs]="columnDefs ">
                 </ag-grid-angular>
             </div>
