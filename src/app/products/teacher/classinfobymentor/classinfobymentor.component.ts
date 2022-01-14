@@ -115,6 +115,7 @@ export class ClassinfobymentorComponent implements OnInit {
   }
   backtoclass(){
     this.lookbuttonclick=false;   
+    this.selectstudentname = '';
   }
   backtostudentlist(){
     this.viewStudentclick=false;   
