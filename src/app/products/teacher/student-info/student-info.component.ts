@@ -23,10 +23,10 @@ export class StudentInfoComponent implements OnInit {
   public selectedRows: Array<studentundercourse>;
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '学科', field: 'xueke', resizable: true, sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
-    { headerName: '年级', field: 'nianji',resizable: true,  sortable: true,  minWidth: 50,maxWidth: 150,filter: 'agTextColumnFilter' },
-    { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 100,maxWidth: 250, filter: 'agTextColumnFilter' },
-    { headerName: '学生姓名', field: 'xingming',resizable: true,  sortable: true, maxWidth: 200,filter: 'agTextColumnFilter' }
+    { headerName: '学科', field: 'xueke', resizable: true, sortable: true, minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' },
+    { headerName: '年级', field: 'nianji', resizable: true,  sortable: true,  minWidth: 50, maxWidth: 150, filter: 'agTextColumnFilter' },
+    { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 100, maxWidth: 250, filter: 'agTextColumnFilter' },
+    { headerName: '学生姓名', field: 'xingming', resizable: true,  sortable: true, maxWidth: 200, filter: 'agTextColumnFilter' }
   ];
   rowData = [];
   result: Array<any>;
@@ -39,7 +39,7 @@ export class StudentInfoComponent implements OnInit {
 
   }
   getAllStudentundercourse(): void {
-    let teacherNum = sessionStorage.getItem('teachernumber');
+    const teacherNum = sessionStorage.getItem('teachernumber');
     this.apiClient.getCourseSelectionByTeacherAccount(teacherNum).subscribe(t => {
       if (t) {
         this.generateAllStudentundercourseRowdata(t);
@@ -52,12 +52,12 @@ export class StudentInfoComponent implements OnInit {
     this.result = new Array<any>();
     infolist.forEach(i => {
 
-      let info = {
+      const info = {
         nianji: i.teacherCourseInfo.class.major.grade,
         zhuanye: i.teacherCourseInfo.class.major.majorName,
         xueke: i.teacherCourseInfo.course.courseName,
         xingming: i.student.name
-      }
+      };
       this.result.push(info);
     });
     this.rowData = this.result;
