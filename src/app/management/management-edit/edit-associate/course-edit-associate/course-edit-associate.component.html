@@ -17,7 +17,7 @@
     </fieldset>
 
     <div class="table-responsive card-body">
-        <table class="table mb-0" >
+        <table class="table mb-0">
             <thead>
                 <tr>
                     <th>课程</th>
@@ -41,7 +41,10 @@
     </div>
 </div>
 
-<span class="fa fa-spinner spinner" *ngIf="loading"></span>
+<div *ngIf='loading'>
+    <span class="fa fa-spinner spinner">
+    </span>
+</div>
 <div class="alert alert-danger" *ngIf="errorMessage">
     {{errorMessage}}
 </div>

@@ -111,7 +111,10 @@
         </div>
     </div>
 </div>
-<span class="fa fa-spinner spinner " *ngIf="loading "></span>
+<div *ngIf='loading'>
+    <span class="fa fa-spinner spinner">
+    </span>
+</div>
 <div class="alert alert-danger " *ngIf="errorMessage ">
     {{errorMessage}}
 </div>

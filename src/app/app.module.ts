@@ -21,6 +21,7 @@ import { CreateTeacherAccountComponent } from './home/create-teacher-account/cre
 /* Feature Modules */
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { IconsProviderModule } from './icons-provider.module';
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
@@ -39,6 +40,7 @@ registerLocaleData(zh);
     MessageModule,
     AppRoutingModule,
     FormsModule,
+    NzIconModule,
     IconsProviderModule,
     NgZorroAntdModule
   ],
