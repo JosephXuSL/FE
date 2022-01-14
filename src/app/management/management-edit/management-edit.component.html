@@ -60,14 +60,19 @@
 <div class="card popup" [hidden]="hiddenInsertTable" *ngIf="business.name =='score'  &&(!info ||(info && info.id === 0))">
     <div class="card-header">插入学生成绩
         <button class="btn btn-light btn-sm float-right" (click)="closeTable()">
-      —
-    </button>
+             —
+        </button>
     </div>
-    <div class="card-body ">
-        <ag-grid-angular style="width: 500px; height: 500px;" #agGrid class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [singleClickEdit]="true" (cellValueChanged)="onCellValueChanged($event)" (gridReady)="onGridReady($event)">
+    <div class="card-body ">        
+        <ag-grid-angular style="width: 500px; height: 500px;"
+         #agGrid class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [singleClickEdit]="true"
+        [stopEditingWhenCellsLoseFocus]="true"
+        (cellValueChanged)="onCellValueChanged($event)"
+        (gridReady)="onGridReady($event)">
         </ag-grid-angular>
-
-
     </div>
 </div>
 
