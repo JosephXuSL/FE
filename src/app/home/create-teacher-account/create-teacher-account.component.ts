@@ -25,8 +25,8 @@ export class CreateTeacherAccountComponent implements OnInit {
   rowSelection = 'multiple';
   columnDefs = [
     // tslint:disable-next-line:max-line-length
-    { headerName: '教师id', checkboxSelection: true, resizable: true, headerCheckboxSelection: true, field: 'teacherid', sortable: true, filter: 'agNumberColumnFilter', hidden: true },
-    { headerName: '教师编号', field: 'teacherNumber', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
+    { headerName: '教师id',   field: 'teacherid',  hide: true },
+    { headerName: '教师编号', headerCheckboxSelection: true, checkboxSelection: true, field: 'teacherNumber', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
     { headerName: '教师姓名', field: 'teacherName', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
     { headerName: '状态', field: 'status', resizable: true, sortable: true, filter: 'agTextColumnFilter' }
   ];
