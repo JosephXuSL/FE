@@ -3,6 +3,7 @@ import { ApiClient, CourseSelection } from 'src/app/api-client';
 import { studentundercourse } from 'src/app/models/studentundercourse';
 import { GridReadyEvent } from 'ag-grid-community';
 import { Student } from 'src/app/models/student';
+import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
 @Component({
   selector: 'pm-student-info',
   templateUrl: './student-info.component.html',
@@ -28,6 +29,7 @@ export class StudentInfoComponent implements OnInit {
     { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 100, maxWidth: 250, filter: 'agTextColumnFilter' },
     { headerName: '学生姓名', field: 'xingming', resizable: true,  sortable: true, maxWidth: 200, filter: 'agTextColumnFilter' }
   ];
+  localeText = AgGridLocalText;
   rowData = [];
   result: Array<any>;
   constructor(private apiClient: ApiClient) { }

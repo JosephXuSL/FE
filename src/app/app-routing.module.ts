@@ -42,7 +42,12 @@ import { CreateTeacherAccountComponent } from './home/create-teacher-account/cre
       },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent }
-    ], { preloadingStrategy: SelectiveStrategy })   // , { enableTracing: true, preloadingStrategy: SelectiveStrategy }
+    ],
+      {
+        preloadingStrategy: SelectiveStrategy,
+        onSameUrlNavigation: 'reload',
+        useHash: true
+      })   // , { enableTracing: true, preloadingStrategy: SelectiveStrategy }
   ],
   exports: [RouterModule]
 })

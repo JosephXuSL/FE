@@ -4,6 +4,7 @@ import { Student } from 'src/app/models/student';
 import { ApiClient } from 'src/app/api-client';
 import { Major } from 'src/app/models/major';
 import { GridOptions, GridReadyEvent } from 'ag-grid-community';
+import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
 declare let html2canvas: any;
 
 @Component({
@@ -31,13 +32,14 @@ export class StudentSearchexamscoreComponent implements OnInit {
     { headerName: '分      数', field: 'score', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
     { headerName: '学      期', field: 'semester', resizable: true, sortable: true, filter: 'agTextColumnFilter' }
   ];
+  localeText = AgGridLocalText;
   rowData = [];
   str = '';
   constructor(private apiClient: ApiClient) { }
 
   ngOnInit() {
     this.resetpagetobegin();
-    //this.student = new Student();
+    // this.student = new Student();
     this.getyanzhengma();
   }
   sbumit(loginForm: NgForm): void {
@@ -49,20 +51,19 @@ export class StudentSearchexamscoreComponent implements OnInit {
       const userName = loginForm.form.value.userName;
       const shenfenzheng = loginForm.form.value.shenfen;
       const yanzhengma = loginForm.form.value.yanzhengma;
-      if (yanzhengma != this.str) {
-        this.dispalyErrorMessage("验证码错误！");
+      if (yanzhengma !== this.str) {
+        this.dispalyErrorMessage('验证码错误！');
         this.getyanzhengma();
         this.loading = false;
-      }
-      else {
+      } else {
         this.apiClient.getStudentByIDCardNumber(shenfenzheng).subscribe(t => {
-          if (t && t.studentNumber && t.studentNumber == userName) {
-            this.dispalyalertMessage("以下是您的个人信息及成绩单");
+          if (t && t.studentNumber && t.studentNumber === userName) {
+            this.dispalyalertMessage('以下是您的个人信息及成绩单');
             this.mapstudentInformation(t);
             this.getAllStudentunderExam();
           } else {
             this.student = new Student();
-            this.dispalyErrorMessage("未查询到您的相关信息，如与事实不符，请联系管理员");
+            this.dispalyErrorMessage('未查询到您的相关信息，如与事实不符，请联系管理员');
             this.closealertMessage();
           }
           this.loading = false;
@@ -72,23 +73,23 @@ export class StudentSearchexamscoreComponent implements OnInit {
 
     }
   }
-  //yanzhengma 生成部分
+  // yanzhengma 生成部分
   getyanzhengma() {
-    //this.clearCanvas()
+    // this.clearCanvas()
 
-    this.canvas = document.getElementById("verifyCanvas"); //获取HTML端画布
-    var context: CanvasRenderingContext2D = this.canvas.getContext("2d"); //获取画布2D上下文
-    context.fillStyle = "white"; //画布填充色
-    context.fillRect(0, 0, this.canvas.width, this.canvas.height); //清空画布
-    context.fillStyle = "cornflowerblue"; //设置字体颜色
-    context.font = "25px Arial"; //设置字体
-    var rand = new Array();
-    var x = new Array();
-    var y = new Array();
+    this.canvas = document.getElementById('verifyCanvas'); // 获取HTML端画布
+    const context: CanvasRenderingContext2D = this.canvas.getContext('2d'); // 获取画布2D上下文
+    context.fillStyle = 'white'; // 画布填充色
+    context.fillRect(0, 0, this.canvas.width, this.canvas.height); // 清空画布
+    context.fillStyle = 'cornflowerblue'; // 设置字体颜色
+    context.font = '25px Arial'; // 设置字体
+    const rand = new Array();
+    const x = new Array();
+    const y = new Array();
     this.rangenum();
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       rand.push(rand[i]);
-      rand[i] = this.nums[i]
+      rand[i] = this.nums[i];
       x[i] = i * 20 + 10;
       y[i] = Math.random() * 20 + 20;
       context.fillText(rand[i], x[i], y[i]);
@@ -101,16 +102,16 @@ export class StudentSearchexamscoreComponent implements OnInit {
   }
   // 绘制图片
   convertCanvasToImage(canvas) {
-    document.getElementById("verifyCanvas").style.display = "none";
-    this.image = document.getElementById("code_img");
-    this.image.src = canvas.toDataURL("image/png");
+    document.getElementById('verifyCanvas').style.display = 'none';
+    this.image = document.getElementById('code_img');
+    this.image.src = canvas.toDataURL('image/png');
     return this.image;
   }
   rangenum() {
     this.nums = new Array<string>();
     this.validateCode = '';
-    for (var i = 0; i < 4; i++) {
-      let t = Math.floor(Math.random() * 10);
+    for (let i = 0; i < 4; i++) {
+      const t = Math.floor(Math.random() * 10);
       this.nums.push(t.toString());
       this.validateCode = this.validateCode + t.toString();
     }
@@ -164,7 +165,7 @@ export class StudentSearchexamscoreComponent implements OnInit {
     }
   }
   getAllStudentunderExam(): void {
-    let ids = new Array<number>();
+    const ids = new Array<number>();
     ids.push(this.student.id);
     this.apiClient.getExaminationsByStudentIds(ids).subscribe(t => {
       if (t) {
@@ -178,12 +179,11 @@ export class StudentSearchexamscoreComponent implements OnInit {
     this.result = new Array<any>();
     infolist.forEach(i => {
 
-      let info = {
+      const info = {
         courseName: i.course.courseName,
-        
         score: i.score,
         semester: i.semester
-      }
+      };
       this.result.push(info);
     });
     this.rowData = this.result;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ColDef, ColumnApi, GridApi } from 'ag-grid-community';
+import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
 import { Course } from 'src/app/models/course';
 import { CourseSchedule, Schedule } from 'src/app/models/courseSchedule';
 import { Major } from 'src/app/models/major';
@@ -36,6 +37,7 @@ export class ManagementEditComponent implements OnInit {
     {headerName: '学号', field: 'studentNumber', resizable: true, lockPosition: true, editable: true},
     {headerName: '分数', field: 'score', resizable: true, lockPosition: true, editable: true,  valueParser: this.numberParser}
   ];
+  localeText = AgGridLocalText;
   rowData = [];
   count = 0 ;
   private dataIsValid: { [key: string]: boolean } = {};

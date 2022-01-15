@@ -7,6 +7,7 @@ import { Business, businessList } from '../models/business';
 import { AgGrideService } from './service/ag-gride.service';
 import { TeacherAccount } from '../api-client';
 import { ManagementService } from './service/management.service';
+import { AgGridLocalText } from '../models/ag-grid-localText';
 @Component({
   selector: 'pm-management',
   templateUrl: './management.component.html',
@@ -16,6 +17,7 @@ export class ManagementComponent implements OnInit {
   business: Business;
   errorMessage = '';
   columnDefs = [];
+  localeText = AgGridLocalText;
   rowData: any;
   logInUserNm: string;
   isBasicInformation: boolean;

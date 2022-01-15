@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { GridApi, ColumnApi } from 'ag-grid-community';
+import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
 import { Business, businessList } from 'src/app/models/business';
 import { AgGrideService } from '../../service/ag-gride.service';
 
@@ -13,6 +14,7 @@ export class DetailAssociateComponent implements OnInit {
   business: Business;
   errorMessage = '';
   columnDefs = [];
+  localeText = AgGridLocalText;
   rowData: any;
 
   private gridApi: GridApi;

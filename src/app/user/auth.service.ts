@@ -21,25 +21,25 @@ export class AuthService {
   constructor(private messageService: MessageService, private apiClient: ApiClient, private router: Router) { }
 
   public login(userName: string, password: string): Observable<boolean> {
-    if (userName === 'admin' && password === 'admin') {
-      this.currentUser = {
-        id: 1,
-        userName: userName,
-        isAdmin: true
-      };
-      this.messageService.addMessage('Admin login');
-      if (this.redirectUrl) {
-        this.router.navigateByUrl(this.redirectUrl);
-      } else {
-        this.router.navigate(['/welcome']);
-      }
-      sessionStorage.setItem('user', userName);
-      sessionStorage.setItem('issuperadmin', '1');
-      sessionStorage.setItem('isadmin', '1');
-      sessionStorage.setItem('teachernumber', userName);
-      sessionStorage.setItem('ismentor', '0');
-      return of(true);
-    }
+    // if (userName === 'admin' && password === 'admin') {
+    //   this.currentUser = {
+    //     id: 1,
+    //     userName: userName,
+    //     isAdmin: true
+    //   };
+    //   this.messageService.addMessage('Admin login');
+    //   if (this.redirectUrl) {
+    //     this.router.navigateByUrl(this.redirectUrl);
+    //   } else {
+    //     this.router.navigate(['/welcome']);
+    //   }
+    //   sessionStorage.setItem('user', userName);
+    //   sessionStorage.setItem('issuperadmin', '1');
+    //   sessionStorage.setItem('isadmin', '1');
+    //   sessionStorage.setItem('teachernumber', userName);
+    //   sessionStorage.setItem('ismentor', '0');
+    //   return of(true);
+    // }
     return this.searchAccount(userName, password).pipe(map(res => {
       if (res && res.id) {
         this.currentUser = {
@@ -77,7 +77,7 @@ export class AuthService {
   }
   public searchAccount(accountName: string, password: string): Observable<TeacherAccount> {
     return this.apiClient
-    .getTeacherAccountByTeacherNameAndPassword(accountName, password, 'details')
-    .pipe(map((res: TeacherAccount) => ManagementServiceMapper.mapTeacherAccountInput(res)));
+      .getTeacherAccountByTeacherNameAndPassword(accountName, password, 'details')
+      .pipe(map((res: TeacherAccount) => ManagementServiceMapper.mapTeacherAccountInput(res)));
   }
 }

@@ -100,7 +100,13 @@
     </div>
 
     <div class="form-group" style="align-items: center;" *ngIf="showPupup">
-        <ag-grid-angular style="width:80%; height: 500px;margin-left: 50px;text-align: left;margin-inline:auto;" class="ag-theme-alpine" #courseGrid (gridReady)="onGridReady($event)" [rowData]="rowData" [columnDefs]="columnDefs">
+        <ag-grid-angular style="width:80%; height: 500px;margin-left: 50px;text-align: left;margin-inline:auto;"
+                         class="ag-theme-alpine"
+                         #courseGrid
+                         (gridReady)="onGridReady($event)"
+                         [localeText]="localeText"
+                         [rowData]="rowData"
+                         [columnDefs]="columnDefs">
         </ag-grid-angular>
     </div>
 </div>

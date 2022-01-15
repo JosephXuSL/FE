@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GridReadyEvent } from 'ag-grid-community';
 import { ApiClient, Class, Student } from 'src/app/api-client';
+import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
 import { studentundercourse } from 'src/app/models/studentundercourse';
 
 @Component({
@@ -26,11 +27,12 @@ export class CourseInfobyMentorComponent implements OnInit {
 
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '班级', field: 'banji', resizable: true, sortable: true, minWidth: 100, maxWidth: 150,filter: 'agTextColumnFilter' },
-    { headerName: '年级', field: 'nianji', resizable: true, sortable: true, minWidth: 100, maxWidth: 200,filter: 'agTextColumnFilter' },
-    { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 150, maxWidth: 250,filter: 'agTextColumnFilter' },
-    { headerName: '学院', field: 'xueyuan', resizable: true, sortable: true,  maxWidth: 300,filter: 'agTextColumnFilter' }
+    { headerName: '班级', field: 'banji', resizable: true, sortable: true, minWidth: 100, maxWidth: 150, filter: 'agTextColumnFilter' },
+    { headerName: '年级', field: 'nianji', resizable: true, sortable: true, minWidth: 100, maxWidth: 200, filter: 'agTextColumnFilter' },
+    { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' },
+    { headerName: '学院', field: 'xueyuan', resizable: true, sortable: true,  maxWidth: 300, filter: 'agTextColumnFilter' }
   ];
+  localeText = AgGridLocalText;
   rowData = [];
   constructor(private apiClient: ApiClient) { }
 
@@ -39,12 +41,11 @@ export class CourseInfobyMentorComponent implements OnInit {
     this.getAllClass();
   }
   getAllClass(): void {
-    let teacherid = sessionStorage.getItem('teacherid');
+    const teacherid = sessionStorage.getItem('teacherid');
     if (teacherid === null) {
       this.errorMessage = '系统错误，请重新登陆再尝试';
       this.loading = false;
-    }
-    else {
+    } else {
       this.apiClient.getClassesByMentorId(parseInt(teacherid)).subscribe(t => {
         if (t) {
           this.generateAllStudentundercourseRowdata(t);
@@ -56,13 +57,13 @@ export class CourseInfobyMentorComponent implements OnInit {
   generateAllStudentundercourseRowdata(infolist: Class[]): void {
     this.classresult = new Array<any>();
     infolist.forEach(i => {
-      let info = {
+      const info = {
         id: i.id,
         banji: i.classNumber,
         nianji: i.major.grade,
         zhuanye: i.major.majorName,
         xueyuan: i.major.department
-      }
+      };
       this.classresult.push(info);
     });
     this.rowData = this.classresult;
@@ -87,12 +88,12 @@ export class CourseInfobyMentorComponent implements OnInit {
     this.apiClient.getCourseScheduleByClassId(this.selectclassid).subscribe(t => {
       if (t && t.length > 0 && t[0].id) {
         t.forEach(i => {
-          let info = {
+          const info = {
             courseName: i.teacherCourseInfo.course.courseName,
             textbook: i.teacherCourseInfo.course.textbook,
             scheduledWeekday: i.scheduledWeekday,
             scheduledTime: i.scheduledTime
-          }
+          };
           this.results.push(info);
         });
       } else {

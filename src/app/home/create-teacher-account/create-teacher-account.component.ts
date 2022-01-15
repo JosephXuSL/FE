@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { Observable } from 'rxjs';
 import { ApiClient, Teacher, TeacherAccountRequestBody } from 'src/app/api-client';
+import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
 
 @Component({
   selector: 'pm-create-teacher-account',
@@ -29,6 +30,7 @@ export class CreateTeacherAccountComponent implements OnInit {
     { headerName: '教师姓名', field: 'teacherName', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
     { headerName: '状态', field: 'status', resizable: true, sortable: true, filter: 'agTextColumnFilter' }
   ];
+  localeText = AgGridLocalText;
   rowData = [];
   str = '';
   constructor(private apiClient: ApiClient) { }
