@@ -7,7 +7,17 @@ export class AgGrideService {
     constructor() { }
 
     public getColumnDefs(business: Business): ColDef[] {
-        const defs = [] as ColDef[];
+        const defs = [
+            {
+                lockPosition: true,
+                headerName: '序号',
+                cellClass: 'locked-col',
+                valueGetter: params => this.getRowId(params),
+                width: 65,
+                resizable: true,
+                suppressNavigable: true
+              }
+        ] as ColDef[];
         business.gridHeader.forEach(h => defs.push({
             headerName: h.headerName,
             field: h.field,
@@ -58,4 +68,9 @@ export class AgGrideService {
             return value;
         }
     }
+
+    private getRowId(params): number {
+        return params.node.rowIndex + 1;
+    }
+
 }
