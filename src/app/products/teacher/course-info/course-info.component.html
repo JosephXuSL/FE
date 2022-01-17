@@ -1,16 +1,41 @@
 <div class="card">
     <div class="card-header">
-        查看课程信息（可使用表头控件进行筛选）
+        检索课程
+    </div>
+    <div class="card-body ">
+        <div class="form-group row">
+            <label class="col-md-1 col-form--label search-area"></label>
+            <label class="col-md-2 col-form--label search-area" for="kechengId">课程名称:</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="kechengId" type="text" placeholder="请输入" [(ngModel)]="kecheng" />
+            </div>
+            <label class="col-md-2 col-form--label search-area" for="xueqiId">学期:</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="xueqiId" type="text" placeholder="请输入" [(ngModel)]="xueqi" />
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-6 col-form--label"></label>
+
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng&&xueqi) " (click)="searchcourse() ">
+                搜索
+            </button>
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng||xueqi) " (click)="clearcourse() ">
+                清空
+            </button>
+            <button class="btn btn-primary mr-3 col-md-2 boxdis" type="submit " style="width:30px " (click)="searchall() ">
+                查看所有
+            </button>
+        </div>
+    </div>
+    <div class="card-header">
+        课程安排
     </div>
     <div class="card-body">
         <div class="form-group row" style="align-items: center;">
-            <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; "
-                             class="ag-theme-alpine"
-                             #courseGrid
-                             (gridReady)="onGridReady($event)"
-                             [rowData]="rowData"
-                             [localeText]="localeText"
-                             [columnDefs]="columnDefs">
+            <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; " class="ag-theme-alpine" #courseGrid (gridReady)="onGridReady($event)" [pagination]="true" [paginationPageSize]="12" [rowData]="rowData" [localeText]="localeText" [columnDefs]="columnDefs">
             </ag-grid-angular>
         </div>
 

@@ -7,11 +7,14 @@ import { StudentInfoComponent } from './teacher/student-info/student-info.compon
 import { CourseInfoComponent } from './teacher/course-info/course-info.component';
 import { CourseInfobyMentorComponent } from './teacher/course-infoby-mentor/course-infoby-mentor.component';
 import { ClassinfobymentorComponent } from './teacher/classinfobymentor/classinfobymentor.component';
-
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzFormModule } from 'ng-zorro-antd/form';
 @NgModule({
   imports: [
     SharedModule,
     AgGridModule.withComponents([]),
+    NzTableModule,
+    NzFormModule,
     RouterModule.forChild([
       {
         path: 'studentInfo',

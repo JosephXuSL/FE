@@ -17,6 +17,10 @@ export class StudentInfoComponent implements OnInit {
   public student: Student;
   public errorMessage = '';
   loading: boolean;
+  public xingming = '';
+  public xueqi = '';
+  public kecheng = '';
+  allInfo = [];
   @Output() popupData = new EventEmitter();
 
   public gridApi: any;
@@ -24,10 +28,11 @@ export class StudentInfoComponent implements OnInit {
   public selectedRows: Array<studentundercourse>;
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '学科', field: 'xueke', resizable: true, sortable: true, minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' },
-    { headerName: '年级', field: 'nianji', resizable: true,  sortable: true,  minWidth: 50, maxWidth: 150, filter: 'agTextColumnFilter' },
+    { headerName: '课程名称', field: 'xueke', resizable: true, sortable: true, minWidth: 130, maxWidth: 250, filter: 'agTextColumnFilter' },
+    { headerName: '学期', field: 'xueqi', resizable: true, sortable: true, minWidth: 50, maxWidth: 150, filter: 'agTextColumnFilter' },
+    { headerName: '年级', field: 'nianji', resizable: true, sortable: true, minWidth: 50, maxWidth: 150, filter: 'agTextColumnFilter' },
     { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 100, maxWidth: 250, filter: 'agTextColumnFilter' },
-    { headerName: '学生姓名', field: 'xingming', resizable: true,  sortable: true, maxWidth: 200, filter: 'agTextColumnFilter' }
+    { headerName: '学生姓名', field: 'xingming', resizable: true, sortable: true, maxWidth: 160, filter: 'agTextColumnFilter' }
   ];
   localeText = AgGridLocalText;
   rowData = [];
@@ -35,16 +40,18 @@ export class StudentInfoComponent implements OnInit {
   constructor(private apiClient: ApiClient) { }
 
   ngOnInit() {
+    this.errorMessage = ''
     this.loading = true;
     this.getAllStudentundercourse();
     this.student = new Student();
-
+    this.allInfo = new Array<any>();
   }
   getAllStudentundercourse(): void {
     const teacherNum = sessionStorage.getItem('teachernumber');
     this.apiClient.getCourseSelectionByTeacherAccount(teacherNum).subscribe(t => {
       if (t) {
         this.generateAllStudentundercourseRowdata(t);
+
       }
       this.loading = false;
     });
@@ -58,11 +65,13 @@ export class StudentInfoComponent implements OnInit {
         nianji: i.teacherCourseInfo.class.major.grade,
         zhuanye: i.teacherCourseInfo.class.major.majorName,
         xueke: i.teacherCourseInfo.course.courseName,
+        xueqi: i.teacherCourseInfo.semester,
         xingming: i.student.name
       };
       this.result.push(info);
     });
     this.rowData = this.result;
+    this.allInfo = this.result;
     this.gridApi.setRowData(this.rowData);
   }
   onSelectionChanged() {
@@ -77,6 +86,8 @@ export class StudentInfoComponent implements OnInit {
   back() {
     this.showPupup = false;
     this.errorMessage = '';
+    this.clear();
+    this.selectstudentname = '';
   }
   searchstudentInfo() {
     this.apiClient.getStudentsByName(this.selectstudentname).subscribe(t => {
@@ -106,5 +117,35 @@ export class StudentInfoComponent implements OnInit {
 
       params.api.showNoRowsOverlay();
     }
+  }
+  search() {
+    this.loading = true;
+    this.errorMessage = '';
+    this.rowData = [];
+    if (this.allInfo && this.allInfo.length > 0) {
+      this.allInfo.forEach(t => {
+        if (t.xueke === this.kecheng && t.xueqi === this.xueqi) {
+          if (this.xingming === '' || (this.xingming && t.xingming === this.xingming)) {
+            this.rowData.push(t);
+          }
+        }
+      });
+      if (!(this.rowData && this.rowData.length > 0)) {
+        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+      }
+    } else {
+      this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+    }
+    this.gridApi.setRowData(this.rowData);
+    this.loading = false;
+  }
+  clear() {
+    this.xingming = '';
+    this.xueqi = '';
+    this.kecheng = '';
+  }
+  searchall(){
+    this.clear();
+    this.ngOnInit();
   }
 }

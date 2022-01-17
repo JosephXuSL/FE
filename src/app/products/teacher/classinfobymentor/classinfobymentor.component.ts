@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Major, Student } from 'src/app/api-client';
+import { ClassInfoRequestBody, Major, Student } from 'src/app/api-client';
 import { ApiClient } from 'src/app/api-client';
 import { GridReadyEvent } from 'ag-grid-community';
 import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
@@ -20,8 +20,18 @@ export class ClassinfobymentorComponent implements OnInit {
   errorMessage: string;
   public selectstudentname = '';
   public selectstudentfenzheng = '';
+  public nianji = '';
+  public zhuanye = '';
+  public yuanxi = '';
+  public banji = '';
+
   public gridApi: any;
   private gridColumnApi;
+
+  dataSet = [];
+  pageIndex = 1;
+  pageSize = 10;
+  total = 1;
   constructor(private apiClient: ApiClient) { }
   rowSelection = 'single';
   columnDefs = [
@@ -61,7 +71,7 @@ export class ClassinfobymentorComponent implements OnInit {
         this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
       }
       this.loading = false;
-
+      this.rowData = this.allClasses;
     });
 
   }
@@ -71,6 +81,7 @@ export class ClassinfobymentorComponent implements OnInit {
     this.classNum = data.classNumber;
     this.lookbuttonclick = true;
     this.getstudentsbyclass( this.classid);
+    this.clear();
   }
 
   getstudentsbyclass(id: number) {
@@ -117,6 +128,7 @@ export class ClassinfobymentorComponent implements OnInit {
   backtoclass() {
     this.lookbuttonclick = false;
     this.selectstudentname = '';
+    this.getallClass();
   }
   backtostudentlist() {
     this.viewStudentclick = false;
@@ -130,6 +142,7 @@ export class ClassinfobymentorComponent implements OnInit {
   }
   searchcoursebyclassidInfo() {
     this.student = new Student();
+    this.errorMessage ='';
     this.student.major = new Major();
     this.apiClient.getStudentByIDCardNumber(this.selectstudentfenzheng).subscribe(t => {
       if (t) {
@@ -148,5 +161,49 @@ export class ClassinfobymentorComponent implements OnInit {
       this.loading = false;
     });
   }
-
+  changePageIndex(pageIndex) {
+    this.pageIndex = pageIndex;
+    this.getallClass();
+  }
+  changePageSize(pageSize) {
+    this.pageSize = pageSize;
+    this.getallClass();
+  }
+  search() {
+    this.loading=true;
+    this.errorMessage ='';
+    this.allClasses = new Array<any>();
+    const info= new ClassInfoRequestBody();
+      info.grade=this.nianji,
+      info.department=this.yuanxi,
+      info.classNumber=this.banji,
+      info.majorName= this.zhuanye   
+    this.apiClient.getClassesByClassInfo(info).subscribe(t=>{
+      if (t && t.length > 0 && t[0].id) {
+        t.forEach(i => {
+          const info = {
+            classid: i.id,
+            grade: i.major.grade,
+            department: i.major.department,
+            majorName: i.major.majorName,
+            classNumber: i.classNumber
+          };
+          this.allClasses.push(info);
+        });
+      } else {
+        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+      }
+      this.loading = false;
+      this.rowData = this.allClasses;
+    });
+  }
+  clear() {
+    this.nianji = '';
+    this.zhuanye = '';
+    this.yuanxi = '';
+    this.banji = '';
+  }
+  searchall(){
+    this.ngOnInit();
+  }
 }

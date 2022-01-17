@@ -13,6 +13,8 @@ export class CreateTeacherAccountComponent implements OnInit {
   public gender;
   public showerror = false;
   public selectedrowids: any[];
+  public jiaoshi: '';
+  public js: '';
   loading: boolean;
   errorMessage: string;
   alertMessage: string;
@@ -21,11 +23,12 @@ export class CreateTeacherAccountComponent implements OnInit {
   public gridApi: any;
   private gridColumnApi;
   result: Array<any>;
+  allteacherAccounts: Array<any>;
   // newaccounts: TeacherAccountRequestBody[];
   rowSelection = 'multiple';
   columnDefs = [
     // tslint:disable-next-line:max-line-length
-    { headerName: '教师id',   field: 'teacherid',  hide: true },
+    { headerName: '教师id', field: 'teacherid', hide: true },
     { headerName: '教师编号', headerCheckboxSelection: true, checkboxSelection: true, field: 'teacherNumber', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
     { headerName: '教师姓名', field: 'teacherName', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
     { headerName: '状态', field: 'status', resizable: true, sortable: true, filter: 'agTextColumnFilter' }
@@ -36,6 +39,9 @@ export class CreateTeacherAccountComponent implements OnInit {
   constructor(private apiClient: ApiClient) { }
 
   ngOnInit() {
+    this.js = '';
+    this.jiaoshi = '';
+    this.errorMessage = '';
     this.loading = true;
     this.gender = 'admin';
     this.selectedrowids = new Array<number>();
@@ -108,6 +114,7 @@ export class CreateTeacherAccountComponent implements OnInit {
       this.result.push(info);
     });
     this.rowData = this.result;
+    this.allteacherAccounts = this.result;
     this.gridApi.setRowData(this.rowData);
     this.loading = false;
   }
@@ -130,5 +137,46 @@ export class CreateTeacherAccountComponent implements OnInit {
   addTeacherAccount(teacherAccounts: TeacherAccountRequestBody[]): Observable<any> {
 
     return this.apiClient.addTeacherAccounts(teacherAccounts);
+  }
+  clear() {
+    this.jiaoshi = '';
+    this.js = '';
+  }
+  searchall() {
+    this.clear();
+    this.ngOnInit();
+  }
+  search() {
+    this.loading = true;
+    this.errorMessage = '';
+    this.rowData = [];
+    if (this.allteacherAccounts && this.allteacherAccounts.length > 0) {
+      this.allteacherAccounts.forEach(t => {
+        if (this.jiaoshi) {
+          if (this.js) {
+            if (t.teacherNumber === this.jiaoshi && t.teacherName === this.js) {
+              this.rowData.push(t);
+            }
+          }
+          else {
+            if (t.teacherNumber === this.jiaoshi) {
+              this.rowData.push(t);
+            }
+          }
+        }
+        else if (this.js && this.js === t.teacherName) {
+          this.rowData.push(t);
+        }
+
+      });
+      if(!(this.rowData&&this.rowData.length>0)){
+        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+      }
+      this.gridApi.setRowData(this.rowData);
+      this.loading = false;
+    }
+    else {
+      this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+    }
   }
 }

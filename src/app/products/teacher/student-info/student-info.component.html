@@ -1,6 +1,40 @@
 <div class="card">
+    <div class="card-header" *ngIf="!showPupup">
+        检索学生
+    </div>
+    <div class="card-body " *ngIf="!showPupup">
+        <div class="form-group row">
+            <label class="col-md-2 col-form--label search-area" for="kechengId">课程名称:</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="kechengId" type="text" placeholder="请输入" [(ngModel)]="kecheng" />
+            </div>
+            <label class="col-md-1 col-form--label search-area" for="xueqiId">学期:</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="xueqiId" type="text" placeholder="请输入" [(ngModel)]="xueqi" />
+            </div>
+            <label class="col-md-2 col-form--label search-area" for="xingmingId">学生姓名:</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="xingminId" type="text" placeholder="非必填" [(ngModel)]="xingming" />
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-6 col-form--label"></label>
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng&&xueqi) " (click)="search() ">
+                搜索
+            </button>
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng||xueqi||xingming) " (click)="clear() ">
+                清空
+            </button>
+            <button class="btn btn-primary mr-3 col-md-2 boxdis" type="submit " style="width:30px " (click)="searchall() ">
+                查看所有
+            </button>
+        </div>
+    </div>
     <div class="card-header">
-        查看所属信息（可使用表头控件进行筛选）
+        查看所属信息
 
     </div>
     <div class="card-body" *ngIf="!showPupup">
@@ -16,15 +50,8 @@
         </div>
 
         <div class="form-group row " style="align-items: center;">
-            <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; "
-                             class="ag-theme-alpine "
-                             #studentinfoGrid
-                             (gridReady)="onGridReady($event) "
-                             [rowSelection]="rowSelection "
-                             (selectionChanged)="onSelectionChanged()"
-                             [rowData]="rowData "
-                             [localeText]="localeText"
-                             [columnDefs]="columnDefs ">
+            <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; " class="ag-theme-alpine " #studentinfoGrid (gridReady)="onGridReady($event) " [pagination]="true" [paginationPageSize]="12" [rowSelection]="rowSelection " (selectionChanged)="onSelectionChanged()"
+                [rowData]="rowData " [localeText]="localeText" [columnDefs]="columnDefs ">
             </ag-grid-angular>
         </div>
 

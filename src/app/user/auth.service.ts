@@ -40,6 +40,7 @@ export class AuthService {
     //   sessionStorage.setItem('ismentor', '0');
     //   return of(true);
     // }
+    this.logout();
     return this.searchAccount(userName, password).pipe(map(res => {
       if (res && res.id) {
         this.currentUser = {
@@ -50,6 +51,10 @@ export class AuthService {
           // 要改的
           isAdmin: res.isAdminAccount
         };
+        if (this.currentUser.status === '停用') {
+          sessionStorage.setItem('accountstatus', this.currentUser.status);
+          return false;
+        }
         this.messageService.addMessage('login Success!');
         if (this.redirectUrl) {
           this.router.navigateByUrl(this.redirectUrl);

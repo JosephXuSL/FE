@@ -1,57 +1,89 @@
 <div class="card">
-    <div class="card-header" *ngIf="!viewStudentclick ">
-        查看所有信息（可使用表头控件进行筛选）
+    <div class="card-header" *ngIf="!lookbuttonclick&&!viewStudentclick ">
+        检索班级
+    </div>
+    <div class="card-body " *ngIf="!lookbuttonclick&&!viewStudentclick ">
+        <div class="form-group row">
+            <label class="col-md-1 col-form--label search-area" for="passwordId">年级：</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="nianjiId" type="text" placeholder="请输入" [(ngModel)]="nianji" />
+            </div>
+            <label class="col-md-1 col-form--label search-area" for="passwordId">院系：</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="yuanxiId" type="text" placeholder="请输入" [(ngModel)]="yuanxi" />
+            </div>
+            <label class="col-md-1 col-form--label search-area " for="passwordId">专业：</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="zhuanyeId" type="text" placeholder="请输入" [(ngModel)]="zhuanye" />
+            </div>
+            <label class="col-md-1 col-form--label search-area" for="passwordId">班级：</label>
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="banjiId" type="text" placeholder="请输入" [(ngModel)]="banji" />
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-6 col-form--label"></label>
+
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(nianji&&zhuanye&&yuanxi&&banji) " (click)="search() ">
+                搜索
+            </button>
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(nianji||zhuanye||yuanxi||banji) " (click)="clear() ">
+                清空
+            </button>
+            <button class="btn btn-primary mr-3 col-md-2 boxdis" type="submit " style="width:30px " (click)="searchall() ">
+                查看所有
+            </button>
+        </div>
+    </div>
+    <div class="card-header " *ngIf="!viewStudentclick ">
+        查看所有信息
     </div>
     <div class="card-header " *ngIf="viewStudentclick ">
         学生信息
     </div>
     <div class="card-body ">
 
-        <div class="table-responsive " style="text-align:center " *ngIf="!lookbuttonclick&&!viewStudentclick ">
-            <table class="table mb-0 ">
+        <div style="text-align:center " *ngIf="!lookbuttonclick&&!viewStudentclick ">
+            <nz-table #rowSelectionTable [nzFrontPagination]="false " [nzData]="rowData " [nzLoading]="loading " [nzTotal]="total " [(nzPageIndex)]="pageIndex " [(nzPageSize)]="pageSize " [nzShowQuickJumper]="true " [nzShowSizeChanger]="true
+                " (nzPageIndexChange)="changePageIndex($event) " (nzPageSizeChange)="changePageSize($event) ">
                 <thead>
                     <tr>
-                        <th>级</th>
-                        <th>院系</th>
-                        <th>专业</th>
-                        <th>班级</th>
-                        <th></th>
+                        <th class="col-md-2 "><b>年级</b></th>
+                        <th class="col-md-2 "><b>院系</b></th>
+                        <th class="col-md-2 "><b>专业</b></th>
+                        <th class="col-md-2 "><b>班级</b></th>
+                        <th class="col-md-4 "><b>操作</b></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of allClasses ">
-
+                    <tr *ngFor=" let data of rowSelectionTable.data ">
                         <td>{{ data.grade }}</td>
                         <td>{{ data.department }}</td>
                         <td>{{ data.majorName}}</td>
                         <td>{{ data.classNumber}}</td>
                         <td>
                             <button class="btn btn-outline-primary btn-sm " (click)="choseClass(data) ">
-                查看该班级学生名单
-              </button>
+                                查看该班级学生名单
+                              </button>
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </nz-table>
         </div>
         <div class="card-body " *ngIf="lookbuttonclick ">
             <div class="example-header " style="margin-left: 70px; ">
                 <label class="col-md-7 col-form-label ">选择: {{selectstudentname}}</label>
                 <span id="selectedRows "></span>
-                <button class="btn btn-primary mr-3 col-md-3" style="width:180px;" [disabled]="!selectstudentname " type="button " title="查询专业 " (click)="searchInfo() ">
+                <button class="btn btn-primary mr-3 col-md-3 " style="width:180px; " [disabled]="!selectstudentname " type="button " title="查询专业 " (click)="searchInfo() ">
                     查看个人信息
                 </button>
             </div>
             <div class="form-group row " style="align-items: center; ">
-                <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; "
-                                 class="ag-theme-alpine "
-                                 #courseGrid
-                                 (gridReady)="onGridReady($event) "
-                                 [rowData]="rowData "
-                                 [rowSelection]="rowSelection"
-                                 [localeText]="localeText"
-                                 (selectionChanged)="onSelectionChanged() "
-                                 [columnDefs]="columnDefs ">
+                <ag-grid-angular style="width:90%; height: 500px;margin-left: 5%; " class="ag-theme-alpine " #courseGrid (gridReady)="onGridReady($event) " [pagination]="true " [paginationPageSize]="12 " [rowData]="rowData " [rowSelection]="rowSelection
+                " [localeText]="localeText " (selectionChanged)="onSelectionChanged() " [columnDefs]="columnDefs ">
                 </ag-grid-angular>
             </div>
             <button class="btn btn-outline-secondary " type="button " style="width:80px; align-items: flex-end; " (click)="backtoclass() ">
@@ -119,7 +151,7 @@
     </div>
 </div>
 <div *ngIf='loading'>
-    <span class="fa fa-spinner spinner">
+    <span class="fa fa-spinner spinner ">
     </span>
 </div>
 <div class="alert alert-danger " *ngIf="errorMessage ">

@@ -15,7 +15,9 @@ export class CourseInfoComponent implements OnInit {
   showPupup: boolean;
   result: Array<any>;
   loading: boolean;
-
+  allCourseResults: any[];
+  public kecheng = '';
+  public xueqi = '';
   public errorMessage = '';
 
   public gridApi: any;
@@ -35,6 +37,9 @@ export class CourseInfoComponent implements OnInit {
 
 
   ngOnInit() {
+    this.kecheng = '';
+    this.xueqi = '';
+    this.errorMessage = '';
     this.getAllStudentundercourse();
   }
   getAllStudentundercourse(): void {
@@ -66,6 +71,7 @@ export class CourseInfoComponent implements OnInit {
       this.result.push(info);
     });
     this.rowData = this.result;
+    this.allCourseResults = this.result;
     this.gridApi.setRowData(this.rowData);
   }
 
@@ -78,5 +84,36 @@ export class CourseInfoComponent implements OnInit {
 
       params.api.showNoRowsOverlay();
     }
+  }
+  searchcourse() {
+    this.loading = true;
+    this.errorMessage = '';
+    //this.results = new Array<any>();
+    const courserowData = new Array<any>();
+    if(this.allCourseResults&&this.allCourseResults.length>0){
+      this.allCourseResults.forEach(s => {
+        if (s.courseName === this.kecheng && s.semester === this.xueqi) {
+          courserowData.push(s);
+        }
+      });
+      if (!(courserowData && courserowData.length > 0)) {
+        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+      }
+    }
+    else{
+      this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }
+  clearcourse() {
+    this.loading=true;
+    this.kecheng = '';
+    this.xueqi = '';
+    this.getAllStudentundercourse();
+    this.loading = false;
+  }
+  searchall(){
+    this.ngOnInit();
   }
 }
