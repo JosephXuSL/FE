@@ -45,6 +45,7 @@ export class ClassinfobymentorComponent implements OnInit {
   localeText = AgGridLocalText;
   rowData = [];
   ngOnInit() {
+    this.errorMessage = '';
     this.loading = true;
     this.lookbuttonclick = false;
     this.student = new Student();
