@@ -1,3 +1,30 @@
-.button-margin{
+.button-margin {
     margin-left: 7px;
+}
+
+.search-area {
+    text-align: right;
+    font-size: 16px;
+    align-items: center;
+}
+
+.search-inputarea {
+    font-size: 16px;
+}
+
+.boxdis {
+    height: 80%;
+}
+
+.spinner {
+    font-size: 300%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10
+}
+
+.fa-spinner {
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
 }

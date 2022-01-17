@@ -22,7 +22,38 @@ export class ManagementComponent implements OnInit {
   logInUserNm: string;
   isBasicInformation: boolean;
   isadmin: boolean;
+public iscoursepage: boolean;
+  allcourses = [];
+  allmajors = [];
+  allteachers = [];
+  allclasses = [];
+  allstudents = [];
+  allscores = [];
+  allcourseSchedules = [];
+  public kecheng = '';
 
+  public ji = '';
+  public yuanxi = '';
+  public zhuanye = '';  
+  
+  public jiaoshi = '';
+  public jnum = '';
+
+  public cji = '';
+  public cyuanxi = '';    
+  public czy = '';  
+  
+  public sname = '';    
+  public sxh = '';
+  
+  public scorename = '';    
+  public sxueke = '';      
+  public sxuenian = '';  
+  
+  public steachern = '';    
+  public scxuenian = '';      
+  public sckcId = '';
+  loading: boolean;
   public teacherAccount: TeacherAccount;
 
   rowSelection: any;
@@ -66,7 +97,34 @@ export class ManagementComponent implements OnInit {
     }
     this.activatedRoute.data.subscribe(data => {
       this.rowData = data.listResolvedData;
+      this.setAllCasesData();
     });
+  }
+
+  setAllCasesData() {
+    if (this.business.name === 'course') {
+      this.allcourses = this.rowData;
+      this.iscoursepage = true;
+    }
+    if (this.business.name === 'major') {
+      this.allmajors = this.rowData;
+    }
+    if (this.business.name === 'teacher') {
+      this.allteachers = this.rowData;
+    }
+    if (this.business.name === 'class') {
+      this.allclasses = this.rowData;
+    }
+    if (this.business.name === 'student') {
+      this.allstudents = this.rowData;
+    }
+    if (this.business.name === 'score') {
+      this.allscores = this.rowData;
+    }
+    if (this.business.name === 'courseSchedule') {
+      this.allcourseSchedules = this.rowData;
+    }
+
   }
 
   onRowDoubleClicked(params) {
@@ -129,5 +187,156 @@ export class ManagementComponent implements OnInit {
         }
       });
     }
+  }
+  searchcourse() {
+    this.loading = true;
+    const courserowData = new Array<any>();
+    if (this.allcourses && this.allcourses.length > 0) {
+      this.allcourses.forEach(s => {
+        if (s.courseName === this.kecheng) {
+          courserowData.push(s);
+        }
+      });
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }
+  searchmajor() {
+    this.loading = true;
+    const courserowData = new Array<any>();
+    if (this.allmajors && this.allmajors.length > 0) {
+      this.allmajors.forEach(s => {
+        if (s.grade === this.ji && s.majorName == this.zhuanye && s.department == this.yuanxi) {
+          courserowData.push(s);
+        }
+      });
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }    
+  
+  searchclass() {
+    this.loading = true;
+    const courserowData = new Array<any>();
+    if (this.allclasses && this.allclasses.length > 0) {
+      this.allclasses.forEach(s => {
+        if (s.major.grade === this.cji && s.major.department == this.cyuanxi&& s.major.majorName == this.czy) {
+          courserowData.push(s);
+        }
+      });
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }  
+  
+  searchteacher() {
+    this.loading = true;
+    const courserowData = new Array<any>();
+    if (this.allteachers && this.allteachers.length > 0) {
+      this.allteachers.forEach(s => {
+        if (s.name === this.jiaoshi && s.teacherNumber == this.jnum) {
+          courserowData.push(s);
+        }    
+      });
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }  
+  searchstudent() {
+    this.loading = true;
+    const courserowData = new Array<any>();
+    if (this.allstudents && this.allstudents.length > 0) {
+      this.allstudents.forEach(s => {
+        if (s.name === this.sname && s.studentNumber == this.sxh) {
+          courserowData.push(s);
+        }    
+      });
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }  
+  searchscore() {
+    this.loading = true;
+    const courserowData = new Array<any>();
+    if (this.allscores && this.allscores.length > 0) {
+      this.allscores.forEach(s => {
+        if (s.semester === this.sxuenian && s.course.courseName == this.sxueke&& s.student.name == this.scorename) {
+          courserowData.push(s);
+        }        
+      });
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }  
+  
+  searchcourseSchedule() {
+    this.loading = true;
+    const courserowData = new Array<any>();
+    if (this.allcourseSchedules && this.allcourseSchedules.length > 0) {
+      this.allcourseSchedules.forEach(s => {
+        if (s.teacherCourseInfo.teacher.name === this.steachern && s.teacherCourseInfo.semester == this.scxuenian&& s.teacherCourseInfo.course.courseName == this.sckcId) {
+          courserowData.push(s);
+        }            
+      });
+    }
+    this.gridApi.setRowData(courserowData);
+    this.loading = false;
+  }
+  clear() {
+    this.loading = true;
+    this.kecheng = '';
+    //this.xueqi = '';
+
+    this.ji = '';
+    this.zhuanye = '';
+    this.yuanxi = '';
+
+    //this.banji = '';
+    this.jiaoshi = '';
+    this.jnum = '';    
+    
+    this.cji = '';
+    this.cyuanxi = '';    
+    this.czy = '';
+
+    this.sname = '';    
+    this.sxh = '';    
+    
+    this.scorename = '';    
+    this.sxueke = '';      
+    this.sxuenian = '';    
+    
+    this.steachern = '';    
+    this.scxuenian = '';      
+    this.sckcId = '';
+
+
+    this.loading = false;
+
+  }
+
+  searchall() {
+    if (this.business.name === 'course') {
+      this.gridApi.setRowData(this.allcourses);
+    }
+    if (this.business.name === 'major') {
+      this.gridApi.setRowData(this.allmajors);
+    }
+    if (this.business.name === 'teacher') {
+      this.gridApi.setRowData(this.allteachers);
+    }
+    if (this.business.name === 'class') {
+      this.gridApi.setRowData(this.allclasses);
+    }
+    if (this.business.name === 'student') {
+      this.gridApi.setRowData(this.allstudents);
+    }
+    if (this.business.name === 'score') {
+      this.gridApi.setRowData(this.allscores);
+    }
+    if (this.business.name === 'courseSchedule') {
+      this.gridApi.setRowData(this.allcourseSchedules);
+    }
+
   }
 }
