@@ -407,6 +407,76 @@ export class ManagementService {
     return this.apiClient.checkTeacherByteacherNumber(teacherNumber);
   }
 
+  removeDataById(business: string, id: number): Observable<any> {
+    return this.removeData(business, id).pipe(map(data => ({ result: true })),
+    catchError(error => {
+      const message = `error: ${error}`;
+      console.error(message);
+      return of({ result:  false, error: message });
+    }));
+  }
+
+  removeData(business: string, id: number): Observable<any> {
+    switch (business) {
+      case 'course':
+        return this.removeCourse(id);
+      case 'major':
+        return this.removeMajor(id);
+      case 'teacher':
+        return this.removeTeacher(id);
+      case 'class':
+        return this.removeClass(id);
+      case 'student':
+        return this.removeStudent(id);
+      case 'score':
+        return this.removeScores(id);
+      case 'courseSchedule':
+        return this.removeCourseSchedule(id);
+    }
+  }
+
+  removeCourse(id: number): Observable<any> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.removeCourses(idList);
+  }
+
+  removeMajor(id: number): Observable<any> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.removeMajors(idList);
+  }
+
+  removeTeacher(id: number): Observable<any> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.removeTeachers(idList);
+  }
+
+  removeClass(id: number): Observable<any> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.removeClasses(idList);
+  }
+
+  removeStudent(id: number): Observable<any> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.removeStudents(idList);
+  }
+
+  removeScores(id: number): Observable<any> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.removeExaminations(idList);
+  }
+
+  removeCourseSchedule(id: number): Observable<any> {
+    const idList = [];
+    idList.push(id);
+    return this.apiClient.removeCourseSchedule(idList);
+  }
+
   private handleError(err) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

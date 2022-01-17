@@ -4,9 +4,12 @@
             <div class="row">
                 {{business.nameForShow}}信息
                 <div class="ml-auto">
-                    <button class="btn btn-outline-primary btn-sm"
-                            [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
-                        修改信息
+                    <button class="btn btn-outline-secondary btn-sm"
+                            style="width:80px"
+                            type="button"
+                            title="返回"
+                            [routerLink]="['/management', business.name]">
+                        返回
                     </button>
                 </div>
             </div>
@@ -416,14 +419,15 @@
 
     </div>
 
-    <div class="card-body">
-        <button class="btn btn-outline-secondary mr-3"
-                style="width:80px"
-                type="button"
-                title="返回"
-                [routerLink]="['/management', business.name]">
-            返回
+    <div class="card-body ml-auto">
+        <button class="btn btn-warning mr-3 "
+                            [routerLink]="['/management',business.name,'edit',detail.id,this.business.subTab]">
+                        修改信息
         </button>
+        <button class="btn btn-danger " (click)="removeSelection()">
+                    删除{{business.nameForShow}}
+        </button>
+        
     </div>
 </div>
 

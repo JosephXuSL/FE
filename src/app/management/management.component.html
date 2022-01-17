@@ -16,7 +16,7 @@
                     修改选中{{business.nameForShow}}
                 </button>
                 <button class="btn btn-sm button-margin" [ngClass]="{'btn-danger': buttonVisiable(), 'btn-outline-danger': !buttonVisiable()}" 
-                [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0">
+                [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="removeSelection()">
                     删除选中{{business.nameForShow}}
                 </button>
             </div>

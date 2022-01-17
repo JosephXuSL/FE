@@ -117,4 +117,17 @@ export class ManagementComponent implements OnInit {
       return false;
     }
   }
+
+  removeSelection() {
+    if ( confirm('确认删除数据？')) {
+      this.managementService.removeDataById(this.business.name, this.rowSelectionId).subscribe(data => {
+        if (data.result) {
+          this.router.navigate([this.router.url]);
+        }
+        if (!data.result && data.error) {
+          alert('当前删除信息正被其他信息使用， 不能被删除！');
+        }
+      });
+    }
+  }
 }

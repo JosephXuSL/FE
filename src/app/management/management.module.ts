@@ -35,6 +35,7 @@ import { EditGuard } from './service/edit-guard.service';
             {
               path: ':business',
               resolve: { listResolvedData: BusinessListResolver },
+              runGuardsAndResolvers: 'always',
               component: ManagementComponent
              },
              {
