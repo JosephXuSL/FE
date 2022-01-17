@@ -19,6 +19,11 @@ export class ClassEditAssociateComponent implements OnInit {
   business: Business;
   loading: boolean;
   errorMessage: string;
+  allClasses: Class[];
+  allGrade = [];
+  allDepartment = [];
+  allMajorName = [];
+  allClassNumber = [];
 
   constructor(private managementService: ManagementService,
               private activatedRoute: ActivatedRoute,
@@ -41,6 +46,17 @@ export class ClassEditAssociateComponent implements OnInit {
         this.searchMajorName = this.currentData.class.major.majorName;
         this.searchClassNumber = this.currentData.class.classNumber;
       }
+      this.allClasses = data['infoResolvedData'].classes;
+      this.getAllGrade();
+      if (this.searchGrade) {
+        this.onGradeChange();
+      }
+      if (this.searchDepartment) {
+        this.onDepartmentChange();
+      }
+      if (this.searchMajorName) {
+        this.onMajorNameChange();
+      }
     });
     this.loading = false;
   }
@@ -48,10 +64,10 @@ export class ClassEditAssociateComponent implements OnInit {
   searchInfo() {
     this.loading = true;
     this.errorMessage = '';
-    this.managementService.searchClasses(this.searchGrade && this.searchGrade.length != 0 ? this.searchGrade : null,
-      this.searchDepartment && this.searchDepartment.length != 0 ? this.searchDepartment : null, 
-      this.searchMajorName && this.searchMajorName.length != 0 ?  this.searchMajorName : null,
-      this.searchClassNumber && this.searchClassNumber.length != 0 ?  this.searchClassNumber : null).subscribe(data => {
+    this.managementService.searchClasses(this.searchGrade && this.searchGrade.length !== 0 ? this.searchGrade : null,
+      this.searchDepartment && this.searchDepartment.length !== 0 ? this.searchDepartment : null,
+      this.searchMajorName && this.searchMajorName.length !== 0 ?  this.searchMajorName : null,
+      this.searchClassNumber && this.searchClassNumber.length !== 0 ?  this.searchClassNumber : null).subscribe(data => {
         this.searchClasses = data;
         if (this.searchClasses == null || this.searchClasses.length <= 0) {
           this.errorMessage = '无查询结果';
@@ -68,5 +84,33 @@ export class ClassEditAssociateComponent implements OnInit {
     }
     this.router.navigate(['/management', this.business.name, 'edit',
     this.currentData.id, this.business.subTab]);
+  }
+
+  getAllGrade() {
+    this.allClasses.forEach(c => this.allGrade.push(c.major.grade));
+  }
+
+  onGradeChange() {
+    this.allClasses.filter(c => c.major.grade === this.searchGrade).forEach(c => this.allDepartment.push(c.major.department));
+  }
+
+  onDepartmentChange() {
+    this.allClasses.filter(c => c.major.grade === this.searchGrade && c.major.department === this.searchDepartment)
+    .forEach(c => this.allMajorName.push(c.major.majorName));
+  }
+
+  onMajorNameChange() {
+    this.allClasses.filter(c => c.major.grade === this.searchGrade
+      && c.major.department === this.searchDepartment
+      && c.major.majorName === this.searchMajorName)
+    .forEach(c => this.allClassNumber.push(c.classNumber));
+  }
+
+  onClassNumberChange() {
+    this.choseClass(this.allClasses
+      .filter(c => c.major.grade === this.searchGrade
+        && c.major.department === this.searchDepartment
+        && c.major.majorName === this.searchMajorName
+        && c.classNumber === this.searchClassNumber)[0]);
   }
 }

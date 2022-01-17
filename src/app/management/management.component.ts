@@ -25,6 +25,8 @@ export class ManagementComponent implements OnInit {
 
   public teacherAccount: TeacherAccount;
 
+  rowSelection: any;
+  rowSelectionId: 0;
   private gridApi: GridApi;
   private gridColumnApi: ColumnApi;
 
@@ -41,6 +43,7 @@ export class ManagementComponent implements OnInit {
     this.activatedRoute.params.subscribe(param => {
       this.business = businessList.find(b => b.name === param.business);
       this.columnDefs = this.agGrideService.getColumnDefs(this.business);
+      this.rowSelection = null;
     });
     this.logInUserNm = sessionStorage.getItem('user');
     if (this.business.name === 'information') {
@@ -67,12 +70,20 @@ export class ManagementComponent implements OnInit {
   }
 
   onRowDoubleClicked(params) {
+    this.viewDetail(params.data);
+  }
+
+  onClickViewButton() {
+    this.viewDetail(this.rowSelection);
+  }
+
+  viewDetail(data) {
     const routerParams: NavigationExtras = {
       queryParams: {
-        detail: JSON.stringify(params.data)
+        detail: JSON.stringify(data)
       }
     };
-    this.router.navigate([this.router.url, params.data.id], routerParams);
+    this.router.navigate([this.router.url, data.id], routerParams);
   }
 
   onGridReady(params) {
@@ -91,9 +102,19 @@ export class ManagementComponent implements OnInit {
         this.teacherAccount.password = t.password;
         this.teacherAccount.teacher = t.teacher;
       }
-
     });
-
   }
 
+  onSelectionChanged() {
+    this.rowSelection = this.gridApi.getSelectedRows()[0];
+    this.rowSelectionId = this.rowSelection.id;
+  }
+
+  buttonVisiable(): boolean {
+    if (this.rowSelection) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

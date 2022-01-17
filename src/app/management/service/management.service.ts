@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Business } from 'src/app/models/business';
 import { Class } from 'src/app/models/class';
@@ -91,25 +91,60 @@ export class ManagementService {
     }));
   }
 
+  mapGetInfoData(info: Observable<any>): Observable<any> {
+    return info.pipe(
+      map(data => ({ data: data })),
+      catchError(error => {
+        const message = `Retrieval error: ${error}`;
+        console.error(message);
+        return of({ data: null, error: message });
+      })
+    );
+  }
+
   getInfoData(business: string, id: number): Observable<any> {
     if (id === 0) {
-      return of(this.initializeInfo(business));
+      return this.initializeInfo(business);
     }
     switch (business) {
       case 'course':
-        return this.getCourse(id);
+        return this.mapGetInfoData(this.getCourse(id));
       case 'major':
-        return this.getMajor(id);
+        return this.mapGetInfoData(this.getMajor(id));
       case 'teacher':
-        return this.getTeacher(id);
+        return this.mapGetInfoData(this.getTeacher(id));
       case 'class':
-        return this.getClass(id);
-        case 'student':
-          return this.getStudent(id);
-        case 'score':
-          return this.getScore(id);
-        case 'courseSchedule':
-          return this.getCourseSchedule(id);
+        return forkJoin([
+          this.getClass(id),
+          this.getAllMajors()
+        ]).pipe(map(data => ({
+          data : data[0],
+          majors : data[1]
+        })));
+      case 'student':
+        return forkJoin([
+          this.getStudent(id),
+          this.getAllClasses()
+        ]).pipe(map(data => ({
+          data : data[0],
+          classes : data[1]
+        })));
+      case 'score':
+        return forkJoin([
+          this.getScore(id),
+          this.getAllMajors()
+        ]).pipe(map(data => ({
+          data : data[0],
+          majors : data[1]
+        })));
+      case 'courseSchedule':
+        return forkJoin([
+          this.getCourseSchedule(id),
+          this.getAllClasses()
+        ]).pipe(map(data => ({
+          data : data[0],
+          classes : data[1]
+        })));
     }
 
   }
@@ -388,22 +423,46 @@ export class ManagementService {
     return throwError(errorMessage);
   }
 
-  private initializeInfo(business: string): any {
+  private initializeInfo(business: string): Observable<any> {
     switch (business) {
       case 'course':
-        return new Course();
+        return this.mapGetInfoData(of(new Course()));
       case 'major':
-        return new Major();
+        return this.mapGetInfoData(of(new Major()));
       case 'teacher':
-        return new Teacher();
+        return this.mapGetInfoData(of(new Teacher()));
       case 'class':
-        return new Class();
+        return forkJoin([
+          of(new Class()),
+          this.getAllMajors()
+        ]).pipe(map(data => ({
+          data : data[0],
+          majors : data[1]
+        })));
       case 'student':
-        return new Student();
+        return forkJoin([
+          of(new Student()),
+          this.getAllClasses()
+        ]).pipe(map(data => ({
+          data : data[0],
+          classes : data[1]
+        })));
       case 'score':
-        return new Score();
+        return forkJoin([
+          of(new Score()),
+          this.getAllMajors()
+        ]).pipe(map(data => ({
+          data : data[0],
+          majors : data[1]
+        })));
       case 'courseSchedule':
-        return new CourseSchedule();
+        return forkJoin([
+          of(new CourseSchedule()),
+          this.getAllClasses()
+        ]).pipe(map(data => ({
+          data : data[0],
+          classes : data[1]
+        })));
     }
   }
   searchTeacherAccountByName(name: string): Observable<TeacherAccount> {

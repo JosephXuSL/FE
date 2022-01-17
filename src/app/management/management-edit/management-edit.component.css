@@ -36,8 +36,8 @@
     width: 0;
     height: 0;
     border-top: 20px inset transparent;
-    border-bottom: 24px inset transparent;
-    border-left: 21px solid #efefef;
+    border-bottom: 21px inset transparent;
+    border-left: 20px solid #efefef;
     position: absolute;
     content: "";
     top: 0;

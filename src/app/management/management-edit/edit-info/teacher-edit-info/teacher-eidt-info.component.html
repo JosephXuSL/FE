@@ -66,16 +66,11 @@
             <label class="col-md-2 col-form-label"
                    for="statusId">教师状态</label>
             <div class="col-md-8">
-                <input class="form-control"
-                       id="statusId"
-                       type="text"
-                       [(ngModel)]=teacher.teacherStatus
-                       name="TeacherStatus"
-                       #teacherStatusVar="ngModel"
-                       [ngClass]="{'is-invalid': (teacherStatusVar.touched || 
-                                                    teacherStatusVar.dirty ||
-                                                      teacher.id !== 0) &&
-                                                      !teacherStatusVar.valid }" />                
+                <select class="form-control" name="teacherStatus" id="statusId" [(ngModel)]=teacher.teacherStatus>
+                    <option  value="在职">在职</option>
+                    <option value="保留职务">保留职务</option>
+                    <option value="离职">离职</option>
+                </select>
             </div>
         </div>
 

@@ -20,7 +20,7 @@ export class Student {
     constructor() {
         this.id = 0;
         this.name = null;
-        this.sex = null;
+        this.sex = '男';
         this.identityCardNumber = null;
         this.studentNumber = null;
         this.studentStatus = null;

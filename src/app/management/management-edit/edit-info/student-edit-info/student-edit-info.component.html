@@ -36,23 +36,10 @@
             <label class="col-md-2 col-form-label"
                    for="sexId">性别</label>
             <div class="col-md-8">
-                <input class="form-control"
-                       id="sexId"
-                       type="text"
-                       placeholder="（必填）"
-                       required
-                       [(ngModel)]=student.sex
-                       name="sex"
-                       #sexVar="ngModel"
-                       [ngClass]="{'is-invalid': (sexVar.touched || 
-                                                    sexVar.dirty ||
-                                                      student.id !== 0) && 
-                                                      !sexVar.valid }" />
-                <span class="invalid-feedback">
-                    <span *ngIf="sexVar.errors?.required">
-                        性别不能为空.
-                    </span>
-                </span>
+                <div class="form-control">
+                    <label style="margin-left: 5px;"><input id="sexId" type="radio" [(ngModel)]=student.sex name="sex" value ="男" > 男 </label>
+                    <label style="margin-left: 10px;"><input id="sexId" type="radio" [(ngModel)]=student.sex name="sex" value ="女" > 女 </label>
+                </div>
             </div>
         </div>
 
@@ -111,11 +98,11 @@
             <label class="col-md-2 col-form-label"
                    for="statusId">学生状态</label>
             <div class="col-md-8">
-                <input class="form-control"
-                       id="statusId"
-                       type="text"
-                       [(ngModel)]=student.studentStatus
-                       name="studentStatus"/>                
+                <select class="form-control" name="studentStatus" id="statusId" [(ngModel)]=student.studentStatus>
+                    <option  value="在籍生">在籍生</option>
+                    <option value="保留学籍">保留学籍</option>
+                    <option value="离校">离校</option>
+                </select>
             </div>
         </div>
         

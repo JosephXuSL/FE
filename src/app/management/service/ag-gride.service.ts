@@ -15,6 +15,7 @@ export class AgGrideService {
             filter: true,
             resizable: true,
             Width: 150,
+            valueFormatter: params => this.booleanFormatter(params.value),
             filterParams:
             {
                 filterOptions: [
@@ -44,5 +45,17 @@ export class AgGrideService {
             }
         } as ColDef));
         return defs;
+    }
+
+    private booleanFormatter(value: any): string {
+        if (typeof(value) === 'boolean') {
+            if (value) {
+                return '是';
+            } else {
+                return '否';
+            }
+        } else {
+            return value;
+        }
     }
 }

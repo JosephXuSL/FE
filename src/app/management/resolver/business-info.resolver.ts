@@ -17,14 +17,6 @@ export class BusinessInfoResolver implements Resolve<any> {
           return of({ data: null, error: message });
         }
 
-        return this.managementService.getInfoData(route.paramMap.get('business') , +id)
-          .pipe(
-            map(data => ({ data: data })),
-            catchError(error => {
-              const message = `Retrieval error: ${error}`;
-              console.error(message);
-              return of({ data: null, error: message });
-            })
-          );
+        return this.managementService.getInfoData(route.paramMap.get('business') , +id);
     }
 }
