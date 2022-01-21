@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './home/change-password/change-password.component';
 import { BasicInformationComponent } from './home/basic-information/basic-information.component';
@@ -23,9 +23,10 @@ import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { IconsProviderModule } from './icons-provider.module';
-import { NgZorroAntdModule,NzTableModule, NZ_I18N, zh_CN, } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzTableModule, NZ_I18N, zh_CN, } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { AuthInterceptorService } from './user/auth-interceptor.service';
 
 registerLocaleData(zh);
 
@@ -56,6 +57,7 @@ registerLocaleData(zh);
     CreateTeacherAccountComponent
   ],
   bootstrap: [AppComponent],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }]
+  providers: [{ provide: NZ_I18N, useValue: zh_CN },
+              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }]
 })
 export class AppModule { }

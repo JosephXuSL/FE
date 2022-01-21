@@ -4621,60 +4621,60 @@ export class ApiClient {
      * @param password (optional) 
      * @return Success
      */
- getTeacherAccountByTeacherNameAndPassword(teacherName: string | null | undefined, password: string | null | undefined, details: string): Observable<TeacherAccount> {
-    let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNameAndPassword/{details}?";
-    if (details === undefined || details === null)
-        throw new Error("The parameter 'details' must be defined.");
-    url_ = url_.replace("{details}", encodeURIComponent("" + details));
-    if (teacherName !== undefined && teacherName !== null)
-        url_ += "teacherName=" + encodeURIComponent("" + teacherName) + "&";
-    if (password !== undefined && password !== null)
-        url_ += "password=" + encodeURIComponent("" + password) + "&";
-    url_ = url_.replace(/[?&]$/, "");
+     getTeacherAccountByTeacherNameAndPassword(teacherName: string | null | undefined, password: string | null | undefined, details: string): Observable<TeacherAccountOutput> {
+        let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNameAndPassword/{details}?";
+        if (details === undefined || details === null)
+            throw new Error("The parameter 'details' must be defined.");
+        url_ = url_.replace("{details}", encodeURIComponent("" + details));
+        if (teacherName !== undefined && teacherName !== null)
+            url_ += "teacherName=" + encodeURIComponent("" + teacherName) + "&";
+        if (password !== undefined && password !== null)
+            url_ += "password=" + encodeURIComponent("" + password) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
-    let options_ : any = {
-        observe: "response",
-        responseType: "blob",
-        headers: new HttpHeaders({
-            "Accept": "application/json"
-        })
-    };
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
 
-    return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-        return this.processGetTeacherAccountByTeacherNameAndPassword(response_);
-    })).pipe(_observableCatch((response_: any) => {
-        if (response_ instanceof HttpResponseBase) {
-            try {
-                return this.processGetTeacherAccountByTeacherNameAndPassword(<any>response_);
-            } catch (e) {
-                return <Observable<TeacherAccount>><any>_observableThrow(e);
-            }
-        } else
-            return <Observable<TeacherAccount>><any>_observableThrow(response_);
-    }));
-}
-
-protected processGetTeacherAccountByTeacherNameAndPassword(response: HttpResponseBase): Observable<TeacherAccount> {
-    const status = response.status;
-    const responseBlob =
-        response instanceof HttpResponse ? response.body :
-        (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-    let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-    if (status === 200) {
-        return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        let result200: any = null;
-        let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-        result200 = TeacherAccount.fromJS(resultData200);
-        return _observableOf(result200);
-        }));
-    } else if (status !== 200 && status !== 204) {
-        return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTeacherAccountByTeacherNameAndPassword(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTeacherAccountByTeacherNameAndPassword(<any>response_);
+                } catch (e) {
+                    return <Observable<TeacherAccountOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TeacherAccountOutput>><any>_observableThrow(response_);
         }));
     }
-    return _observableOf<TeacherAccount>(<any>null);
-}
+
+    protected processGetTeacherAccountByTeacherNameAndPassword(response: HttpResponseBase): Observable<TeacherAccountOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TeacherAccountOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TeacherAccountOutput>(<any>null);
+    }
 
     /**
      * @param body (optional) 
@@ -4799,6 +4799,20 @@ export interface ITeacher {
 
 export class TeacherAccount implements ITeacherAccount {
     id?: number;
+    userName?: string | undefined;
+    normalizedUserName?: string | undefined;
+    email?: string | undefined;
+    normalizedEmail?: string | undefined;
+    emailConfirmed?: boolean;
+    passwordHash?: string | undefined;
+    securityStamp?: string | undefined;
+    concurrencyStamp?: string | undefined;
+    phoneNumber?: string | undefined;
+    phoneNumberConfirmed?: boolean;
+    twoFactorEnabled?: boolean;
+    lockoutEnd?: Date | undefined;
+    lockoutEnabled?: boolean;
+    accessFailedCount?: number;
     teacherId?: number;
     teacher?: Teacher;
     accountName?: string | undefined;
@@ -4818,6 +4832,20 @@ export class TeacherAccount implements ITeacherAccount {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.userName = _data["userName"];
+            this.normalizedUserName = _data["normalizedUserName"];
+            this.email = _data["email"];
+            this.normalizedEmail = _data["normalizedEmail"];
+            this.emailConfirmed = _data["emailConfirmed"];
+            this.passwordHash = _data["passwordHash"];
+            this.securityStamp = _data["securityStamp"];
+            this.concurrencyStamp = _data["concurrencyStamp"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.phoneNumberConfirmed = _data["phoneNumberConfirmed"];
+            this.twoFactorEnabled = _data["twoFactorEnabled"];
+            this.lockoutEnd = _data["lockoutEnd"] ? new Date(_data["lockoutEnd"].toString()) : <any>undefined;
+            this.lockoutEnabled = _data["lockoutEnabled"];
+            this.accessFailedCount = _data["accessFailedCount"];
             this.teacherId = _data["teacherId"];
             this.teacher = _data["teacher"] ? Teacher.fromJS(_data["teacher"]) : <any>undefined;
             this.accountName = _data["accountName"];
@@ -4837,6 +4865,20 @@ export class TeacherAccount implements ITeacherAccount {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["userName"] = this.userName;
+        data["normalizedUserName"] = this.normalizedUserName;
+        data["email"] = this.email;
+        data["normalizedEmail"] = this.normalizedEmail;
+        data["emailConfirmed"] = this.emailConfirmed;
+        data["passwordHash"] = this.passwordHash;
+        data["securityStamp"] = this.securityStamp;
+        data["concurrencyStamp"] = this.concurrencyStamp;
+        data["phoneNumber"] = this.phoneNumber;
+        data["phoneNumberConfirmed"] = this.phoneNumberConfirmed;
+        data["twoFactorEnabled"] = this.twoFactorEnabled;
+        data["lockoutEnd"] = this.lockoutEnd ? this.lockoutEnd.toISOString() : <any>undefined;
+        data["lockoutEnabled"] = this.lockoutEnabled;
+        data["accessFailedCount"] = this.accessFailedCount;
         data["teacherId"] = this.teacherId;
         data["teacher"] = this.teacher ? this.teacher.toJSON() : <any>undefined;
         data["accountName"] = this.accountName;
@@ -4849,12 +4891,70 @@ export class TeacherAccount implements ITeacherAccount {
 
 export interface ITeacherAccount {
     id?: number;
+    userName?: string | undefined;
+    normalizedUserName?: string | undefined;
+    email?: string | undefined;
+    normalizedEmail?: string | undefined;
+    emailConfirmed?: boolean;
+    passwordHash?: string | undefined;
+    securityStamp?: string | undefined;
+    concurrencyStamp?: string | undefined;
+    phoneNumber?: string | undefined;
+    phoneNumberConfirmed?: boolean;
+    twoFactorEnabled?: boolean;
+    lockoutEnd?: Date | undefined;
+    lockoutEnabled?: boolean;
+    accessFailedCount?: number;
     teacherId?: number;
     teacher?: Teacher;
     accountName?: string | undefined;
     password?: string | undefined;
     accountStatus?: string | undefined;
     isAdminAccount?: boolean;
+}
+
+export class TeacherAccountOutput implements ITeacherAccountOutput {
+    loginResult?: TeacherAccount;
+    token?: string | undefined;
+    expiration?: Date;
+
+    constructor(data?: ITeacherAccountOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.loginResult = _data["loginResult"] ? TeacherAccount.fromJS(_data["loginResult"]) : <any>undefined;
+            this.token = _data["token"];
+            this.expiration = _data["expiration"] ? new Date(_data["expiration"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): TeacherAccountOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new TeacherAccountOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["loginResult"] = this.loginResult ? this.loginResult.toJSON() : <any>undefined;
+        data["token"] = this.token;
+        data["expiration"] = this.expiration ? this.expiration.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface ITeacherAccountOutput {
+    loginResult?: TeacherAccount;
+    token?: string | undefined;
+    expiration?: Date;
 }
 
 export class CourseRequestBody implements ICourseRequestBody {

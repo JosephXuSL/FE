@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ApiClient, GetMajorRequestBody, TeacherAccount } from '../api-client';
+import { ApiClient, GetMajorRequestBody, TeacherAccount, TeacherAccountOutput } from '../api-client';
 import { map } from 'rxjs/operators';
 import { ManagementServiceMapper } from '../management/service/management.service.mapper';
 import { Router } from '@angular/router';
@@ -41,7 +41,8 @@ export class AuthService {
     //   return of(true);
     // }
     this.logout();
-    return this.searchAccount(userName, password).pipe(map(res => {
+    return this.searchAccount(userName, password).pipe(map(data => {
+      const res = ManagementServiceMapper.mapTeacherAccountInput(data.loginResult);
       if (res && res.id) {
         this.currentUser = {
           id: res.id,
@@ -67,6 +68,8 @@ export class AuthService {
         sessionStorage.setItem('issuperadmin', '0');
         sessionStorage.setItem('isadmin', this.currentUser.isAdmin ? '1' : '0');
         sessionStorage.setItem('ismentor', this.currentUser.isMentor ? '1' : '0');
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('tokenExpiration', data.expiration.toDateString());
 
         return true;
       } else {
@@ -80,9 +83,8 @@ export class AuthService {
     this.currentUser = null;
     sessionStorage.clear();
   }
-  public searchAccount(accountName: string, password: string): Observable<TeacherAccount> {
+  public searchAccount(accountName: string, password: string): Observable<TeacherAccountOutput> {
     return this.apiClient
-      .getTeacherAccountByTeacherNameAndPassword(accountName, password, 'details')
-      .pipe(map((res: TeacherAccount) => ManagementServiceMapper.mapTeacherAccountInput(res)));
+      .getTeacherAccountByTeacherNameAndPassword(accountName, password, 'details');
   }
 }
