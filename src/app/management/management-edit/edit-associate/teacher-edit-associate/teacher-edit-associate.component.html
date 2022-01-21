@@ -2,21 +2,20 @@
 
     <fieldset>
         <div class="row">
-            <legend>查找教师</legend>
+            <legend style="font-size: large;"><b>查找教师</b></legend>
         </div>
         <div class="form-group row">
-            <label class="col-md-2 col-form-label" for="nameId">姓名</label>
+            <label class="col-md-2 col-form-label" for="nameId" style="text-align: right;">姓名</label>
             <div class="col-md-8">
                 <input class="form-control" id="nameId" type="text" [(ngModel)]=searchName name="name" />
             </div>
-            <button class="btn btn-primary mr-3" [disabled]="!searchName" style="width:80px" type="button" title="查询教师" (click)="searchInfo()">
+            <button class="btn btn-primary mr-3" [disabled]="!searchName" style="width:80px;background-color: #00559e;" type="button" title="查询教师" (click)="searchInfo()">
           查找
       </button>
         </div>
 
     </fieldset>
-
-    <div class="table-responsive card-body">
+    <div class="table-responsive card-body" style="height: 170px;">
         <table class="table mb-0">
             <thead>
                 <tr>
@@ -35,8 +34,8 @@
                     <td>{{ teacher.teacherStatus}}</td>
                     <td>{{ teacher.isMentor}}</td>
                     <td>
-                        <button class="btn btn-outline-primary btn-sm" (click)="choseData(teacher)">
-                选择
+                        <button class="btn btn-outline-primary btn-sm" (click)="choseData(teacher)" style="background-color: #00ccd3;color: white;border-radius: 30px;width: 60px;border: 2px;">
+                            选择
               </button>
                     </td>
                 </tr>

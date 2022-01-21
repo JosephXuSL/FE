@@ -25,12 +25,16 @@ import { AssociateListResolver } from './resolver/associate-list.resolver';
 import { CourseScheduleEditInfoComponent } from './management-edit/edit-info/course-schedule-edit-info/course-schedule-edit-info.component';
 import { EditGuard } from './service/edit-guard.service';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzIconModule } from 'ng-zorro-antd';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         NzDividerModule,
+        NzIconModule,
+        NzButtonModule,
         AgGridModule.withComponents([]),
         RouterModule.forChild([
             {

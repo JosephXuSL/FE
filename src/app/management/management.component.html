@@ -1,18 +1,19 @@
 <div class="card">
     <div class="card-header">
         <div class="row">
-            {{business.nameForShow}}管理
+            <b>{{business.nameForShow}}管理</b>
             <div class="ml-auto" *ngIf="!isBasicInformation">
-                <button class="btn btn-sm button-margin" [ngClass]="{'btn-primary': buttonVisiable(), 'btn-outline-primary': !buttonVisiable()}" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="onClickViewButton()">
+                <button class="btn btn-sm button-margin" style="background-color: #00559e;color: white;" [ngClass]="{'btn-primary': buttonVisiable(), 'btn-outline-primary': !buttonVisiable()}" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="onClickViewButton()">
                     查看选中{{business.nameForShow}}细节
                 </button>
                 <button class="btn btn-success btn-sm button-margin" [routerLink]="['/management',business.name,'edit',0,this.business.subTab]">
                     添加{{business.nameForShow}}
                 </button>
-                <button class="btn btn-sm button-margin" [routerLink]="['/management',business.name,'edit',rowSelectionId,this.business.subTab]" [ngClass]="{'btn-warning': buttonVisiable(), 'btn-outline-warning': !buttonVisiable()}" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0">
+                <button class="btn btn-sm button-margin" style="background-color: #efb400;color: white;" [routerLink]="['/management',business.name,'edit',rowSelectionId,this.business.subTab]" [ngClass]="{'btn-warning': buttonVisiable(), 'btn-outline-warning': !buttonVisiable()}"
+                    [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0">
                     修改选中{{business.nameForShow}}
                 </button>
-                <button class="btn btn-sm button-margin" [ngClass]="{'btn-danger': buttonVisiable(), 'btn-outline-danger': !buttonVisiable()}" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="removeSelection()">
+                <button class="btn btn-sm button-margin" style="background-color: #d30000;color: white;" [ngClass]="{'btn-danger': buttonVisiable(), 'btn-outline-danger': !buttonVisiable()}" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="removeSelection()">
                     删除选中{{business.nameForShow}}
                 </button>
             </div>
@@ -24,9 +25,13 @@
         </div>
     </div>
 
-    <div class="card-body" *ngIf="!isBasicInformation ">
-        <div class="form-group row" [hidden]="business.name !=='course' ">
-            <label class="col-md-1 col-form--label search-area"><b>检索：</b></label>
+    <div class="card" *ngIf="!isBasicInformation " style="width: 95%; margin-left: 2.5%;">
+        <div class="card-header">
+            <div class="row">
+                <b>检索：</b>
+            </div>
+        </div>
+        <div class="form-group row" [hidden]="business.name !=='course' " style="margin-top: 10px;">
             <label class="col-md-1 col-form--label search-area"></label>
             <label class="col-md-2 col-form--label search-area" for="kechengId">课程名称:</label>
 
@@ -34,8 +39,8 @@
                 <input class="form-control search-inputarea boxdis" id="kechengId" type="text" placeholder="请输入" [(ngModel)]="kecheng" />
             </div>
         </div>
-        <div class="form-group row" [hidden]="business.name !=='major' ">
-            <label class="col-md-1 col-form--label search-area"><b>检索：</b></label>
+        <div class="form-group row" [hidden]="business.name !=='major' " style="margin-top: 10px;">
+            <label class="col-md-1 col-form--label search-area"></label>
             <label class="col-md-1 col-form--label search-area" for="jiId">级:</label>
 
             <div class="col-md-2">
@@ -53,8 +58,8 @@
             </div>
         </div>
 
-        <div class="form-group row" [hidden]="business.name !=='teacher' ">
-            <label class="col-md-1 col-form--label search-area"><b>检索：</b></label>
+        <div class="form-group row" [hidden]="business.name !=='teacher' " style="margin-top: 10px;">
+            <label class="col-md-1 col-form--label search-area"></label>
             <label class="col-md-2 col-form--label search-area" for="jiaoshiId">教师姓名:</label>
 
             <div class="col-md-2">
@@ -67,8 +72,8 @@
             </div>
 
         </div>
-        <div class="form-group row" [hidden]="business.name !=='class' ">
-            <label class="col-md-1 col-form--label search-area"><b>检索：</b></label>
+        <div class="form-group row" [hidden]="business.name !=='class' " style="margin-top: 10px;">
+            <label class="col-md-1 col-form--label search-area"></label>
             <label class="col-md-1 col-form--label search-area" for="cjiId">级:</label>
 
             <div class="col-md-2">
@@ -87,23 +92,23 @@
 
         </div>
 
-        <div class="form-group row" [hidden]="business.name !=='student' ">
-            <label class="col-md-1 col-form--label search-area"><b>检索：</b></label>
+        <div class="form-group row" [hidden]="business.name !=='student' " style="margin-top: 10px;">
+            <label class="col-md-1 col-form--label search-area"></label>
             <label class="col-md-1 col-form--label search-area" for="snameId">姓名:</label>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <input class="form-control search-inputarea boxdis" id="snameId" type="text" placeholder="请输入" [(ngModel)]="sname" />
             </div>
             <label class="col-md-1 col-form--label search-area" for="sxhId">学号:</label>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <input class="form-control search-inputarea boxdis" id="sxhId" type="text" placeholder="请输入" [(ngModel)]="sxh" />
             </div>
 
         </div>
 
-        <div class="form-group row" [hidden]="business.name !=='score' ">
-            <label class="col-md-1 col-form--label search-area"><b>检索：</b></label>
+        <div class="form-group row" [hidden]="business.name !=='score' " style="margin-top: 10px;">
+            <label class="col-md-1 col-form--label search-area"></label>
             <label class="col-md-1 col-form--label search-area" for="scorenameId">姓名:</label>
 
             <div class="col-md-2">
@@ -122,8 +127,8 @@
 
         </div>
 
-        <div class="form-group row" [hidden]="business.name !=='courseSchedule' ">
-            <label class="col-md-1 col-form--label search-area"><b>检索：</b></label>
+        <div class="form-group row" [hidden]="business.name !=='courseSchedule' " style="margin-top: 10px;">
+            <label class="col-md-1 col-form--label search-area"></label>
             <label class="col-md-1 col-form--label search-area" for="steachernId">教师:</label>
 
             <div class="col-md-2">
@@ -142,73 +147,206 @@
 
         </div>
         <div class="row">
-            <label class="col-md-6 col-form--label"></label>
+            <label class="col-md-7 col-form--label">
+            </label>
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='course'" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;" [disabled]="!(kecheng) " (click)="searchcourse() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
 
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='course'" [ngClass]="{'btn-primary':kecheng, 'btn-outline-primary': !kecheng}" type="submit " style="width:30px;height: 70%; " [disabled]="!(kecheng) " (click)="searchcourse() ">
-                搜索
-            </button>
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='course'" [ngClass]="{'btn-primary': kecheng, 'btn-outline-primary': !kecheng}" type="submit " style="width:30px;height: 70%;" [disabled]="!(kecheng) " (click)="clear() ">
-                清空
-            </button>
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='course'" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;" [disabled]="!(kecheng) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
 
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='major'" [ngClass]="{'btn-primary':(ji&&yuanxi&&zhuanye), 'btn-outline-primary': !(ji&&yuanxi&&zhuanye)}" type="submit " style="width:30px;height: 70%; " [disabled]="!(ji&&yuanxi&&zhuanye) "
+
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='major'" [ngClass]="{'btn-primary':(ji&&yuanxi&&zhuanye), 'btn-outline-primary': !(ji&&yuanxi&&zhuanye)}" type="submit " style="width:30px;height: 70%; " [disabled]="!(ji&&yuanxi&&zhuanye) "
                 (click)="searchmajor() ">
                 搜索
-            </button>
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='major'" [ngClass]="{'btn-primary': ji||yuanxi||zhuanye, 'btn-outline-primary': !(ji||yuanxi||zhuanye)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(ji||yuanxi||zhuanye) "
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='major'" [ngClass]="{'btn-primary':(ji&&yuanxi&&zhuanye), 'btn-outline-primary': !(ji&&yuanxi&&zhuanye)}" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;"
+                    [disabled]="!(ji&&yuanxi&&zhuanye) " (click)="searchmajor() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='major'" [ngClass]="{'btn-primary': ji||yuanxi||zhuanye, 'btn-outline-primary': !(ji||yuanxi||zhuanye)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(ji||yuanxi||zhuanye) "
                 (click)="clear() ">
                 清空
-            </button>
-
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='major'" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;" [disabled]="!(ji||yuanxi||zhuanye) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- 
             <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='teacher'" [ngClass]="{'btn-primary':(jiaoshi&&jnum), 'btn-outline-primary': !(jiaoshi&&jnum)}" type="submit " style="width:30px;height: 70%; " [disabled]="!(jiaoshi&&jnum) "
                 (click)="searchteacher() ">
                 搜索
-            </button>
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='teacher'" [ngClass]="{'btn-primary': jiaoshi||jnum, 'btn-outline-primary': !(jiaoshi||jnum)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(jiaoshi||jnum) "
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='teacher'" [ngClass]="{'btn-primary':(jiaoshi&&jnum), 'btn-outline-primary': !(jiaoshi&&jnum)}" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;" [disabled]="!(jiaoshi&&jnum) "
+                    (click)="searchteacher() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='teacher'" [ngClass]="{'btn-primary': jiaoshi||jnum, 'btn-outline-primary': !(jiaoshi||jnum)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(jiaoshi||jnum) "
                 (click)="clear() ">
                 清空
-            </button>
-
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='teacher'" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;" [disabled]="!(jiaoshi||jnum) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- 
             <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='class'" [ngClass]="{'btn-primary':(cji&&cyuanxi&&czy), 'btn-outline-primary': !(cji&&cyuanxi&&czy)}" type="submit " style="width:30px;height: 70%; " [disabled]="!(cji&&cyuanxi&&czy) "
                 (click)="searchclass() ">
                 搜索
-            </button>
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='class'" [ngClass]="{'btn-primary': cji||cyuanxi||czy, 'btn-outline-primary': !(cji||cyuanxi||czy)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(cji||cyuanxi||czy) "
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='class'" [ngClass]="{'btn-primary':(cji&&cyuanxi&&czy), 'btn-outline-primary': !(cji&&cyuanxi&&czy)}" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;"
+                    [disabled]="!(cji&&cyuanxi&&czy) " (click)="searchclass() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='class'" [ngClass]="{'btn-primary': cji||cyuanxi||czy, 'btn-outline-primary': !(cji||cyuanxi||czy)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(cji||cyuanxi||czy) "
                 (click)="clear() ">
                 清空
-            </button>
-
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='class'" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;" [disabled]="!(cji||cyuanxi||czy) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- 
             <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='student'" [ngClass]="{'btn-primary':(sname&&sxh), 'btn-outline-primary': !(sname&&sxh)}" type="submit " style="width:30px;height: 70%; " [disabled]="!(sname&&sxh) " (click)="searchstudent() ">
                 搜索
-            </button>
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='student'" [ngClass]="{'btn-primary': sname||sxh, 'btn-outline-primary': !(sname||sxh)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(sname||sxh) " (click)="clear() ">
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='student'" [ngClass]="{'btn-primary':(sname&&sxh), 'btn-outline-primary': !(sname&&sxh)}" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;" [disabled]="!(sname&&sxh) "
+                    (click)="searchstudent() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='student'" [ngClass]="{'btn-primary': sname||sxh, 'btn-outline-primary': !(sname||sxh)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(sname||sxh) " (click)="clear() ">
                 清空
-            </button>
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='student'" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;" [disabled]="!(sname||sxh) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
 
-
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='score'" [ngClass]="{'btn-primary':(scorename&&sxueke&&sxuenian), 'btn-outline-primary': !(scorename&&sxueke&&sxuenian)}" type="submit " style="width:30px;height: 70%; "
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='score'" [ngClass]="{'btn-primary':(scorename&&sxueke&&sxuenian), 'btn-outline-primary': !(scorename&&sxueke&&sxuenian)}" type="submit " style="width:30px;height: 70%; "
                 [disabled]="!(scorename&&sxueke&&sxuenian) " (click)="searchscore() ">
                 搜索
-            </button>
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='score'" [ngClass]="{'btn-primary': scorename||sxueke||sxuenian, 'btn-outline-primary': !(scorename||sxueke||sxuenian)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(scorename||sxueke||sxuenian) "
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='score'" [ngClass]="{'btn-primary':(scorename&&sxueke&&sxuenian), 'btn-outline-primary': !(scorename&&sxueke&&sxuenian)}" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;"
+                    [disabled]="!(scorename&&sxueke&&sxuenian) " (click)="searchscore() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='score'" [ngClass]="{'btn-primary': scorename||sxueke||sxuenian, 'btn-outline-primary': !(scorename||sxueke||sxuenian)}" type="submit " style="width:30px;height: 70%;" [disabled]="!(scorename||sxueke||sxuenian) "
                 (click)="clear() ">
                 清空
-            </button>
-
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='courseSchedule'" [ngClass]="{'btn-primary':(steachern&&scxuenian&&sckcId), 'btn-outline-primary': !(steachern&&scxuenian&&sckcId)}" type="submit " style="width:30px;height: 70%; "
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='score'" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;" [disabled]="!(scorename||sxueke||sxuenian) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='courseSchedule'" [ngClass]="{'btn-primary':(steachern&&scxuenian&&sckcId), 'btn-outline-primary': !(steachern&&scxuenian&&sckcId)}" type="submit " style="width:30px;height: 70%; "
                 [disabled]="!(steachern&&scxuenian&&sckcId) " (click)="searchcourseSchedule() ">
                 搜索
-            </button>
-            <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='courseSchedule'" [ngClass]="{'btn-primary': steachern||scxuenian||sckcId, 'btn-outline-primary': !(steachern||scxuenian||sckcId)}" type="submit " style="width:30px;height: 70%;"
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='courseSchedule'" [ngClass]="{'btn-primary':(steachern&&scxuenian&&sckcId), 'btn-outline-primary': !(steachern&&scxuenian&&sckcId)}" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;"
+                    [disabled]="!(steachern&&scxuenian&&sckcId) " (click)="searchcourseSchedule() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+            <!-- <button class="btn btn-sm button-margin mr-3 col-md-1" [hidden]="business.name !=='courseSchedule'" [ngClass]="{'btn-primary': steachern||scxuenian||sckcId, 'btn-outline-primary': !(steachern||scxuenian||sckcId)}" type="submit " style="width:30px;height: 70%;"
                 [disabled]="!(steachern||scxuenian||sckcId) " (click)="clear() ">
                 清空
-            </button>
-
-            <button class="btn btn-sm button-margin btn-primary mr-3 col-md-2 " type="submit " style="width:30px;height: 70%;" (click)="searchall() ">
-                查看所有
-            </button>
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" [hidden]="business.name !=='courseSchedule'" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;" [disabled]="!(steachern||scxuenian||sckcId) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" type="submit " style="width:130px;height: 65%;background-color: #e40000;color: white;" (click)="searchall() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -3%;margin-left: 3%; "><i nz-icon [nzType]="'file-search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -8%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -5%; font-size: small; ">查看所有</div>                       
+                    </div>
+                </button>
+            </div>
         </div>
-        <nz-divider></nz-divider>
+    </div>
+
+    <div class="card-body" *ngIf="!isBasicInformation ">
         <ag-grid-angular style="height: 450px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [localeText]="localeText" rowSelection="single" pagination="true" paginationPageSize="10" (selectionChanged)="onSelectionChanged()" (rowDoubleClicked)="onRowDoubleClicked($event)"
             (gridReady)="onGridReady($event)">
         </ag-grid-angular>

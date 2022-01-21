@@ -1,126 +1,77 @@
 <div class="card-body">
-    <form novalidate
-          #courseScheduleForm="ngForm">
-      <fieldset>
-        <legend>课表信息</legend>
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label"
-                   for="semesterId">学年</label>
-            <div class="col-md-8">
-                <input class="form-control"
-                       id="semesterId"
-                       type="text"
-                       placeholder="（必填）"
-                       required
-                       [(ngModel)]=courseSchedule.teacherCourseInfo.semester
-                       name="semester"
-                       #semesterVar="ngModel"
-                       [ngClass]="{'is-invalid': (semesterVar.touched || 
+    <legend style="font-size: large;margin-left: -20px;">
+        <b>课表信息</b>
+    </legend>
+    <form novalidate #courseScheduleForm="ngForm">
+        <fieldset>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="semesterId">学年</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="semesterId" type="text" placeholder="（必填）" required [(ngModel)]=courseSchedule.teacherCourseInfo.semester name="semester" #semesterVar="ngModel" [ngClass]="{'is-invalid': (semesterVar.touched || 
                                                 semesterVar.dirty ||
                                                 courseSchedule.id !== 0) && 
                                                   !semesterVar.valid }" />
-                <span class="invalid-feedback">
+                    <span class="invalid-feedback">
                     <span *ngIf="semesterVar.errors?.required">
                         学年不能为空.
                     </span>
-                </span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label"
-                   for="teacherId">教师</label>
-            <div class="col-md-8" (click)= "selectTeacher()">
-                <input class="form-control"
-                       disabled
-                       id="teacherId"
-                       type="text"
-                       placeholder="（前往选择）"
-                       [(ngModel)]=courseSchedule.teacherCourseInfo.teacher.name
-                       name="teacher"/>                
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="teacherId">教师</label>
+                <div class="col-md-8" (click)="selectTeacher()">
+                    <input class="form-control" disabled id="teacherId" type="text" placeholder="（前往选择）" [(ngModel)]=courseSchedule.teacherCourseInfo.teacher.name name="teacher" />
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label"
-                   for="courseId">课程</label>
-            <div class="col-md-8"
-                 (click)="selectCourse()">
-                <input class="form-control"
-                       disabled
-                       id="courseId"
-                       type="text"
-                       placeholder="（前往选择）"
-                       [(ngModel)]=courseSchedule.teacherCourseInfo.course.courseName
-                       name="courseName" />                
-            </div>
-        </div>
 
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label"
-                   for="classId">班级</label>
-            <div class="col-md-8" (click)= "selectClass()">
-                <input class="form-control"
-                       disabled
-                       id="classId"
-                       type="text"
-                       placeholder="（前往选择）"
-                       [(ngModel)]=courseSchedule.teacherCourseInfo.class.classNumber
-                       name="class"/>                
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="courseId">课程</label>
+                <div class="col-md-8" (click)="selectCourse()">
+                    <input class="form-control" disabled id="courseId" type="text" placeholder="（前往选择）" [(ngModel)]=courseSchedule.teacherCourseInfo.course.courseName name="courseName" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row" *ngIf="courseSchedule.id!==0">
-            <label class="col-md-2 col-form-label"
-                   for="dayId">课程日</label>
-            <div class="col-md-8">
-                <input class="form-control"
-                       id="dayId"
-                       type="text"
-                       placeholder="（必填）"
-                       required
-                       [(ngModel)]=courseSchedule.scheduledWeekday
-                       name="day"
-                       #dayVar="ngModel"
-                       [ngClass]="{'is-invalid': (dayVar.touched || 
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="classId">班级</label>
+                <div class="col-md-8" (click)="selectClass()">
+                    <input class="form-control" disabled id="classId" type="text" placeholder="（前往选择）" [(ngModel)]=courseSchedule.teacherCourseInfo.class.classNumber name="class" />
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="courseSchedule.id!==0">
+                <label class="col-md-2 col-form-label" for="dayId">课程日</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="dayId" type="text" placeholder="（必填）" required [(ngModel)]=courseSchedule.scheduledWeekday name="day" #dayVar="ngModel" [ngClass]="{'is-invalid': (dayVar.touched || 
                                                 dayVar.dirty ||
                                                 courseSchedule.id !== 0) && 
                                                   !dayVar.valid }" />
-                <span class="invalid-feedback">
+                    <span class="invalid-feedback">
                     <span *ngIf="dayVar.errors?.required">
                         课程日不能为空.
                     </span>
-                </span>
+                    </span>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row" *ngIf="courseSchedule.id!==0">
-            <label class="col-md-2 col-form-label"
-                   for="timeId">课程时间</label>
-            <div class="col-md-8">
-                <input class="form-control"
-                       id="timeId"
-                       type="text"
-                       placeholder="（必填）"
-                       required
-                       [(ngModel)]=courseSchedule.scheduledTime
-                       name="time"
-                       #timeVar="ngModel"
-                       [ngClass]="{'is-invalid': (timeVar.touched || 
+            <div class="form-group row" *ngIf="courseSchedule.id!==0">
+                <label class="col-md-2 col-form-label" for="timeId">课程时间</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="timeId" type="text" placeholder="（必填）" required [(ngModel)]=courseSchedule.scheduledTime name="time" #timeVar="ngModel" [ngClass]="{'is-invalid': (timeVar.touched || 
                                                 timeVar.dirty ||
                                                 courseSchedule.id !== 0) && 
                                                   !timeVar.valid }" />
-                <span class="invalid-feedback">
+                    <span class="invalid-feedback">
                     <span *ngIf="timeVar.errors?.required">
                         课程时间不能为空.
                     </span>
-                </span>
+                    </span>
+                </div>
             </div>
-        </div>
-      </fieldset>
+        </fieldset>
     </form>
-  </div>
-  
-  <div class='alert alert-danger'
-       *ngIf='errorMessage'>{{errorMessage}}
-  </div>
+</div>
+
+<div class='alert alert-danger' *ngIf='errorMessage'>{{errorMessage}}
+</div>

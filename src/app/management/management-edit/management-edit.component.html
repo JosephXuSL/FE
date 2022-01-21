@@ -1,10 +1,17 @@
 <div class="card">
     <div class="card-header">
-        {{pageTitle}}
+        <b>{{pageTitle}} </b>
     </div>
 
     <div class="card-body" *ngIf="info">
-        <div class="wizard">
+        <div class="wizard a:first-child" *ngIf="!business.subAssociateTab">
+            <a [routerLink]="[business.subTab]" routerLinkActive="active">
+        基础信息 <span [ngClass]="{'fa fa-exclamation': !isValid(business.subTab)}"></span>
+
+            </a>
+            <a style="background-color: white; width: 0px;pointer-events: none;"></a>
+        </div>
+        <div class="wizard" *ngIf="business.subAssociateTab">
             <a [routerLink]="[business.subTab]" routerLinkActive="active">
         基础信息 <span [ngClass]="{'fa fa-exclamation': !isValid(business.subTab)}"></span>
       </a>
@@ -23,12 +30,13 @@
                 <button *ngIf="business.name =='score' && info.id === 0" class="btn btn-primary mr-3" style="width:80px" type="button" title="导入输入信息" [disabled]="rowData.length == 0" (click)="importInfo()">
           导入
         </button>
-                <button *ngIf="!((business.name =='score' ||business.name =='courseSchedule') && info.id === 0)" class="btn btn-primary mr-3" style="width:80px" type="button" title="保存输入信息" [disabled]="!isValid()" (click)="saveInfo()">
-          保存
-        </button>
-                <button class="btn btn-outline-secondary mr-3" style="width:80px" type="button" title="取消改动" [routerLink]="['/management', business.name]">
-          取消
-        </button>
+                <button *ngIf="!((business.name =='score' ||business.name =='courseSchedule') && info.id === 0)" class="btn btn-primary mr-3" style="width:80px;background-color: #00559e; border: 2px; color: white;" type="button" title="保存输入信息" [disabled]="!isValid()"
+                    (click)="saveInfo()">
+            保存
+            </button>
+                <button class="btn btn-outline-secondary mr-3" style="width:80px;background-color: #efb400;  border: 2px; color: white;" type="button" title="取消改动" [routerLink]="['/management', business.name]">
+            取消
+            </button>
             </div>
 
             <label class="col-form-label mr-3 ml-auto" *ngIf="business.name =='score' && info.id === 0" for="nId">导入条数</label>
@@ -63,16 +71,9 @@
              —
         </button>
     </div>
-    <div class="card-body ">        
-        <ag-grid-angular style="width: 500px; height: 500px;"
-         #agGrid class="ag-theme-alpine"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
-        [localeText]="localeText"
-        [singleClickEdit]="true"
-        [stopEditingWhenCellsLoseFocus]="true"
-        (cellValueChanged)="onCellValueChanged($event)"
-        (gridReady)="onGridReady($event)">
+    <div class="card-body ">
+        <ag-grid-angular style="width: 500px; height: 500px;" #agGrid class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [localeText]="localeText" [singleClickEdit]="true" [stopEditingWhenCellsLoseFocus]="true" (cellValueChanged)="onCellValueChanged($event)"
+            (gridReady)="onGridReady($event)">
         </ag-grid-angular>
     </div>
 </div>

@@ -88,9 +88,8 @@ export class CourseInfoComponent implements OnInit {
   searchcourse() {
     this.loading = true;
     this.errorMessage = '';
-    //this.results = new Array<any>();
     const courserowData = new Array<any>();
-    if(this.allCourseResults&&this.allCourseResults.length>0){
+    if (this.allCourseResults && this.allCourseResults.length > 0) {
       this.allCourseResults.forEach(s => {
         if (s.courseName === this.kecheng && s.semester === this.xueqi) {
           courserowData.push(s);
@@ -99,21 +98,20 @@ export class CourseInfoComponent implements OnInit {
       if (!(courserowData && courserowData.length > 0)) {
         this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
       }
-    }
-    else{
+    } else {
       this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
   }
   clearcourse() {
-    this.loading=true;
+    this.loading = true;
     this.kecheng = '';
     this.xueqi = '';
     this.getAllStudentundercourse();
     this.loading = false;
   }
-  searchall(){
+  searchall() {
     this.ngOnInit();
   }
 }

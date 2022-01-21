@@ -35,7 +35,15 @@ export class ClassinfobymentorComponent implements OnInit {
   constructor(private apiClient: ApiClient) { }
   rowSelection = 'single';
   columnDefs = [
-    { headerName: '姓名', field: 'xingming', resizable: true, sortable: true, minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' },
+    {
+      headerName: '姓名',
+      field: 'xingming',
+      checkboxSelection: true,
+      resizable: true, sortable: true,
+      minWidth: 150,
+      maxWidth: 250,
+      filter: 'agTextColumnFilter'
+    },
     { headerName: '学号', field: 'xuehao', resizable: true, sortable: true, minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' },
     { headerName: '性别', field: 'xingbie', resizable: true, sortable: true, minWidth: 80, maxWidth: 120, filter: 'agTextColumnFilter' },
     // tslint:disable-next-line:max-line-length
@@ -56,6 +64,7 @@ export class ClassinfobymentorComponent implements OnInit {
   getallClass() {
     this.allClasses = new Array<any>();
     const teacherid = sessionStorage.getItem('teacherid');
+    // tslint:disable-next-line:radix
     this.apiClient.getClassesByMentorId(parseInt(teacherid)).subscribe(t => {
       if (t && t.length > 0 && t[0].id) {
         t.forEach(i => {
@@ -81,7 +90,7 @@ export class ClassinfobymentorComponent implements OnInit {
     this.classid = data.classid;
     this.classNum = data.classNumber;
     this.lookbuttonclick = true;
-    this.getstudentsbyclass( this.classid);
+    this.getstudentsbyclass(this.classid);
     this.clear();
   }
 
@@ -143,7 +152,7 @@ export class ClassinfobymentorComponent implements OnInit {
   }
   searchcoursebyclassidInfo() {
     this.student = new Student();
-    this.errorMessage ='';
+    this.errorMessage = '';
     this.student.major = new Major();
     this.apiClient.getStudentByIDCardNumber(this.selectstudentfenzheng).subscribe(t => {
       if (t) {
@@ -171,32 +180,33 @@ export class ClassinfobymentorComponent implements OnInit {
     this.getallClass();
   }
   search() {
-    this.loading=true;
-    this.errorMessage ='';
+    this.loading = true;
+    this.errorMessage = '';
     this.allClasses = new Array<any>();
-    const info= new ClassInfoRequestBody();
-      info.grade=this.nianji,
-      info.department=this.yuanxi,
-      info.classNumber=this.banji,
-      info.majorName= this.zhuanye   
-    this.apiClient.getClassesByClassInfo(info).subscribe(t=>{
-      if (t && t.length > 0 && t[0].id) {
-        t.forEach(i => {
-          const info = {
-            classid: i.id,
-            grade: i.major.grade,
-            department: i.major.department,
-            majorName: i.major.majorName,
-            classNumber: i.classNumber
-          };
-          this.allClasses.push(info);
-        });
-      } else {
-        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
-      }
-      this.loading = false;
-      this.rowData = this.allClasses;
-    });
+    const info = new ClassInfoRequestBody();
+    info.grade = this.nianji,
+      info.department = this.yuanxi,
+      info.classNumber = this.banji,
+      info.majorName = this.zhuanye,
+      this.apiClient.getClassesByClassInfo(info).subscribe(t => {
+        if (t && t.length > 0 && t[0].id) {
+          t.forEach(i => {
+            // tslint:disable-next-line:no-shadowed-variable
+            const info = {
+              classid: i.id,
+              grade: i.major.grade,
+              department: i.major.department,
+              majorName: i.major.majorName,
+              classNumber: i.classNumber
+            };
+            this.allClasses.push(info);
+          });
+        } else {
+          this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+        }
+        this.loading = false;
+        this.rowData = this.allClasses;
+      });
   }
   clear() {
     this.nianji = '';
@@ -204,7 +214,7 @@ export class ClassinfobymentorComponent implements OnInit {
     this.yuanxi = '';
     this.banji = '';
   }
-  searchall(){
+  searchall() {
     this.ngOnInit();
   }
 }

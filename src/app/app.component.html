@@ -1,23 +1,36 @@
-<span class="fa fa-spinner spinner"
-      *ngIf="loading"></span>
+<span class="fa fa-spinner spinner" *ngIf="loading"></span>
 
+
+<nav class="navbar navbar-expand navbar-light" style="background-color: #00559e;">
+    <img src="./assets/images/headrt.PNG" style="height: 45px;" />
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item" *ngIf="isLoggedIn||isLoggedInSession" style="color: white; font-size:medium;margin-right: 10px;margin-top: 4%;">
+            欢迎 {{ username }}
+        </li>
+
+        <li class="nav-item" *ngIf="!(isLoggedIn || isLoggedInSession)" style="text-align: center;
+        width: 90px;
+        border-radius: 10px;
+        border: 2px;
+        background: #2a9fff; height: 60%;
+        color:white;">
+            <a class="nav-link" [routerLink]="['/login']" style="color: white;font-size: medium;">登录</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn||isLoggedInSession" style="text-align: center;
+        width: 90px;
+        border-radius: 10px;
+        border: 2px;
+        background: #efb400; height: 60%;
+        color:white;">
+            <a class="nav-link" style="color: white;font-size: medium;" (click)="logOut()">注销</a>
+        </li>
+    </ul>
+
+</nav>
 <nz-layout>
-    <div nz-row>
+    <nz-layout style="height:90%">
 
-        <nz-header>
-            <div class="logo" style="font-size: x-large; color: white;"><span>学校教务管理系统</span></div>
-
-            <ul style="margin-left: 75%; font-size:medium; padding:9px" nz-menu nzTheme="dark" nzMode="horizontal">
-                <li nz-menu-item *ngIf="isLoggedIn||isLoggedInSession">欢迎 {{ username }}</li>
-                <li nz-menu-item *ngIf="!(isLoggedIn || isLoggedInSession)" [routerLink]="['/login']">
-                    登录</li>
-                <li nz-menu-item *ngIf="isLoggedIn||isLoggedInSession" (click)="logOut()">注销</li>
-            </ul>
-        </nz-header>
-
-    </div>
-
-    <nz-layout>
         <nz-sider nzWidth="200px" nzTheme="light">
             <ul nz-menu nzMode="inline" class="sider-menu">
                 <li nz-submenu nzOpen nzIcon="home" nzTitle="首页">
@@ -36,37 +49,35 @@
                 </li>
                 <li nz-submenu nzTitle="教务服务" nzIcon="laptop" *ngIf="isadmin()&&islogin()">
                     <ul>
-                        <li nz-menu-item *ngFor=" let business of businessList">
-                            <a *ngIf="isadmin()&&islogin()" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理</a>
+                        <li nz-menu-item *ngFor=" let business of businessList" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理
                         </li>
-                        <li nz-menu-item *ngIf="isadmin()&&islogin()">
-                            <a [routerLink]="['/createteacheraccount']" routerLinkActive="active">教师账号管理</a>
+                        <li nz-menu-item [routerLink]="['/createteacheraccount']" routerLinkActive="active">教师账号管理
                         </li>
                     </ul>
                 </li>
                 <li nz-submenu nzTitle="教师服务" nzIcon="book" *ngIf="!isadmin()&&islogin()">
                     <ul>
-                        <li nz-menu-item *ngIf="!isadmin()&&islogin()&&!ismentor()">
-                            <a [routerLink]="['/products/studentInfo']" routerLinkActive="active">学生管理</a>
+                        <li nz-menu-item *ngIf="!isadmin()&&islogin()&&!ismentor()" [routerLink]="['/products/studentInfo']" routerLinkActive="active">
+                            学生管理
                         </li>
-                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()">
-                            <a [routerLink]="['/products/classInfobyMentor']" routerLinkActive="active">班级及学生管理</a>
+                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()" [routerLink]="['/products/classInfobyMentor']" routerLinkActive="active">
+                            班级及学生管理
                         </li>
-                        <li nz-menu-item *ngIf="!isadmin()&&!ismentor()&&islogin()">
-                            <a [routerLink]="['/products/courseInfo']" routerLinkActive="active">课程表管理</a>
+                        <li nz-menu-item *ngIf="!isadmin()&&!ismentor()&&islogin()" [routerLink]="['/products/courseInfo']" routerLinkActive="active">
+                            课程表管理
                         </li>
-                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()">
-                            <a [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">课程表管理</a>
+                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()" [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">
+                            课程表管理
                         </li>
                     </ul>
                 </li>
                 <li nz-submenu nzTitle="公共服务" nzIcon="heart">
                     <ul>
-                        <li nz-menu-item>
-                            <a [routerLink]="['/enrollsearchfrostudent']" routerLinkActive="active">录取查询</a>
+                        <li nz-menu-item [routerLink]="['/enrollsearchfrostudent']" routerLinkActive="active">
+                            录取查询
                         </li>
-                        <li nz-menu-item>
-                            <a [routerLink]="['/examsearchfrostudent']" routerLinkActive="active">成绩查询</a>
+                        <li nz-menu-item [routerLink]="['/examsearchfrostudent']" routerLinkActive="active">
+                            成绩查询
                         </li>
                     </ul>
                 </li>
@@ -74,7 +85,7 @@
             </ul>
 
         </nz-sider>
-        <nz-layout class="inner-layout">
+        <nz-layout class="inner-layout" style="min-height: 550px;">
             <nz-content>
                 <div class="inner-content">
                     <router-outlet></router-outlet>

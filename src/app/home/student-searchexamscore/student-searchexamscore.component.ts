@@ -81,7 +81,7 @@ export class StudentSearchexamscoreComponent implements OnInit {
     const context: CanvasRenderingContext2D = this.canvas.getContext('2d'); // 获取画布2D上下文
     context.fillStyle = 'white'; // 画布填充色
     context.fillRect(0, 0, this.canvas.width, this.canvas.height); // 清空画布
-    context.fillStyle = 'cornflowerblue'; // 设置字体颜色
+    context.fillStyle = 'DarkGreen'; // 设置字体颜色
     context.font = '25px Arial'; // 设置字体
     const rand = new Array();
     const x = new Array();

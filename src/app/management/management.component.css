@@ -16,6 +16,11 @@
     height: 80%;
 }
 
+.btn-success {
+    background-color: #00ccd3;
+    border: 2px;
+}
+
 .spinner {
     font-size: 300%;
     position: absolute;
@@ -27,4 +32,10 @@
 .fa-spinner {
     -webkit-animation: spin 1000ms infinite linear;
     animation: spin 1000ms infinite linear;
+}
+
+.btuicon {
+    margin-top: -40%;
+    margin-right: 5px;
+    margin-left: -50%;
 }

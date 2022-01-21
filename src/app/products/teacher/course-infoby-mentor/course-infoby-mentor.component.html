@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header" *ngIf="!showPupup">
-        检索班级
+        <b>检索班级</b>
     </div>
     <div class="card-body " *ngIf="!showPupup">
         <div class="form-group row">
@@ -25,9 +25,9 @@
             </div>
         </div>
         <div class="row">
-            <label class="col-md-6 col-form--label"></label>
+            <label class="col-md-7 col-form--label"></label>
 
-            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(nianji&&zhuanye&&yuanxi&&banji) " (click)="search() ">
+            <!-- <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(nianji&&zhuanye&&yuanxi&&banji) " (click)="search() ">
                 搜索
             </button>
             <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(nianji||zhuanye||yuanxi||banji) " (click)="clear() ">
@@ -35,17 +35,45 @@
             </button>
             <button class="btn btn-primary mr-3 col-md-2 boxdis" type="submit " style="width:30px " (click)="searchall() ">
                 查看所有
-            </button>
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;margin-left:30px;" [disabled]="!(nianji&&zhuanye&&yuanxi&&banji) " (click)="search() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;margin-left:2px;" [disabled]="!(nianji||zhuanye||yuanxi||banji) " (click)="clear() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" type="submit " style="width:130px;height: 65%;background-color: #e40000;color: white;margin-left:2px;" (click)="searchall() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -3%;margin-left: 3%; "><i nz-icon [nzType]="'file-search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -8%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -5%; font-size: small; ">查看所有</div>                       
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
-    <div class="card-header">
-        相关信息
+    <div class="card-header" *ngIf="!showPupup">
+        <b>所属信息</b>
     </div>
     <div class="card-body" *ngIf="!showPupup">
         <div class="example-header" style="margin-left: 70px;">
-            <label class="col-md-8 col-form-label ">选择: {{selectclassname}}</label>
+            <label class="col-md-9 col-form-label " style="font-size: smaller;">选择: {{selectclassname}}</label>
             <span id="selectedRows"></span>
-            <button class="btn btn-primary mr-3 col-md-2" style="width:190px;" [disabled]="!selectclassname" type="button" title="查询专业" (click)="searchInfo()">
+            <button class="btn btn-primary mr-3 col-md-2" style="width:130px;background-color: #00559e;color: white;font-size: small;" [disabled]="!selectclassname" type="button" title="查询专业" (click)="searchInfo()">
                 查看课程安排
             </button>
         </div>
@@ -56,66 +84,93 @@
         </div>
 
     </div>
+
+    <div class="card-header" *ngIf="showPupup">
+        <b>检索课程</b>
+    </div>
+    <div class="card-body " *ngIf="showPupup">
+        <div class="form-group row">
+            <label class="col-md-1 col-form--label search-area"></label>
+            <label class="col-md-2 col-form--label search-area" for="kechengId">课程名称:</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="kechengId" type="text" placeholder="请输入" [(ngModel)]="kecheng" />
+            </div>
+            <label class="col-md-2 col-form--label search-area" for="xueqiId">学期:</label>
+
+            <div class="col-md-2">
+                <input class="form-control search-inputarea boxdis" id="xueqiId" type="text" placeholder="请输入" [(ngModel)]="xueqi" />
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-7 col-form--label"></label>
+            <!-- 
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng&&xueqi) " (click)="searchcourse() ">
+                搜索
+            </button>
+            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng||xueqi) " (click)="clearcourse() ">
+                清空
+            </button>
+            <button class="btn btn-primary mr-3 col-md-2 boxdis" type="submit " style="width:30px " (click)="searchallCourse() ">
+                查看所有
+            </button> -->
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;margin-left:30px;" [disabled]="!(kecheng&&xueqi) " (click)="searchcourse() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
+                    </div>
+                </button>
+            </div>
+
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;margin-left:2px;" [disabled]="!(kecheng||xueqi) " (click)="clearcourse() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
+                    </div>
+                </button>
+            </div>
+            <div class="row mr-3">
+                <button class="btn btn-sm button-margin" type="submit " style="width:130px;height: 65%;background-color: #e40000;color: white;margin-left:2px;" (click)="searchallCourse() ">                   
+                    <div class="form-group row" >
+                        <div class="col-md-1 col-form--label" style="margin-top: -3%;margin-left: 3%; "><i nz-icon [nzType]="'file-search'" style="margin-top: -40%;"></i></div>
+                        <div class="col-md-1 col-form--label" style="margin-left: -8%;"><nz-divider nzType="vertical"></nz-divider></div>
+                        <div class="col-md-7 col-form--label"  style="margin-left: -5%; font-size: small; ">查看所有</div>                       
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-header" *ngIf="showPupup">
+        <b>课程安排</b>
+    </div>
     <div class="card-body" *ngIf="showPupup">
-        <div class="card-header">
-            检索课程
-        </div>
-        <div class="card-body ">
-            <div class="form-group row">
-                <label class="col-md-1 col-form--label search-area"></label>
-                <label class="col-md-2 col-form--label search-area" for="kechengId">课程名称:</label>
 
-                <div class="col-md-2">
-                    <input class="form-control search-inputarea boxdis" id="kechengId" type="text" placeholder="请输入" [(ngModel)]="kecheng" />
-                </div>
-                <label class="col-md-2 col-form--label search-area" for="xueqiId">学期:</label>
-
-                <div class="col-md-2">
-                    <input class="form-control search-inputarea boxdis" id="xueqiId" type="text" placeholder="请输入" [(ngModel)]="xueqi" />
-                </div>
-            </div>
-            <div class="row">
-                <label class="col-md-6 col-form--label"></label>
-
-                <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng&&xueqi) " (click)="searchcourse() ">
-                    搜索
-                </button>
-                <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(kecheng||xueqi) " (click)="clearcourse() ">
-                    清空
-                </button>
-                <button class="btn btn-primary mr-3 col-md-2 boxdis" type="submit " style="width:30px " (click)="searchallCourse() ">
-                    查看所有
-                </button>
-            </div>
-        </div>
-        <div class="card-header">
-            课程安排
-        </div>
-
-        <div class="card-body">
-            <nz-table #rowSelectionTable [nzFrontPagination]="false " [nzData]="courserowData" [nzLoading]="loading " [nzTotal]="total " [(nzPageIndex)]="pageIndex " [(nzPageSize)]="pageSize " [nzShowQuickJumper]="true " [nzShowSizeChanger]="true
+        <nz-table #rowSelectionTable [nzFrontPagination]="false " [nzData]="courserowData" [nzLoading]="loading " [nzTotal]="total " [(nzPageIndex)]="pageIndex " [(nzPageSize)]="pageSize " [nzShowQuickJumper]="true " [nzShowSizeChanger]="true
                 " (nzPageIndexChange)="changePageIndex($event) " (nzPageSizeChange)="changePageSize($event) ">
-                <thead>
-                    <tr>
-                        <th class="col-md-2 "><b>课程名称</b></th>
-                        <th class="col-md-2 "><b>使用教材</b></th>
-                        <th class="col-md-2 "><b>学期</b></th>
-                        <th class="col-md-2 "><b>计划课程安排</b></th>
-                        <th class="col-md-4 "><b>上课时间</b></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor=" let data of rowSelectionTable.data ">
-                        <td>{{data.courseName}}</td>
-                        <td>{{data.textbook}}</td>
-                        <td>{{data.semester}}</td>
-                        <td>{{data.scheduledWeekday}}</td>
-                        <td>{{data.scheduledTime}}</td>
-                    </tr>
-                </tbody>
-            </nz-table>
-        </div>
-        <button class="btn btn-outline-secondary" type="button" style="width:80px; align-items: flex-end;" (click)="back()">
+            <thead>
+                <tr>
+                    <th class="col-md-2 "><b>课程名称</b></th>
+                    <th class="col-md-2 "><b>使用教材</b></th>
+                    <th class="col-md-2 "><b>学期</b></th>
+                    <th class="col-md-2 "><b>计划课程安排</b></th>
+                    <th class="col-md-4 "><b>上课时间</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor=" let data of rowSelectionTable.data ">
+                    <td>{{data.courseName}}</td>
+                    <td>{{data.textbook}}</td>
+                    <td>{{data.semester}}</td>
+                    <td>{{data.scheduledWeekday}}</td>
+                    <td>{{data.scheduledTime}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <button class="btn " type="button " style="width:80px; align-items: flex-end;background-color: #efb400; color: white;" (click)="back() ">
             返回
           </button>
     </div>

@@ -14,7 +14,7 @@ export class LoginComponent {
   constructor(private authService: AuthService) { }
 
   login(loginForm: NgForm): void {
-    this.errorMessage='';
+    this.errorMessage = '';
     if (loginForm && loginForm.valid) {
       this.showerror = false;
       const userName = loginForm.form.value.userName;
@@ -28,9 +28,9 @@ export class LoginComponent {
   }
   AddErrorMessage(): void {
     this.showerror = true;
-    if(sessionStorage.getItem('accountstatus')==="停用"){
+    if (sessionStorage.getItem('accountstatus') === '停用') {
       this.errorMessage = '该账号已停用，如仍需登录，请联系管理员！';
-    }else{
+    } else {
       this.errorMessage = '请检查用户名和密码是否正确.';
     }
 

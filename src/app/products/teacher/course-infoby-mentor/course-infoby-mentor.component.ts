@@ -37,10 +37,42 @@ export class CourseInfobyMentorComponent implements OnInit {
   rowSelection = 'single';
   allCourseResults = new Array<any>();
   columnDefs = [
-    { headerName: '班级', field: 'banji', checkboxSelection: true, resizable: true, sortable: true, minWidth: 100, maxWidth: 150, filter: 'agTextColumnFilter' },
-    { headerName: '年级', field: 'nianji', resizable: true, sortable: true, minWidth: 100, maxWidth: 200, filter: 'agTextColumnFilter' },
-    { headerName: '专业', field: 'zhuanye', resizable: true, sortable: true, minWidth: 150, maxWidth: 250, filter: 'agTextColumnFilter' },
-    { headerName: '学院', field: 'xueyuan', resizable: true, sortable: true, maxWidth: 300, filter: 'agTextColumnFilter' }
+    {
+      headerName: '班级',
+      field: 'banji',
+      checkboxSelection: true,
+      resizable: true,
+      sortable: true,
+      minWidth: 100,
+      maxWidth: 150,
+      filter: 'agTextColumnFilter'
+    },
+    {
+      headerName: '年级',
+      field: 'nianji',
+      resizable: true,
+      sortable: true,
+      minWidth: 100,
+      maxWidth: 200,
+      filter: 'agTextColumnFilter'
+    },
+    {
+      headerName: '专业',
+      field: 'zhuanye',
+      resizable: true,
+      sortable: true,
+      minWidth: 150,
+      maxWidth: 250,
+      filter: 'agTextColumnFilter'
+    },
+    {
+      headerName: '学院',
+      field: 'xueyuan',
+      resizable: true,
+      sortable: true,
+      maxWidth: 300,
+      filter: 'agTextColumnFilter'
+    }
   ];
   localeText = AgGridLocalText;
   rowData = [];
@@ -50,7 +82,7 @@ export class CourseInfobyMentorComponent implements OnInit {
   ngOnInit() {
     this.clear();
     this.clearcourse();
-    this.selectclassname='';
+    this.selectclassname = '';
     this.loading = true;
     this.getAllClass();
   }
@@ -60,6 +92,7 @@ export class CourseInfobyMentorComponent implements OnInit {
       this.errorMessage = '系统错误，请重新登陆再尝试';
       this.loading = false;
     } else {
+      // tslint:disable-next-line:radix
       this.apiClient.getClassesByMentorId(parseInt(teacherid)).subscribe(t => {
         if (t) {
           this.generateAllStudentundercourseRowdata(t);
@@ -97,19 +130,17 @@ export class CourseInfobyMentorComponent implements OnInit {
     this.showPupup = true;
     this.loading = true;
     this.searchcoursebyclassidInfo();
-    //this.clear();
   }
   back() {
     this.showPupup = false;
     this.errorMessage = '';
     this.clearcourse();
     this.selectclassname = '';
-    //this.getAllClass();
   }
   searchcoursebyclassidInfo() {
     this.results = new Array<any>();
     this.courserowData = new Array<any>();
-    this.errorMessage='';
+    this.errorMessage = '';
     this.apiClient.getCourseScheduleByClassId(this.selectclassid).subscribe(t => {
       if (t && t.length > 0 && t[0].id) {
         t.forEach(i => {
@@ -122,7 +153,6 @@ export class CourseInfobyMentorComponent implements OnInit {
           };
           this.results.push(info);
         });
-        //this.allCourseResults = this.results;
       } else {
 
         this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
@@ -130,7 +160,7 @@ export class CourseInfobyMentorComponent implements OnInit {
       this.loading = false;
       this.courserowData = this.results;
       this.allCourseResults = this.results;
-      
+
     });
   }
 
@@ -152,18 +182,17 @@ export class CourseInfobyMentorComponent implements OnInit {
     info.grade = this.nianji,
       info.department = this.yuanxi,
       info.classNumber = this.banji,
-      info.majorName = this.zhuanye
-    this.apiClient.getClassesByClassInfo(info).subscribe(t => {
-      if (t && t.length > 0 && t[0].id) {
-        this.generateAllStudentundercourseRowdata(t);
-      } else {
-        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
-        this.gridApi.setRowData(this.rowData);
-      }
-      this.loading = false;
-      //this.rowData = this.classresult;
+      info.majorName = this.zhuanye,
+      this.apiClient.getClassesByClassInfo(info).subscribe(t => {
+        if (t && t.length > 0 && t[0].id) {
+          this.generateAllStudentundercourseRowdata(t);
+        } else {
+          this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+          this.gridApi.setRowData(this.rowData);
+        }
+        this.loading = false;
 
-    });
+      });
   }
   clear() {
     this.nianji = '';
@@ -177,11 +206,9 @@ export class CourseInfobyMentorComponent implements OnInit {
   }
   changePageIndex(pageIndex) {
     this.pageIndex = pageIndex;
-    //this.getallClass();
   }
   changePageSize(pageSize) {
     this.pageSize = pageSize;
-    //this.getallClass();
   }
   searchcourse() {
     this.loading = true;
@@ -199,10 +226,10 @@ export class CourseInfobyMentorComponent implements OnInit {
     this.loading = false;
     this.courserowData = this.results;
   }
-  searchall(){
+  searchall() {
     this.ngOnInit();
   }
-  searchallCourse(){
+  searchallCourse() {
     this.clearcourse();
     this.searchInfo();
   }

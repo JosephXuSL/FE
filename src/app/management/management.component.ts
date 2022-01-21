@@ -22,7 +22,7 @@ export class ManagementComponent implements OnInit {
   logInUserNm: string;
   isBasicInformation: boolean;
   isadmin: boolean;
-public iscoursepage: boolean;
+  public iscoursepage: boolean;
   allcourses = [];
   allmajors = [];
   allteachers = [];
@@ -34,24 +34,24 @@ public iscoursepage: boolean;
 
   public ji = '';
   public yuanxi = '';
-  public zhuanye = '';  
-  
+  public zhuanye = '';
+
   public jiaoshi = '';
   public jnum = '';
 
   public cji = '';
-  public cyuanxi = '';    
-  public czy = '';  
-  
-  public sname = '';    
+  public cyuanxi = '';
+  public czy = '';
+
+  public sname = '';
   public sxh = '';
-  
-  public scorename = '';    
-  public sxueke = '';      
-  public sxuenian = '';  
-  
-  public steachern = '';    
-  public scxuenian = '';      
+
+  public scorename = '';
+  public sxueke = '';
+  public sxuenian = '';
+
+  public steachern = '';
+  public scxuenian = '';
   public sckcId = '';
   loading: boolean;
   public teacherAccount: TeacherAccount;
@@ -177,7 +177,7 @@ public iscoursepage: boolean;
   }
 
   removeSelection() {
-    if ( confirm('确认删除数据？')) {
+    if (confirm('确认删除数据？')) {
       this.managementService.removeDataById(this.business.name, this.rowSelectionId).subscribe(data => {
         if (data.result) {
           this.router.navigate([this.router.url]);
@@ -206,77 +206,81 @@ public iscoursepage: boolean;
     const courserowData = new Array<any>();
     if (this.allmajors && this.allmajors.length > 0) {
       this.allmajors.forEach(s => {
-        if (s.grade === this.ji && s.majorName == this.zhuanye && s.department == this.yuanxi) {
+        if (s.grade === this.ji && s.majorName === this.zhuanye && s.department === this.yuanxi) {
           courserowData.push(s);
         }
       });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
-  }    
-  
+  }
+
   searchclass() {
     this.loading = true;
     const courserowData = new Array<any>();
     if (this.allclasses && this.allclasses.length > 0) {
       this.allclasses.forEach(s => {
-        if (s.major.grade === this.cji && s.major.department == this.cyuanxi&& s.major.majorName == this.czy) {
+        if (s.major.grade === this.cji && s.major.department === this.cyuanxi && s.major.majorName === this.czy) {
           courserowData.push(s);
         }
       });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
-  }  
-  
+  }
+
   searchteacher() {
     this.loading = true;
     const courserowData = new Array<any>();
     if (this.allteachers && this.allteachers.length > 0) {
       this.allteachers.forEach(s => {
-        if (s.name === this.jiaoshi && s.teacherNumber == this.jnum) {
+        if (s.name === this.jiaoshi && s.teacherNumber === this.jnum) {
           courserowData.push(s);
-        }    
+        }
       });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
-  }  
+  }
   searchstudent() {
     this.loading = true;
     const courserowData = new Array<any>();
     if (this.allstudents && this.allstudents.length > 0) {
       this.allstudents.forEach(s => {
-        if (s.name === this.sname && s.studentNumber == this.sxh) {
+        if (s.name === this.sname && s.studentNumber === this.sxh) {
           courserowData.push(s);
-        }    
+        }
       });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
-  }  
+  }
   searchscore() {
     this.loading = true;
     const courserowData = new Array<any>();
     if (this.allscores && this.allscores.length > 0) {
       this.allscores.forEach(s => {
-        if (s.semester === this.sxuenian && s.course.courseName == this.sxueke&& s.student.name == this.scorename) {
+        if (s.semester === this.sxuenian
+          && s.course.courseName === this.sxueke
+          && s.student.name === this.scorename) {
           courserowData.push(s);
-        }        
+        }
       });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
-  }  
-  
+  }
+
   searchcourseSchedule() {
     this.loading = true;
     const courserowData = new Array<any>();
     if (this.allcourseSchedules && this.allcourseSchedules.length > 0) {
       this.allcourseSchedules.forEach(s => {
-        if (s.teacherCourseInfo.teacher.name === this.steachern && s.teacherCourseInfo.semester == this.scxuenian&& s.teacherCourseInfo.course.courseName == this.sckcId) {
+        if (s.teacherCourseInfo.teacher.name === this.steachern
+          && s.teacherCourseInfo.semester === this.scxuenian
+          && s.teacherCourseInfo.course.courseName === this.sckcId) {
           courserowData.push(s);
-        }            
+        }
       });
     }
     this.gridApi.setRowData(courserowData);
@@ -285,29 +289,27 @@ public iscoursepage: boolean;
   clear() {
     this.loading = true;
     this.kecheng = '';
-    //this.xueqi = '';
 
     this.ji = '';
     this.zhuanye = '';
     this.yuanxi = '';
 
-    //this.banji = '';
     this.jiaoshi = '';
-    this.jnum = '';    
-    
+    this.jnum = '';
+
     this.cji = '';
-    this.cyuanxi = '';    
+    this.cyuanxi = '';
     this.czy = '';
 
-    this.sname = '';    
-    this.sxh = '';    
-    
-    this.scorename = '';    
-    this.sxueke = '';      
-    this.sxuenian = '';    
-    
-    this.steachern = '';    
-    this.scxuenian = '';      
+    this.sname = '';
+    this.sxh = '';
+
+    this.scorename = '';
+    this.sxueke = '';
+    this.sxuenian = '';
+
+    this.steachern = '';
+    this.scxuenian = '';
     this.sckcId = '';
 
 

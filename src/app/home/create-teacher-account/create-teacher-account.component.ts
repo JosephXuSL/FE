@@ -28,10 +28,34 @@ export class CreateTeacherAccountComponent implements OnInit {
   rowSelection = 'multiple';
   columnDefs = [
     // tslint:disable-next-line:max-line-length
-    { headerName: '教师id', field: 'teacherid', hide: true },
-    { headerName: '教师编号', headerCheckboxSelection: true, checkboxSelection: true, field: 'teacherNumber', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
-    { headerName: '教师姓名', field: 'teacherName', resizable: true, sortable: true, filter: 'agNumberColumnFilter' },
-    { headerName: '状态', field: 'status', resizable: true, sortable: true, filter: 'agTextColumnFilter' }
+    {
+      headerName: '教师id',
+      field: 'teacherid',
+      hide: true
+    },
+    {
+      headerName: '教师编号',
+      headerCheckboxSelection: true,
+      checkboxSelection: true,
+      field: 'teacherNumber',
+      resizable: true,
+      sortable: true,
+      filter: 'agNumberColumnFilter'
+    },
+    {
+      headerName: '教师姓名',
+      field: 'teacherName',
+      resizable: true,
+      sortable: true,
+      filter: 'agNumberColumnFilter'
+    },
+    {
+      headerName: '状态',
+      field: 'status',
+      resizable: true,
+      sortable: true,
+      filter: 'agTextColumnFilter'
+    }
   ];
   localeText = AgGridLocalText;
   rowData = [];
@@ -157,25 +181,22 @@ export class CreateTeacherAccountComponent implements OnInit {
             if (t.teacherNumber === this.jiaoshi && t.teacherName === this.js) {
               this.rowData.push(t);
             }
-          }
-          else {
+          } else {
             if (t.teacherNumber === this.jiaoshi) {
               this.rowData.push(t);
             }
           }
-        }
-        else if (this.js && this.js === t.teacherName) {
+        } else if (this.js && this.js === t.teacherName) {
           this.rowData.push(t);
         }
 
       });
-      if(!(this.rowData&&this.rowData.length>0)){
+      if (!(this.rowData && this.rowData.length > 0)) {
         this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
       }
       this.gridApi.setRowData(this.rowData);
       this.loading = false;
-    }
-    else {
+    } else {
       this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
     }
   }

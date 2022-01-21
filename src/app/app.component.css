@@ -1,16 +1,17 @@
 /* Spinner */
+
 .spinner {
-    font-size:300%;
-    position:absolute;
+    font-size: 300%;
+    position: absolute;
     top: 50%;
     left: 50%;
-    z-index:10
-  }
-  
-  .fa-spinner {
-      -webkit-animation: spin 1000ms infinite linear;
-      animation: spin 1000ms infinite linear;
-  }
+    z-index: 10
+}
+
+.fa-spinner {
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
+}
 
 .logo {
     width: 220px;
@@ -43,3 +44,242 @@ nz-content {
     padding: 24px;
     min-height: 280px;
 }
+
+
+/* ::ng-deep .ant-menu-submenu .ant-menu-submenu-selected .ant-menu-submenu-inline {
+    background-color: #083862;
+} */
+
+
+/*
+::ng-deep .ant-menu-submenu-selected {
+    color: white;
+    background-color: #083862;
+}
+
+::ng-deep .ant-menu-submenu-active {
+    color: white;
+    background-color: #00559e;
+}
+
+::ng-deep.ant-menu-submenu>.ant-menu {
+    background-color: #083862;
+}
+
+::ng-deep .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    color: white;
+    background-color: #00559e;
+}
+
+.ant-menu-submenu-open {
+    background-color: #083862;
+}
+
+*/
+
+
+/* ::ng-deep .ant-menu-item {
+    color: lightgray;
+    background-color: #03223d;
+    ;
+} */
+
+
+/*
+ ::ng-deep .ant-menu-sub.ant-menu-inline {
+    background-color: #03223d;
+    color: lightgray;
+}
+ */
+
+
+/*
+::ng-deep .ant-menu-sub.ant-menu-inline {
+    background-color: #083862;
+}
+
+::ng-deep .ant-menu-submenu-selected {
+    background-color: #00559e;
+}
+
+::ng-deep .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #00559e;
+}
+
+::ng-deep .ant-menu-item-selected {
+    background-color: #00559e;
+    color: white;
+}
+
+
+/* ::ng-deep .ant-menu-inline .ant-menu-item:not(:last-child) {
+    background-color: #083862;
+    color: white;
+}
+
+*/
+
+
+/* ::ng-deep .ant-menu-submenu>.ant-menu .ant-menu-submenu-selected {
+    background-color: red!important;
+    color: #567896;
+} */
+
+
+/* .ant-menu-inline {
+    border: none;
+    background-color: #03223d !important;
+} */
+
+
+/* ::ng-deep .ant-menu-submenu-open {
+    background-color: #083862 !important;
+    color: #567896;
+} */
+
+
+/* .ant-menu-submenu-title {
+    color: #666666 !important;
+} */
+
+
+/* // 去掉左边框 */
+
+
+/* 
+.ant-menu-inline {
+    border: none;
+    background-color: #03223d !important;
+} */
+
+
+/* // 设置 a 链接款式 */
+
+::ng-deep .ant-menu-light {
+    background-color: #03223d;
+    color: #567896;
+}
+
+
+/* // 设置菜单款式 */
+
+.ant-menu,
+.ant-menu-sub,
+.ant-menu-inline {
+    color: #567896;
+    background-color: #03223d !important;
+}
+
+::ng-deep .ant-menu-sub.ant-menu-inline {
+    background-color: #03223d;
+    color: #567896;
+}
+
+
+/* ::ng-deep .ant-menu-submenu .ant-menu-submenu-selected .ant-menu-submenu-inline {
+    background-color: #083862;
+} */
+
+
+/* // 设置子菜单开展款式 展开之后都是这个色*/
+
+
+/* ::ng-deep .ant-menu-submenu>.ant-menu {
+    background-color: #00559e!important;
+    color: #567896;
+} */
+
+.ant-menu-item a {
+    color: #666666 !important;
+}
+
+.ant-menu-item a:hover {
+    color: white !important;
+}
+
+
+/* // 菜单收缩样式 */
+
+.ant-menu.ant-menu-inline-collapsed {
+    width: 60px;
+}
+
+
+/* // 设置收缩后的右边框 */
+
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
+    border-right: none;
+}
+
+
+/* // 下拉箭头款式 */
+
+.ant-menu-submenu-arrow {
+    color: white;
+}
+
+
+/* // 选中菜单状态 */
+
+::ng-deep .ant-menu-item-selected {
+    background-color: #00559e !important;
+    /* border-left: red; */
+    color: white !important;
+    border: none;
+}
+
+
+/* // 选中菜单父亲状态 */
+
+::ng-deep .ant-menu-submenu-selected {
+    background-color: #083862;
+    color: white !important;
+}
+
+::ng-deep .ant-menu-submenu-selected>.ant-menu-submenu {
+    background-color: #083862;
+    color: white !important;
+}
+
+::ng-deep .ant-menu-submenu-selected>.ant-menu {
+    background-color: #083862;
+    color: white !important;
+}
+
+
+/* ::ng-deep .ant-menu-submenu-selected>.ant-menu-submenu-inline {
+    background-color: #083862;
+    color: white !important;
+} */
+
+::ng-deep .ant-menu-submenu-active {
+    background-color: #083862 !important;
+    color: #666666!important;
+}
+
+
+/* // 设置未选中菜单项鼠标滑过款式 */
+
+.ant-menu-item-active {
+    background-color: #083862 !important;
+    color: #666666 !important;
+}
+
+
+/* .ant-menu-item a:first-child {
+    background-color: red;
+} */
+
+
+/* ::ng-deep .ant-menu-selected {
+    background-color: #00559e;
+    color: white !important;
+} */
+
+
+/* ::ng-deep .ant-menu-submenu-selected>.ant-menu-item {
+    background-color: red!important;
+    color: #567896;
+} */

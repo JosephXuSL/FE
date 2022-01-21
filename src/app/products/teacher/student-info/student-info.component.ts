@@ -40,7 +40,7 @@ export class StudentInfoComponent implements OnInit {
   constructor(private apiClient: ApiClient) { }
 
   ngOnInit() {
-    this.errorMessage = ''
+    this.errorMessage = '';
     this.loading = true;
     this.getAllStudentundercourse();
     this.student = new Student();
@@ -144,7 +144,7 @@ export class StudentInfoComponent implements OnInit {
     this.xueqi = '';
     this.kecheng = '';
   }
-  searchall(){
+  searchall() {
     this.clear();
     this.ngOnInit();
   }
