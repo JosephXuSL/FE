@@ -346,8 +346,18 @@
     </div>
 
     <div class="card-body" *ngIf="!isBasicInformation ">
-        <ag-grid-angular style="height: 450px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [localeText]="localeText" rowSelection="single" pagination="true" paginationPageSize="10" (selectionChanged)="onSelectionChanged()" (rowDoubleClicked)="onRowDoubleClicked($event)"
-            (gridReady)="onGridReady($event)">
+        <ag-grid-angular style="height: 450px;"
+                         class="ag-theme-alpine"
+                         [rowData]="rowData"
+                         [columnDefs]="columnDefs"
+                         [localeText]="localeText"
+                         rowSelection="single"
+                         pagination="true"
+                         paginationPageSize="10"
+                         (selectionChanged)="onSelectionChanged()"
+                         (rowDoubleClicked)="onRowDoubleClicked($event)"
+                         (gridReady)="onGridReady($event)"
+                         (gridColumnsChanged)="resizeColumns()">
         </ag-grid-angular>
 
     </div>

@@ -9,6 +9,7 @@ import { BasicInformationComponent } from './home/basic-information/basic-inform
 import { StudentEnrollsearchComponent } from './home/student-enrollsearch/student-enrollsearch.component';
 import { StudentSearchexamscoreComponent } from './home/student-searchexamscore/student-searchexamscore.component';
 import { CreateTeacherAccountComponent } from './home/create-teacher-account/create-teacher-account.component';
+import { ManagementGuard } from './management/management.guard';
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -29,7 +30,7 @@ import { CreateTeacherAccountComponent } from './home/create-teacher-account/cre
         component: ChangePasswordComponent
       },
       { path: 'management',
-      canActivate: [AuthGuard],
+      canActivate: [AuthGuard, ManagementGuard],
       loadChildren: () =>
       import('./management/management.module').then(m => m.ManagementModule)
       },
