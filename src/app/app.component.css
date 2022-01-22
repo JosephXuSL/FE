@@ -243,9 +243,12 @@ nz-content {
     color: white !important;
 }
 
+
+/* // 选中菜单其他兄弟菜单状态 */
+
 ::ng-deep .ant-menu-submenu-selected>.ant-menu {
     background-color: #083862;
-    color: white !important;
+    /* color: white !important; */
 }
 
 

@@ -3,17 +3,16 @@
         <div class="row">
             <b>{{business.nameForShow}}管理</b>
             <div class="ml-auto" *ngIf="!isBasicInformation">
-                <button class="btn btn-sm button-margin" style="background-color: #00559e;color: white;" [ngClass]="{'btn-primary': buttonVisiable(), 'btn-outline-primary': !buttonVisiable()}" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="onClickViewButton()">
+                <button class="btn btn-sm button-margin btna" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="onClickViewButton()">
                     查看选中{{business.nameForShow}}细节
                 </button>
-                <button class="btn btn-success btn-sm button-margin" style="background-color: #00559e;color: white;" [routerLink]="['/management',business.name,'edit',0,this.business.subTab]">
+                <button class="btn btn-success btn-sm button-margin" style="background-color: #00ccd3;color: white;" [routerLink]="['/management',business.name,'edit',0,this.business.subTab]">
                     添加{{business.nameForShow}}
                 </button>
-                <button class="btn btn-sm button-margin" style="background-color: #efb400;color: white;" [routerLink]="['/management',business.name,'edit',rowSelectionId,this.business.subTab]" [ngClass]="{'btn-warning': buttonVisiable(), 'btn-outline-warning': !buttonVisiable()}"
-                    [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0">
+                <button class="btn btn-sm button-margin btnc" [routerLink]="['/management',business.name,'edit',rowSelectionId,this.business.subTab]" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0">
                     修改选中{{business.nameForShow}}
                 </button>
-                <button class="btn btn-sm button-margin" style="background-color: #d30000;color: white;" [ngClass]="{'btn-danger': buttonVisiable(), 'btn-outline-danger': !buttonVisiable()}" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="removeSelection()">
+                <button class="btn btn-sm button-margin btnd" [disabled]="!buttonVisiable()" *ngIf="rowData.length > 0" (click)="removeSelection()">
                     删除选中{{business.nameForShow}}
                 </button>
             </div>

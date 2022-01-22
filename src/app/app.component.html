@@ -47,7 +47,7 @@
                         </li>
                     </ul>
                 </li>
-                <li nz-submenu nzTitle="教务服务" nzIcon="laptop" *ngIf="isadmin()&&islogin()">
+                <li nz-submenu nzTitle="教务服务" nzIcon="audit" *ngIf="isadmin()&&islogin()">
                     <ul>
                         <li nz-menu-item *ngFor=" let business of businessList" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理
                         </li>

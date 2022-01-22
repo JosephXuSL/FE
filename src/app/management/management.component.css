@@ -39,3 +39,33 @@
     margin-right: 5px;
     margin-left: -50%;
 }
+
+.btna {
+    background-color: #00559e;
+    color: white;
+}
+
+.btna:disabled {
+    background-color: #cde4f8;
+    color: #00559e;
+}
+
+.btnc {
+    background-color: #efb400;
+    color: white;
+}
+
+.btnc:disabled {
+    background-color: #f4eedc;
+    color: #efb506;
+}
+
+.btnd {
+    background-color: #d30000;
+    color: white;
+}
+
+.btnd:disabled {
+    background-color: #fbe5e5;
+    color: #f61313;
+}
