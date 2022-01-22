@@ -199,6 +199,9 @@ export class ManagementComponent implements OnInit {
       });
     }
     this.gridApi.setRowData(courserowData);
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
     this.loading = false;
   }
   searchmajor() {
@@ -212,6 +215,9 @@ export class ManagementComponent implements OnInit {
       });
     }
     this.gridApi.setRowData(courserowData);
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
     this.loading = false;
   }
 
@@ -226,6 +232,9 @@ export class ManagementComponent implements OnInit {
       });
     }
     this.gridApi.setRowData(courserowData);
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
     this.loading = false;
   }
 
@@ -240,6 +249,9 @@ export class ManagementComponent implements OnInit {
       });
     }
     this.gridApi.setRowData(courserowData);
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
     this.loading = false;
   }
   searchstudent() {
@@ -253,6 +265,9 @@ export class ManagementComponent implements OnInit {
       });
     }
     this.gridApi.setRowData(courserowData);
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
     this.loading = false;
   }
   searchscore() {
@@ -268,6 +283,9 @@ export class ManagementComponent implements OnInit {
       });
     }
     this.gridApi.setRowData(courserowData);
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
     this.loading = false;
   }
 
@@ -284,6 +302,9 @@ export class ManagementComponent implements OnInit {
       });
     }
     this.gridApi.setRowData(courserowData);
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
     this.loading = false;
   }
   clear() {
@@ -339,6 +360,8 @@ export class ManagementComponent implements OnInit {
     if (this.business.name === 'courseSchedule') {
       this.gridApi.setRowData(this.allcourseSchedules);
     }
-
+    if (this.gridApi !== null || this.gridApi !== undefined) {
+      this.gridApi.sizeColumnsToFit();
+    }
   }
 }
