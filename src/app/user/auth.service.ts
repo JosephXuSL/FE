@@ -42,8 +42,8 @@ export class AuthService {
     // }
     this.logout();
     return this.searchAccount(userName, password).pipe(map(data => {
-      const res = ManagementServiceMapper.mapTeacherAccountInput(data.loginResult);
-      if (res && res.id) {
+      if (data && data.loginResult && data.loginResult.id) {
+        const res = ManagementServiceMapper.mapTeacherAccountInput(data.loginResult);
         this.currentUser = {
           id: res.id,
           isMentor: res.teacher.isMentor,
