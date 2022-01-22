@@ -6,6 +6,7 @@ import { ManagementServiceMapper } from '../management/service/management.servic
 import { Router } from '@angular/router';
 import { User } from './user';
 import { MessageService } from '../messages/message.service';
+import { AppEventEmitterService } from '../app-eventEmitter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class AuthService {
     return !!this.currentUser;
   }
 
-  constructor(private messageService: MessageService, private apiClient: ApiClient, private router: Router) { }
+  constructor(private messageService: MessageService,
+              private apiClient: ApiClient,
+              private router: Router,
+              private appEventEmitterService: AppEventEmitterService) { }
 
   public login(userName: string, password: string): Observable<boolean> {
     // if (userName === 'admin' && password === 'admin') {
@@ -71,6 +75,7 @@ export class AuthService {
         sessionStorage.setItem('token', data.token);
         sessionStorage.setItem('tokenExpiration', data.expiration.toDateString());
 
+        this.appEventEmitterService.showWelcomeNameEmitter.emit('nameChanged');
         return true;
       } else {
         this.messageService.addMessage('Please enter your correct userName and password');
