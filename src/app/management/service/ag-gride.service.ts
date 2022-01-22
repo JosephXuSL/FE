@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ColDef, GridApi, GridOptions, IFilterOptionDef  } from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions, IFilterOptionDef } from 'ag-grid-community';
 import { Business } from 'src/app/models/business';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class AgGrideService {
                 width: 65,
                 resizable: true,
                 suppressNavigable: true
-              }
+            }
         ] as ColDef[];
         business.gridHeader.forEach(h => defs.push({
             headerName: h.headerName,
@@ -24,7 +24,9 @@ export class AgGrideService {
             sortable: true,
             filter: true,
             resizable: true,
-            Width: 150,
+            suppressAutoSize: true,
+            minWidth: business.name === 'course' ? 450 : (business.name === 'major' ? 250 : 150),
+            // Width: business.name === 'course' ? 350 : (business.name === 'major' ? 250 : 150),
             valueFormatter: params => this.booleanFormatter(params.value),
             filterParams:
             {
@@ -58,7 +60,7 @@ export class AgGrideService {
     }
 
     private booleanFormatter(value: any): string {
-        if (typeof(value) === 'boolean') {
+        if (typeof (value) === 'boolean') {
             if (value) {
                 return '是';
             } else {
