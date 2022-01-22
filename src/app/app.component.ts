@@ -6,6 +6,7 @@ import { AuthService } from './user/auth.service';
 import { slideInAnimation } from './app.animation';
 import { MessageService } from './messages/message.service';
 import { businessList } from './models/business';
+import { AppEventEmitterService } from './app-eventEmitter.service';
 @Component({
   selector: 'pm-root',
   templateUrl: './app.component.html',
@@ -40,9 +41,15 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private appEventEmitterService: AppEventEmitterService) {
     router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
+    });
+    appEventEmitterService.showWelcomeNameEmitter.subscribe( message => {
+      if (message === 'nameChanged') {
+        this.username = sessionStorage.getItem('user');
+      }
     });
   }
 
