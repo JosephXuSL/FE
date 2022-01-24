@@ -2,7 +2,7 @@
 
 
 <nav class="navbar navbar-expand navbar-light" style="background-color: #00559e;">
-    <img src="./assets/images/headrt.PNG" style="height: 45px;" />
+    <img src="./assets/images/head.jpg" style="height: 45px;" />
 
     <ul class="navbar-nav ml-auto">
         <li class="nav-item" *ngIf="isLoggedIn||isLoggedInSession" style="color: white; font-size:medium;margin-right: 10px;margin-top: 4%;">
@@ -28,8 +28,8 @@
     </ul>
 
 </nav>
-<nz-layout>
-    <nz-layout style="height:90%">
+<nz-layout style="height:100%">
+    <nz-layout style="height:100%">
 
         <nz-sider nzWidth="200px" nzTheme="light">
             <ul nz-menu nzMode="inline" class="sider-menu">
@@ -85,9 +85,9 @@
             </ul>
 
         </nz-sider>
-        <nz-layout class="inner-layout" style="min-height: 550px;">
+        <nz-layout style="height: 100%;">
             <nz-content>
-                <div class="inner-content">
+                <div style="height: 100%;">
                     <router-outlet></router-outlet>
                 </div>
             </nz-content>

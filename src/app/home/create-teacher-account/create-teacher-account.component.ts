@@ -175,22 +175,24 @@ export class CreateTeacherAccountComponent implements OnInit {
     this.errorMessage = '';
     this.rowData = [];
     if (this.allteacherAccounts && this.allteacherAccounts.length > 0) {
-      this.allteacherAccounts.forEach(t => {
-        if (this.jiaoshi) {
-          if (this.js) {
-            if (t.teacherNumber === this.jiaoshi && t.teacherName === this.js) {
-              this.rowData.push(t);
-            }
-          } else {
-            if (t.teacherNumber === this.jiaoshi) {
-              this.rowData.push(t);
-            }
-          }
-        } else if (this.js && this.js === t.teacherName) {
-          this.rowData.push(t);
-        }
+      this.rowData = this.searchMatchResult('teacherName', this.js, false, this.allteacherAccounts);
+      this.rowData = this.searchMatchResult('teacherNumber', this.jiaoshi, true, this.rowData);
+      // this.allteacherAccounts.forEach(t => {
+      //   if (this.jiaoshi) {
+      //     if (this.js) {
+      //       if (t.teacherNumber === this.jiaoshi && t.teacherName === this.js) {
+      //         this.rowData.push(t);
+      //       }
+      //     } else {
+      //       if (t.teacherNumber === this.jiaoshi) {
+      //         this.rowData.push(t);
+      //       }
+      //     }
+      //   } else if (this.js && this.js === t.teacherName) {
+      //     this.rowData.push(t);
+      //   }
 
-      });
+      // });
       if (!(this.rowData && this.rowData.length > 0)) {
         this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
       }
@@ -200,4 +202,26 @@ export class CreateTeacherAccountComponent implements OnInit {
       this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
     }
   }
+  searchMatchResult(st: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, st);
+        if (isfullmatch) {
+          if (v && v === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v && v.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
+  }
+
 }

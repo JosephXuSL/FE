@@ -30,6 +30,7 @@ export class ManagementComponent implements OnInit {
   allstudents = [];
   allscores = [];
   allcourseSchedules = [];
+  matchResult = [];
   public kecheng = '';
 
   public ji = '';
@@ -199,7 +200,8 @@ export class ManagementComponent implements OnInit {
     const courserowData = new Array<any>();
     if (this.allcourses && this.allcourses.length > 0) {
       this.allcourses.forEach(s => {
-        if (s.courseName === this.kecheng) {
+        // if (s.courseName === this.kecheng) {
+        if (s.courseName.indexOf(this.kecheng) === 0) {
           courserowData.push(s);
         }
       });
@@ -209,27 +211,38 @@ export class ManagementComponent implements OnInit {
   }
   searchmajor() {
     this.loading = true;
-    const courserowData = new Array<any>();
+    // const courserowData = new Array<any>();
+    let finalresult = new Array<any>();
     if (this.allmajors && this.allmajors.length > 0) {
-      this.allmajors.forEach(s => {
-        if (s.grade === this.ji && s.majorName === this.zhuanye && s.department === this.yuanxi) {
-          courserowData.push(s);
-        }
-      });
+      finalresult = this.searchMatchResult('grade', this.ji, false, this.allmajors);
+      finalresult = this.searchMatchResult('majorName', this.zhuanye, false, finalresult);
+      finalresult = this.searchMatchResult('department', this.yuanxi, false, finalresult);
+
+      // this.allmajors.forEach(s => {
+      //   if (s.grade === this.ji && s.majorName === this.zhuanye && s.department === this.yuanxi) {
+      //     courserowData.push(s);
+      //   }
+      // });
     }
-    this.gridApi.setRowData(courserowData);
+    this.gridApi.setRowData(finalresult);
     this.loading = false;
   }
 
   searchclass() {
     this.loading = true;
-    const courserowData = new Array<any>();
+    let courserowData = new Array<any>();
     if (this.allclasses && this.allclasses.length > 0) {
-      this.allclasses.forEach(s => {
-        if (s.major.grade === this.cji && s.major.department === this.cyuanxi && s.major.majorName === this.czy) {
-          courserowData.push(s);
-        }
-      });
+      courserowData = this.searchMatchTwoCycleResult('major', 'grade', this.cji, false, this.allclasses);
+      courserowData = this.searchMatchTwoCycleResult('major', 'department', this.cyuanxi, false, courserowData);
+      courserowData = this.searchMatchTwoCycleResult('major', 'majorName', this.czy, false, courserowData);
+      // this.allclasses.forEach(s => {
+      //   if (this.cji && this.cji !== '') {
+
+      //   }
+      //   if (s.major.grade === this.cji && s.major.department === this.cyuanxi && s.major.majorName === this.czy) {
+      //     courserowData.push(s);
+      //   }
+      // });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
@@ -237,41 +250,44 @@ export class ManagementComponent implements OnInit {
 
   searchteacher() {
     this.loading = true;
-    const courserowData = new Array<any>();
+    let courserowData = new Array<any>();
     if (this.allteachers && this.allteachers.length > 0) {
-      this.allteachers.forEach(s => {
-        if (s.name === this.jiaoshi && s.teacherNumber === this.jnum) {
-          courserowData.push(s);
-        }
-      });
+      courserowData = this.searchMatchResult('name', this.jiaoshi, false, this.allteachers);
+      courserowData = this.searchMatchResult('teacherNumber', this.jnum, true, courserowData);
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
   }
+
   searchstudent() {
     this.loading = true;
-    const courserowData = new Array<any>();
+    let courserowData = new Array<any>();
     if (this.allstudents && this.allstudents.length > 0) {
-      this.allstudents.forEach(s => {
-        if (s.name === this.sname && s.studentNumber === this.sxh) {
-          courserowData.push(s);
-        }
-      });
+      courserowData = this.searchMatchResult('name', this.sname, false, this.allstudents);
+      courserowData = this.searchMatchResult('studentNumber', this.sxh, true, courserowData);
+      // this.allstudents.forEach(s => {
+      //   if (s.name === this.sname && s.studentNumber === this.sxh) {
+      //     courserowData.push(s);
+      //   }
+      // });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
   }
   searchscore() {
     this.loading = true;
-    const courserowData = new Array<any>();
+    let courserowData = new Array<any>();
     if (this.allscores && this.allscores.length > 0) {
-      this.allscores.forEach(s => {
-        if (s.semester === this.sxuenian
-          && s.course.courseName === this.sxueke
-          && s.student.name === this.scorename) {
-          courserowData.push(s);
-        }
-      });
+      courserowData = this.searchMatchResult('semester', this.sxuenian, false, this.allscores);
+      courserowData = this.searchMatchTwoCycleResult('course', 'courseName', this.sxueke, false, courserowData);
+      courserowData = this.searchMatchTwoCycleResult('student', 'name', this.scorename, false, courserowData);
+      // this.allscores.forEach(s => {
+      //   if (s.semester === this.sxuenian
+      //     && s.course.courseName === this.sxueke
+      //     && s.student.name === this.scorename) {
+      //     courserowData.push(s);
+      //   }
+      // });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
@@ -279,15 +295,20 @@ export class ManagementComponent implements OnInit {
 
   searchcourseSchedule() {
     this.loading = true;
-    const courserowData = new Array<any>();
+    let courserowData = new Array<any>();
     if (this.allcourseSchedules && this.allcourseSchedules.length > 0) {
-      this.allcourseSchedules.forEach(s => {
-        if (s.teacherCourseInfo.teacher.name === this.steachern
-          && s.teacherCourseInfo.semester === this.scxuenian
-          && s.teacherCourseInfo.course.courseName === this.sckcId) {
-          courserowData.push(s);
-        }
-      });
+      // tslint:disable-next-line:max-line-length
+      courserowData = this.searchMatchThreeCycleResult('teacherCourseInfo', 'teacher', 'name', this.steachern, false, this.allcourseSchedules);
+      courserowData = this.searchMatchTwoCycleResult('teacherCourseInfo', 'semester', this.scxuenian, false, courserowData);
+      courserowData = this.searchMatchThreeCycleResult('teacherCourseInfo', 'course', 'courseName', this.sckcId, false, courserowData);
+
+      // this.allcourseSchedules.forEach(s => {
+      //   if (s.teacherCourseInfo.teacher.name === this.steachern
+      //     && s.teacherCourseInfo.semester === this.scxuenian
+      //     && s.teacherCourseInfo.course.courseName === this.sckcId) {
+      //     courserowData.push(s);
+      //   }
+      // });
     }
     this.gridApi.setRowData(courserowData);
     this.loading = false;
@@ -345,5 +366,77 @@ export class ManagementComponent implements OnInit {
     if (this.business.name === 'courseSchedule') {
       this.gridApi.setRowData(this.allcourseSchedules);
     }
+  }
+
+  searchMatchResult(st: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, st);
+        if (isfullmatch) {
+          if (v && v === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v && v.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
+  }
+
+  searchMatchTwoCycleResult(fistst: string, secost: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, fistst);
+        const v2 = Reflect.get(v, secost);
+
+        if (isfullmatch) {
+          if (v2 && v2 === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v2 && v2.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
+  }
+
+  searchMatchThreeCycleResult(fistst: string, secost: string,
+                              thirdst: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, fistst);
+        const v2 = Reflect.get(v, secost);
+        const v3 = Reflect.get(v2, thirdst);
+
+        if (isfullmatch) {
+          if (v3 && v3 === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v3 && v3.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
   }
 }
