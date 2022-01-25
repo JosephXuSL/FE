@@ -286,3 +286,16 @@ nz-content {
     background-color: red!important;
     color: #567896;
 } */
+
+
+/*清除btn按钮点击出现的边框*/
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
