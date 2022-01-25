@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ApiClient, GetMajorRequestBody, TeacherAccount, TeacherAccountOutput } from '../api-client';
+import { ApiClient, GetMajorRequestBody, LoginModel, TeacherAccount, TeacherAccountOutput } from '../api-client';
 import { map } from 'rxjs/operators';
 import { ManagementServiceMapper } from '../management/service/management.service.mapper';
 import { Router } from '@angular/router';
@@ -90,6 +90,6 @@ export class AuthService {
   }
   public searchAccount(accountName: string, password: string): Observable<TeacherAccountOutput> {
     return this.apiClient
-      .getTeacherAccountByTeacherNameAndPassword(accountName, password, 'details');
+      .getTeacherAccountByTeacherNameAndPassword(new LoginModel({accountName: accountName, password: password}));
   }
 }

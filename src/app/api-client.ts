@@ -4617,30 +4617,26 @@ export class ApiClient {
     }
 
     /**
-     * @param teacherName (optional) 
-     * @param password (optional) 
+     * @param body (optional) 
      * @return Success
      */
-     getTeacherAccountByTeacherNameAndPassword(teacherName: string | null | undefined, password: string | null | undefined, details: string): Observable<TeacherAccountOutput> {
-        let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNameAndPassword/{details}?";
-        if (details === undefined || details === null)
-            throw new Error("The parameter 'details' must be defined.");
-        url_ = url_.replace("{details}", encodeURIComponent("" + details));
-        if (teacherName !== undefined && teacherName !== null)
-            url_ += "teacherName=" + encodeURIComponent("" + teacherName) + "&";
-        if (password !== undefined && password !== null)
-            url_ += "password=" + encodeURIComponent("" + password) + "&";
+     getTeacherAccountByTeacherNameAndPassword(body: LoginModel | undefined): Observable<TeacherAccountOutput> {
+        let url_ = this.baseUrl + "/GetTeacherAccountByTeacherNameAndPassword";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
             return this.processGetTeacherAccountByTeacherNameAndPassword(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -4735,6 +4731,46 @@ export class ApiClient {
         }
         return _observableOf<Examination[]>(<any>null);
     }
+}
+
+export class LoginModel implements ILoginModel {
+    accountName!: string;
+    password!: string;
+
+    constructor(data?: ILoginModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.accountName = _data["accountName"];
+            this.password = _data["password"];
+        }
+    }
+
+    static fromJS(data: any): LoginModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["accountName"] = this.accountName;
+        data["password"] = this.password;
+        return data; 
+    }
+}
+
+export interface ILoginModel {
+    accountName: string;
+    password: string;
 }
 
 export class Teacher implements ITeacher {
