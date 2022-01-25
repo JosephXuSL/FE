@@ -3,6 +3,7 @@ import { ClassInfoRequestBody, Major, Student } from 'src/app/api-client';
 import { ApiClient } from 'src/app/api-client';
 import { GridReadyEvent } from 'ag-grid-community';
 import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
+import { NullTemplateVisitor } from '@angular/compiler';
 @Component({
   selector: 'pm-classinfobymentor',
   templateUrl: './classinfobymentor.component.html',
@@ -10,6 +11,7 @@ import { AgGridLocalText } from 'src/app/models/ag-grid-localText';
 })
 export class ClassinfobymentorComponent implements OnInit {
   allClasses: Array<any>;
+  allClassesExisted = [];
   currentClassstudent: Array<any>;
   loading: boolean;
   lookbuttonclick: boolean;
@@ -24,7 +26,6 @@ export class ClassinfobymentorComponent implements OnInit {
   public zhuanye = '';
   public yuanxi = '';
   public banji = '';
-
   public gridApi: any;
   private gridColumnApi;
 
@@ -80,6 +81,7 @@ export class ClassinfobymentorComponent implements OnInit {
       } else {
         this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
       }
+      this.allClassesExisted = this.allClasses;
       this.loading = false;
       this.rowData = this.allClasses;
     });
@@ -182,31 +184,19 @@ export class ClassinfobymentorComponent implements OnInit {
   search() {
     this.loading = true;
     this.errorMessage = '';
-    this.allClasses = new Array<any>();
-    const info = new ClassInfoRequestBody();
-    info.grade = this.nianji,
-      info.department = this.yuanxi,
-      info.classNumber = this.banji,
-      info.majorName = this.zhuanye,
-      this.apiClient.getClassesByClassInfo(info).subscribe(t => {
-        if (t && t.length > 0 && t[0].id) {
-          t.forEach(i => {
-            // tslint:disable-next-line:no-shadowed-variable
-            const info = {
-              classid: i.id,
-              grade: i.major.grade,
-              department: i.major.department,
-              majorName: i.major.majorName,
-              classNumber: i.classNumber
-            };
-            this.allClasses.push(info);
-          });
-        } else {
-          this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
-        }
-        this.loading = false;
-        this.rowData = this.allClasses;
-      });
+    if (this.allClassesExisted != null) {
+      this.allClasses = this.searchMatchResult('grade', this.nianji, false, this.allClassesExisted);
+      this.allClasses = this.searchMatchResult('classNumber', this.banji, false, this.allClasses);
+      this.allClasses = this.searchMatchResult('majorName', this.zhuanye, false, this.allClasses);
+      this.allClasses = this.searchMatchResult('department', this.yuanxi, false, this.allClasses);
+    }
+    if (this.allClassesExisted == null || this.allClasses == null) {
+
+      this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+    }
+
+    this.loading = false;
+    this.rowData = this.allClasses;
   }
   clear() {
     this.nianji = '';
@@ -216,5 +206,76 @@ export class ClassinfobymentorComponent implements OnInit {
   }
   searchall() {
     this.ngOnInit();
+  }
+  searchMatchResult(st: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, st);
+        if (isfullmatch) {
+          if (v && v === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v && v.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
+  }
+
+  searchMatchTwoCycleResult(fistst: string, secost: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, fistst);
+        const v2 = Reflect.get(v, secost);
+
+        if (isfullmatch) {
+          if (v2 && v2 === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v2 && v2.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
+  }
+
+  searchMatchThreeCycleResult(fistst: string, secost: string,
+                              thirdst: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, fistst);
+        const v2 = Reflect.get(v, secost);
+        const v3 = Reflect.get(v2, thirdst);
+
+        if (isfullmatch) {
+          if (v3 && v3 === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v3 && v3.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
   }
 }

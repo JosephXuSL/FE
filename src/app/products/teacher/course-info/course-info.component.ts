@@ -88,17 +88,13 @@ export class CourseInfoComponent implements OnInit {
   searchcourse() {
     this.loading = true;
     this.errorMessage = '';
-    const courserowData = new Array<any>();
+    let courserowData = new Array<any>();
     if (this.allCourseResults && this.allCourseResults.length > 0) {
-      this.allCourseResults.forEach(s => {
-        if (s.courseName === this.kecheng && s.semester === this.xueqi) {
-          courserowData.push(s);
-        }
-      });
-      if (!(courserowData && courserowData.length > 0)) {
-        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
-      }
-    } else {
+      courserowData = this.searchMatchResult('courseName', this.kecheng, false, this.allCourseResults);
+      courserowData = this.searchMatchResult('semester', this.xueqi, false, courserowData);
+
+    }
+    if (this.allCourseResults == null || courserowData == null) {
       this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
     }
     this.gridApi.setRowData(courserowData);
@@ -113,5 +109,26 @@ export class CourseInfoComponent implements OnInit {
   }
   searchall() {
     this.ngOnInit();
+  }
+  searchMatchResult(st: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, st);
+        if (isfullmatch) {
+          if (v && v === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v && v.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
   }
 }

@@ -31,6 +31,7 @@ export class CourseInfobyMentorComponent implements OnInit {
   public kecheng = '';
   public xueqi = '';
   dataSet = [];
+  allClassesExisted = [];
   pageIndex = 1;
   pageSize = 10;
   total = 1;
@@ -114,6 +115,7 @@ export class CourseInfobyMentorComponent implements OnInit {
       this.classresult.push(info);
     });
     this.rowData = this.classresult;
+    this.allClassesExisted = this.classresult;
     this.gridApi.setRowData(this.rowData);
   }
   onSelectionChanged() {
@@ -178,21 +180,20 @@ export class CourseInfobyMentorComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
     this.rowData = [];
-    const info = new ClassInfoRequestBody();
-    info.grade = this.nianji,
-      info.department = this.yuanxi,
-      info.classNumber = this.banji,
-      info.majorName = this.zhuanye,
-      this.apiClient.getClassesByClassInfo(info).subscribe(t => {
-        if (t && t.length > 0 && t[0].id) {
-          this.generateAllStudentundercourseRowdata(t);
-        } else {
-          this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
-          this.gridApi.setRowData(this.rowData);
-        }
-        this.loading = false;
+    if (this.allClassesExisted != null) {
+      this.rowData = this.searchMatchResult('nianji', this.nianji, false, this.allClassesExisted);
+      this.rowData = this.searchMatchResult('banji', this.banji, false, this.rowData);
+      this.rowData = this.searchMatchResult('zhuanye', this.zhuanye, false, this.rowData);
+      this.rowData = this.searchMatchResult('xueyuan', this.yuanxi, false, this.rowData);
+    }
+    if (this.allClassesExisted == null || this.rowData == null) {
 
-      });
+      this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
+    }
+
+    this.loading = false;
+    this.gridApi.setRowData(this.rowData);
+
   }
   clear() {
     this.nianji = '';
@@ -215,16 +216,15 @@ export class CourseInfobyMentorComponent implements OnInit {
     this.errorMessage = '';
     this.results = new Array<any>();
     this.courserowData = new Array<any>();
-    this.allCourseResults.forEach(s => {
-      if (s.courseName === this.kecheng && s.semester === this.xueqi) {
-        this.results.push(s);
-      }
-    });
-    if (!(this.results && this.results.length > 0)) {
+    if (this.allCourseResults && this.allCourseResults.length > 0) {
+      this.courserowData = this.searchMatchResult('courseName', this.kecheng, false, this.allCourseResults);
+      this.courserowData = this.searchMatchResult('semester', this.xueqi, false, this.courserowData);
+
+    }
+    if (this.allCourseResults == null || this.courserowData == null) {
       this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
     }
     this.loading = false;
-    this.courserowData = this.results;
   }
   searchall() {
     this.ngOnInit();
@@ -233,5 +233,27 @@ export class CourseInfobyMentorComponent implements OnInit {
     this.clearcourse();
     this.searchInfo();
   }
+  searchMatchResult(st: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, st);
+        if (isfullmatch) {
+          if (v && v === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v && v.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
+  }
+
 }
 

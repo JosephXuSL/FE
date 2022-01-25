@@ -24,46 +24,32 @@
                 <input class="form-control search-inputarea boxdis" id="banjiId" type="text" placeholder="请输入" [(ngModel)]="banji" />
             </div>
         </div>
-        <div class="row">
-            <label class="col-md-7 col-form--label"></label>
+        <div style="float: right;">
 
-            <!-- <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(nianji&&zhuanye&&yuanxi&&banji) " (click)="search() ">
-                搜索
-            </button>
-            <button class="btn btn-primary mr-3 col-md-1 boxdis" type="submit " style="width:30px " [disabled]="!(nianji||zhuanye||yuanxi||banji) " (click)="clear() ">
-                清空
-            </button>
-            <button class="btn btn-primary mr-3 col-md-2 boxdis" type="submit " style="width:30px " (click)="searchall() ">
-                查看所有
-            </button> -->
-            <div class="row mr-3">
-                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;margin-left:30px;" [disabled]="!(nianji&&zhuanye&&yuanxi&&banji) " (click)="search() ">                   
+            <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 33px;background-color: #37a1d3;color: white;margin-left:30px;" [disabled]="!(nianji||zhuanye||yuanxi||banji) " (click)="search() ">                   
                     <div class="form-group row" >
                         <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
                         <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
                         <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
                     </div>
                 </button>
-            </div>
 
-            <div class="row mr-3">
-                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;margin-left:2px;" [disabled]="!(nianji||zhuanye||yuanxi||banji) " (click)="clear() ">                   
+            <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 33px;background-color: #e88527;color: white;margin-left:2px;" [disabled]="!(nianji||zhuanye||yuanxi||banji) " (click)="clear() ">                   
                     <div class="form-group row" >
                         <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
                         <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
                         <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
                     </div>
                 </button>
-            </div>
-            <div class="row mr-3">
-                <button class="btn btn-sm button-margin" type="submit " style="width:130px;height: 65%;background-color: #e40000;color: white;margin-left:2px;" (click)="searchall() ">                   
+
+            <button class="btn btn-sm button-margin" type="submit " style="width:130px;height: 33px;background-color: #e40000;color: white;margin-left:2px;" (click)="searchall() ">                   
                     <div class="form-group row" >
                         <div class="col-md-1 col-form--label" style="margin-top: -3%;margin-left: 3%; "><i nz-icon [nzType]="'file-search'" style="margin-top: -40%;"></i></div>
                         <div class="col-md-1 col-form--label" style="margin-left: -8%;"><nz-divider nzType="vertical"></nz-divider></div>
                         <div class="col-md-7 col-form--label"  style="margin-left: -5%; font-size: small; ">查看所有</div>                       
                     </div>
                 </button>
-            </div>
+
         </div>
     </div>
     <div class="card-header " *ngIf="!viewStudentclick ">

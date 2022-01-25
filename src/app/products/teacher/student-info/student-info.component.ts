@@ -21,6 +21,7 @@ export class StudentInfoComponent implements OnInit {
   public xueqi = '';
   public kecheng = '';
   allInfo = [];
+  allInfoExisted = [];
   @Output() popupData = new EventEmitter();
 
   public gridApi: any;
@@ -72,6 +73,7 @@ export class StudentInfoComponent implements OnInit {
     });
     this.rowData = this.result;
     this.allInfo = this.result;
+    this.allInfoExisted = this.result;
     this.gridApi.setRowData(this.rowData);
   }
   onSelectionChanged() {
@@ -122,18 +124,13 @@ export class StudentInfoComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
     this.rowData = [];
-    if (this.allInfo && this.allInfo.length > 0) {
-      this.allInfo.forEach(t => {
-        if (t.xueke === this.kecheng && t.xueqi === this.xueqi) {
-          if (this.xingming === '' || (this.xingming && t.xingming === this.xingming)) {
-            this.rowData.push(t);
-          }
-        }
-      });
-      if (!(this.rowData && this.rowData.length > 0)) {
-        this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
-      }
-    } else {
+    if (this.allInfoExisted && this.allInfoExisted.length > 0) {
+      this.rowData = this.searchMatchResult('xueke', this.kecheng, false, this.allInfoExisted);
+      this.rowData = this.searchMatchResult('xueqi', this.xueqi, false, this.rowData);
+      this.rowData = this.searchMatchResult('xingming', this.xingming, false, this.rowData);
+
+    }
+    if (this.allInfoExisted == null || this.rowData == null) {
       this.errorMessage = '暂无相关信息，如与事实不符，请联系管理员';
     }
     this.gridApi.setRowData(this.rowData);
@@ -147,5 +144,26 @@ export class StudentInfoComponent implements OnInit {
   searchall() {
     this.clear();
     this.ngOnInit();
+  }
+  searchMatchResult(st: string, value: string, isfullmatch: boolean, allresult: any[]): any[] {
+    if (value !== null && value !== '') {
+      const resultrowData = new Array<any>();
+      allresult.forEach(e => {
+        const v = Reflect.get(e, st);
+        if (isfullmatch) {
+          if (v && v === value) {
+            resultrowData.push(e);
+          }
+        } else {
+          if (v && v.indexOf(value) === 0) {
+            resultrowData.push(e);
+          }
+        }
+      });
+      return resultrowData;
+    } else {
+      return allresult;
+    }
+
   }
 }
