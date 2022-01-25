@@ -16,35 +16,33 @@
                 <input class="form-control search-inputarea boxdis" id="jsId" type="text" placeholder="请输入" [(ngModel)]="js" />
             </div>
         </div>
-        <div class="row" style="height: 70%;">
-            <label class="col-md-7 col-form--label"></label>
-            <div class="row mr-3">
-                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #37a1d3;color: white;margin-left:30px;" [disabled]="!(jiaoshi||js) " (click)="search() ">                   
+        <div class="row" style="float: right;">
+
+            <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 33px;background-color: #37a1d3;color: white;margin-left:30px;" [disabled]="!(jiaoshi||js) " (click)="search() ">                   
                     <div class="form-group row" >
                         <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'search'" style="margin-top: -40%;"></i></div>
                         <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
                         <div class="col-md-7 col-form--label"  style="margin-left: -10%;">检索</div>                       
                     </div>
             </button>
-            </div>
-            <div class="row mr-3">
-                <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 65%;background-color: #e88527;color: white;margin-left:2px;" [disabled]="!(jiaoshi||js) " (click)="clear() ">                   
+
+
+            <button class="btn btn-sm button-margin" type="submit " style="width:90px;height: 33px;background-color: #e88527;color: white;margin-left:2px;" [disabled]="!(jiaoshi||js) " (click)="clear() ">                   
                     <div class="form-group row" >
                         <div class="col-md-1 col-form--label" style="margin-top: -4%; "><i nz-icon [nzType]="'reload'" style="margin-top: -40%;"></i></div>
                         <div class="col-md-1 col-form--label" style="margin-left: -15%;"><nz-divider nzType="vertical"></nz-divider></div>
                         <div class="col-md-7 col-form--label"  style="margin-left: -10%;">清空</div>                       
                     </div>
-                </button>
-            </div>
-            <div class="row mr-3">
-                <button class="btn btn-sm button-margin" type="submit " style="width:130px;height: 65%;background-color: #e40000;color: white;margin-left:2px;" (click)="searchall() ">                   
+            </button>
+
+
+            <button class="btn btn-sm button-margin" type="submit " style="width:130px;height: 33px;background-color: #e40000;color: white;margin-left:2px;" (click)="searchall() ">                   
                     <div class="form-group row" >
                         <div class="col-md-1 col-form--label" style="margin-top: -3%;margin-left: 3%; "><i nz-icon [nzType]="'file-search'" style="margin-top: -40%;"></i></div>
                         <div class="col-md-1 col-form--label" style="margin-left: -8%;"><nz-divider nzType="vertical"></nz-divider></div>
                         <div class="col-md-7 col-form--label"  style="margin-left: -5%; font-size: small; ">查看所有</div>                       
                     </div>
             </button>
-            </div>
         </div>
     </div>
 </div>
