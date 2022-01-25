@@ -11,7 +11,7 @@
                     <label class="col-md-1 col-form-label" for="userNameId"></label>
                     <label class="col-md-2 col-form-label" for="userNameId">身份证号码：</label>
                     <div class="col-md-7">
-                        <input class="form-control" id="userNameId" type="text" style="border-color: lightgray; background-image: none" placeholder="身份证号（必填）" required ngModel name="userName" #userNameVar="ngModel" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
+                        <input class="form-control" id="userNameId" type="text" style="border-color: lightgray; background-image: none;box-shadow: none;" placeholder="身份证号（必填）" required ngModel name="userName" #userNameVar="ngModel" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
                         />
                         <span class="invalid-feedback">
                         <span *ngIf="userNameVar.errors?.required">
@@ -24,7 +24,7 @@
                     <label class="col-md-1 col-form-label" for="yanzhengmaId"></label>
                     <label class="col-md-2 col-form-label" for="yanzhengmaId">验证码：</label>
                     <div class="col-md-7">
-                        <input class="form-control" id="yanzhengmaId" style="border-color: lightgray; background-image: none" type="text" placeholder="请填入图片中的数字（必填）" required ngModel name="yanzhengma" #yanzhengmaVar="ngModel" [ngClass]="{'is-invalid': (yanzhengmaVar.touched || yanzhengmaVar.dirty) && !yanzhengmaVar.valid }"
+                        <input class="form-control" id="yanzhengmaId" style="border-color: lightgray; background-image: none;box-shadow: none;" type="text" placeholder="请填入图片中的数字（必填）" required ngModel name="yanzhengma" #yanzhengmaVar="ngModel" [ngClass]="{'is-invalid': (yanzhengmaVar.touched || yanzhengmaVar.dirty) && !yanzhengmaVar.valid }"
                         />
 
                         <span class="invalid-feedback">

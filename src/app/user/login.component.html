@@ -12,7 +12,7 @@
                     <label class="col-md-1 col-form-label"></label>
                     <label class="col-md-2 col-form-label" for="userNameId">用户名称</label>
                     <div class="col-md-7">
-                        <input class="form-control" id="userNameId" type="text" style="border-color: lightgray; background-image: none" placeholder="用户名称（必填）" required ngModel name="userName" #userNameVar="ngModel" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
+                        <input class="form-control" id="userNameId" type="text" style="border-color: lightgray; background-image: none;box-shadow: none;" placeholder="用户名称（必填）" required ngModel name="userName" #userNameVar="ngModel" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
                         />
                         <span class="invalid-feedback">
                             <span *ngIf="userNameVar.errors?.required">
@@ -27,7 +27,7 @@
                     <label class="col-md-2 col-form--label" for="passwordId">密码</label>
 
                     <div class="col-md-7">
-                        <input class="form-control" id="passwordId" type="password" style="border-color: lightgray; background-image: none" placeholder="密码（必填项）" required ngModel name="password" #passwordVar="ngModel" [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }"
+                        <input class="form-control" id="passwordId" type="password" style="border-color: lightgray; background-image: none;box-shadow: none;" placeholder="密码（必填项）" required ngModel name="password" #passwordVar="ngModel" [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }"
                         />
                         <span class="invalid-feedback">
               <span *ngIf="passwordVar.errors?.required">
@@ -40,7 +40,7 @@
                     <label class="col-md-1 col-form-label" for="yanzhengmaId"></label>
                     <label class="col-md-2 col-form-label" for="yanzhengmaId">验证码：</label>
                     <div class="col-md-7">
-                        <input class="form-control" id="yanzhengmaId" type="text" style="border-color: lightgray; background-image: none" placeholder="请填入图片中的数字（必填）" required ngModel name="yanzhengma" #yanzhengmaVar="ngModel" [ngClass]="{'is-invalid': (yanzhengmaVar.touched || yanzhengmaVar.dirty) && !yanzhengmaVar.valid }"
+                        <input class="form-control" id="yanzhengmaId" type="text" style="border-color: lightgray; background-image: none;box-shadow: none;" placeholder="请填入图片中的数字（必填）" required ngModel name="yanzhengma" #yanzhengmaVar="ngModel" [ngClass]="{'is-invalid': (yanzhengmaVar.touched || yanzhengmaVar.dirty) && !yanzhengmaVar.valid }"
                         />
 
                         <span class="invalid-feedback">

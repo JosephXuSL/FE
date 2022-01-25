@@ -28,69 +28,104 @@
     </ul>
 
 </nav>
-<nz-layout style="height:100%">
-    <nz-layout style="height:100%">
+<nz-layout >
+    <nz-sider [ngStyle] ="{'min-height': windowHeight}"  nzWidth="200px" nzTheme="light">
+        <ul nz-menu
+            nzMode="inline"
+            class="sider-menu">
+            <li nz-submenu
+                nzOpen
+                nzIcon="home"
+                nzTitle="首页">
+                <ul>
+                    <li nz-menu-item
+                        nzSelected
+                        [routerLink]="['/welcome']"
+                        routerLinkActive="active">
+                        欢迎页面
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu
+                nzIcon="user"
+                nzTitle="基本信息管理"
+                *ngIf="islogin()">
+                <ul>
+                    <li nz-menu-item
+                        [routerLink]="['/basicInfo']"
+                        routerLinkActive="active">
+                        个人信息及密码
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu
+                nzTitle="教务服务"
+                nzIcon="audit"
+                *ngIf="isadmin()&&islogin()">
+                <ul>
+                    <li nz-menu-item
+                        *ngFor=" let business of businessList"
+                        [routerLink]="['/management',business.name]"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理
+                    </li>
+                    <li nz-menu-item
+                        [routerLink]="['/createteacheraccount']"
+                        routerLinkActive="active">教师账号管理
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu
+                nzTitle="教师服务"
+                nzIcon="book"
+                *ngIf="!isadmin()&&islogin()">
+                <ul>
+                    <li nz-menu-item
+                        *ngIf="!isadmin()&&islogin()&&!ismentor()"
+                        [routerLink]="['/products/studentInfo']"
+                        routerLinkActive="active">
+                        学生管理
+                    </li>
+                    <li nz-menu-item
+                        *ngIf="!isadmin()&&ismentor()&&islogin()"
+                        [routerLink]="['/products/classInfobyMentor']"
+                        routerLinkActive="active">
+                        班级及学生管理
+                    </li>
+                    <li nz-menu-item
+                        *ngIf="!isadmin()&&!ismentor()&&islogin()"
+                        [routerLink]="['/products/courseInfo']"
+                        routerLinkActive="active">
+                        课程表管理
+                    </li>
+                    <li nz-menu-item
+                        *ngIf="!isadmin()&&ismentor()&&islogin()"
+                        [routerLink]="['/products/courseInfobyMentor']"
+                        routerLinkActive="active">
+                        课程表管理
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu
+                nzTitle="公共服务"
+                nzIcon="heart">
+                <ul>
+                    <li nz-menu-item
+                        [routerLink]="['/enrollsearchfrostudent']"
+                        routerLinkActive="active">
+                        录取查询
+                    </li>
+                    <li nz-menu-item
+                        [routerLink]="['/examsearchfrostudent']"
+                        routerLinkActive="active">
+                        成绩查询
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nz-sider>
 
-        <nz-sider nzWidth="200px" nzTheme="light">
-            <ul nz-menu nzMode="inline" class="sider-menu">
-                <li nz-submenu nzOpen nzIcon="home" nzTitle="首页">
-                    <ul>
-                        <li nz-menu-item nzSelected [routerLink]="['/welcome']" routerLinkActive="active">
-                            欢迎页面
-                        </li>
-                    </ul>
-                </li>
-                <li nz-submenu nzIcon="user" nzTitle="基本信息管理" *ngIf="islogin()">
-                    <ul>
-                        <li nz-menu-item [routerLink]="['/basicInfo']" routerLinkActive="active">
-                            个人信息及密码
-                        </li>
-                    </ul>
-                </li>
-                <li nz-submenu nzTitle="教务服务" nzIcon="audit" *ngIf="isadmin()&&islogin()">
-                    <ul>
-                        <li nz-menu-item *ngFor=" let business of businessList" [routerLink]="['/management',business.name]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact : true}">{{business.nameForShow}}管理
-                        </li>
-                        <li nz-menu-item [routerLink]="['/createteacheraccount']" routerLinkActive="active">教师账号管理
-                        </li>
-                    </ul>
-                </li>
-                <li nz-submenu nzTitle="教师服务" nzIcon="book" *ngIf="!isadmin()&&islogin()">
-                    <ul>
-                        <li nz-menu-item *ngIf="!isadmin()&&islogin()&&!ismentor()" [routerLink]="['/products/studentInfo']" routerLinkActive="active">
-                            学生管理
-                        </li>
-                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()" [routerLink]="['/products/classInfobyMentor']" routerLinkActive="active">
-                            班级及学生管理
-                        </li>
-                        <li nz-menu-item *ngIf="!isadmin()&&!ismentor()&&islogin()" [routerLink]="['/products/courseInfo']" routerLinkActive="active">
-                            课程表管理
-                        </li>
-                        <li nz-menu-item *ngIf="!isadmin()&&ismentor()&&islogin()" [routerLink]="['/products/courseInfobyMentor']" routerLinkActive="active">
-                            课程表管理
-                        </li>
-                    </ul>
-                </li>
-                <li nz-submenu nzTitle="公共服务" nzIcon="heart">
-                    <ul>
-                        <li nz-menu-item [routerLink]="['/enrollsearchfrostudent']" routerLinkActive="active">
-                            录取查询
-                        </li>
-                        <li nz-menu-item [routerLink]="['/examsearchfrostudent']" routerLinkActive="active">
-                            成绩查询
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-
-        </nz-sider>
-        <nz-layout style="height: 100%;">
-            <nz-content>
-                <div style="height: 100%;">
-                    <router-outlet></router-outlet>
-                </div>
-            </nz-content>
-        </nz-layout>
-    </nz-layout>
+    <nz-content>
+        <router-outlet></router-outlet>
+    </nz-content>
 </nz-layout>

@@ -11,7 +11,7 @@
                     <label class="col-md-1 col-form-label"></label>
                     <label class="col-md-2 col-form-label" for="userNameId">学号：</label>
                     <div class="col-md-7">
-                        <input class="form-control" id="userNameId" type="text" style="border-color: lightgray; background-image: none" placeholder="学号（必填）" required ngModel name="userName" #userNameVar="ngModel" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
+                        <input class="form-control" id="userNameId" type="text" style="border-color: lightgray; background-image: none;box-shadow: none;" placeholder="学号（必填）" required ngModel name="userName" #userNameVar="ngModel" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
                         />
                         <span class="invalid-feedback">
                         <span *ngIf="userNameVar.errors?.required">
@@ -24,7 +24,7 @@
                     <label class="col-md-1 col-form-label"></label>
                     <label class="col-md-2 col-form-label" for="shenfenId"> 身份证号码：</label>
                     <div class="col-md-7">
-                        <input class="form-control" id="shenfenId" type="text" style="border-color: lightgray; background-image: none" placeholder="身份证号码（必填）" required ngModel name="shenfen" #shenfenVar="ngModel" [ngClass]="{'is-invalid': (shenfenVar.touched || shenfenVar.dirty) && !shenfenVar.valid }"
+                        <input class="form-control" id="shenfenId" type="text" style="border-color: lightgray; background-image: none;box-shadow: none;" placeholder="身份证号码（必填）" required ngModel name="shenfen" #shenfenVar="ngModel" [ngClass]="{'is-invalid': (shenfenVar.touched || shenfenVar.dirty) && !shenfenVar.valid }"
                         />
                         <span class="invalid-feedback">
                         <span *ngIf="shenfenVar.errors?.required">
@@ -37,7 +37,7 @@
                     <label class="col-md-1 col-form-label"></label>
                     <label class="col-md-2 col-form-label" for="yanzhengmaId">验证码：</label>
                     <div class="col-md-7">
-                        <input class="form-control" id="yanzhengmaId" type="text" style="border-color: lightgray; background-image: none" placeholder="请填入图片中的数字（必填）" required ngModel name="yanzhengma" #yanzhengmaVar="ngModel" [ngClass]="{'is-invalid': (yanzhengmaVar.touched || yanzhengmaVar.dirty) && !yanzhengmaVar.valid }"
+                        <input class="form-control" id="yanzhengmaId" type="text" style="border-color: lightgray; background-image: none;box-shadow: none;" placeholder="请填入图片中的数字（必填）" required ngModel name="yanzhengma" #yanzhengmaVar="ngModel" [ngClass]="{'is-invalid': (yanzhengmaVar.touched || yanzhengmaVar.dirty) && !yanzhengmaVar.valid }"
                         />
                         <!--去掉 style="border-color: lightgray; background-image: none" 框框会变红，更好看 -->
                         <span class="invalid-feedback">

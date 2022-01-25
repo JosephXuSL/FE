@@ -18,6 +18,7 @@ export class AppComponent {
   loading = true;
   businessList = businessList;
   username: string;
+  windowHeight;
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
@@ -51,6 +52,7 @@ export class AppComponent {
         this.username = sessionStorage.getItem('user');
       }
     });
+    this.windowHeight = (window.innerHeight - 61) + 'px';
   }
 
   checkRouterEvent(routerEvent: Event): void {

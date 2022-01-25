@@ -31,7 +31,7 @@
                     <b>检索：</b>
                 </div>
             </div>
-            <div class="card-header">
+            <div class="card-body">
                 <div class="form-group row" [hidden]="business.name !=='course' " style="margin-top: 10px;">
                     <label class="col-md-1 col-form--label search-area"></label>
                     <label class="col-md-2 col-form--label search-area" for="kechengId">课程名称:</label>
@@ -266,7 +266,7 @@
                 </div>
             </div>
         </div>
-        <ag-grid-angular style="height: 450px; width: 100%;margin-top: 1.5%;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [localeText]="localeText" rowSelection="single" pagination="true" paginationPageSize="10" (selectionChanged)="onSelectionChanged()"
+        <ag-grid-angular style="height: 520px; width: 100%;margin-top: 1.5%;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs" [localeText]="localeText" rowSelection="single" pagination="true" paginationPageSize="10" (selectionChanged)="onSelectionChanged()"
             (rowDoubleClicked)="onRowDoubleClicked($event)" (gridReady)="onGridReady($event)" (gridColumnsChanged)="resizeColumns()">
         </ag-grid-angular>
 
